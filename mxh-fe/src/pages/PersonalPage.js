@@ -1,14 +1,13 @@
 import React from 'react';
-import {Outlet} from "react-router-dom";
 
-const Home = () => {
+const PersonalPage = () => {
     return (
         <>
             <div>
-                <Outlet/>
+                hehe
             </div>
         </>
 
     )
 }
-export default Home;
+export default PersonalPage;
