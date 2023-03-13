@@ -1,4 +1,5 @@
 import {configureStore} from "@reduxjs/toolkit";
+<<<<<<< HEAD
 import accountSlice from "./slice/AccountSlice";
 
 
@@ -14,3 +15,14 @@ const Store = configureStore({
 })
 
 export default Store;
+=======
+import postsReducer from "./post/PostSlice";
+
+
+
+export const store = configureStore({
+    reducer: {
+        posts: postsReducer,
+    }
+})
+>>>>>>> origin/master
