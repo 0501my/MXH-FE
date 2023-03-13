@@ -102,7 +102,7 @@ const Login = () => {
                                                 <div className="we-form mt-6">
                                                     <input type="checkbox"/><label>remember me</label>
                                                     <button type="submit"
-                                                            className="we-form mt-6">Login
+                                                            className="we-form mt-6  btn-primary">Login
                                                     </button>
                                                 </div>
 
@@ -110,8 +110,10 @@ const Login = () => {
                                         </Formik>
                                         <Link className="with-smedia google" href="#" title="" data-ripple=""><i
                                             className="fa fa-google-plus"></i></Link>
-                                        <span>don't have an account? <Link className="we-account underline"
-                                                                        title="" to={"/registers"}>register now</Link></span>
+                                        <span className="col-12">don't have an account?
+                                            <Link className="we-account "
+                                                                        title="" to={"/registers"}>
+                                                <h6 className="we-account" style={{color : "purple"}}>register now</h6></Link></span>
                                     </div>
                                 </div>
                             </div>
