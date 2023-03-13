@@ -1,27 +1,39 @@
 import React from 'react';
-import {Field, Form, Formik} from "formik";
+import {useDispatch} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {AccountsLogin} from "../services/AccountService";
+import {AccountsRegister} from "../services/AccountService";
+import {ErrorMessage, Field, Form, Formik} from "formik";
+import * as Yup from "yup";
 
-const Login = () => {
+const Register = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const initialValuesAdd = {
         username: "",
         password: "",
+        passwordAgain: "",
     };
+    const validationSchema = Yup.object().shape({
+        username: Yup.string().required("Vui lòng nhập tên đăng nhập"),
+        password: Yup.string()
+            .required("Vui lòng nhập mật khẩu")
+            .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
+            .max(14, "Mật khẩu chỉ có nhiều nhất 14 ký tự")
+    });
     const handleSubmit = async (values) => {
-        console.log(localStorage.getItem('status') === 'User is not exit')
-        await dispatch(AccountsLogin(values));
-        if (localStorage.getItem('status') === 'User is not exit' || localStorage.getItem('status') === 'Password is wrong' || localStorage.getItem('status') == null || localStorage.getItem('status') === undefined) {
-            alert('User or password incorrect')
-            navigate(('/accounts/login'))
+        if (values.password !== values.passwordAgain) {
+            alert('Password is incorrect')
         } else {
-            navigate('/home')
+            let data = {
+                username: values.username,
+                password: values.password
+            }
+            await dispatch(AccountsRegister(data));
+            alert('Registered successfully')
+            navigate('/')
         }
-    };
 
+    };
     return (
         <>
             <div className="www-layout">
@@ -85,8 +97,8 @@ const Login = () => {
                                 <div className="col-lg-4">
                                     <div className="we-login-register">
                                         <div className="form-title">
-                                            <i className="fa fa-key"></i>login
-                                            <span>sign in now and meet the awesome Friends around the world.</span>
+                                            <i className="fa fa-key"></i>register
+                                            <span>Register now and meet the awesome Friends around the world.</span>
                                         </div>
                                         <Formik className="we-form" initialValues={initialValuesAdd}
                                                 onSubmit={handleSubmit}>
@@ -99,10 +111,14 @@ const Login = () => {
                                                     <Field type="password" placeholder="Password" name="password"/>
 
                                                 </Form>
+                                                <Form className="we-form mt-6">
+                                                    <Field type="password" placeholder="passwordAgain"
+                                                           name="passwordAgain"/>
+
+                                                </Form>
                                                 <div className="we-form mt-6">
-                                                    <input type="checkbox"/><label>remember me</label>
                                                     <button type="submit"
-                                                            className="we-form mt-6">Login
+                                                            className="we-form mt-6">Register
                                                     </button>
                                                 </div>
 
@@ -110,8 +126,6 @@ const Login = () => {
                                         </Formik>
                                         <Link className="with-smedia google" href="#" title="" data-ripple=""><i
                                             className="fa fa-google-plus"></i></Link>
-                                        <span>don't have an account? <Link className="we-account underline"
-                                                                        title="" to={"/registers"}>register now</Link></span>
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +135,8 @@ const Login = () => {
 
             </div>
         </>
-
     )
 }
-export default Login;
+
+
+export default Register;
