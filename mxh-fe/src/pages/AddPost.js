@@ -6,11 +6,8 @@ import {useEffect, useState} from "react";
 import {addPosts} from "../services/PostService";
 
 const AddPost = () => {
-
     const dispatch = useDispatch();
-
     const navigate = useNavigate();
-
     return (
         <>
             <div>
