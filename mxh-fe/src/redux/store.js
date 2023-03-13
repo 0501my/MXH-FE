@@ -1,11 +1,13 @@
 import {configureStore} from "@reduxjs/toolkit";
-<<<<<<< HEAD
+
 import accountSlice from "./slice/AccountSlice";
+import postReducer from "./slice/PostSlice";
 
 
 const Store = configureStore({
     reducer: {
         account: accountSlice,
+        posts : postReducer
     },
 
     middleware: getDefaultMiddleware =>
@@ -15,14 +17,8 @@ const Store = configureStore({
 })
 
 export default Store;
-=======
-import postsReducer from "./post/PostSlice";
 
 
 
-export const store = configureStore({
-    reducer: {
-        posts: postsReducer,
-    }
-})
->>>>>>> origin/master
+
+
