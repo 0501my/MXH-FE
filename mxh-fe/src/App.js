@@ -18,9 +18,10 @@ function App() {
         <Route path="/home" element={<Home/>}>
             <Route path={""} element={<ShowHome/>}/>
             <Route path={"addPost"} element={<AddPost/>}/>
+            <Route path="posts/:id" element={<EditPost/>}/>
             <Route path={"personalPage"} element={<PersonalPage/>}/>
         </Route>
-        <Route path="posts/:id" element={<EditPost/>}/>
+
     </Routes>
   )
 }

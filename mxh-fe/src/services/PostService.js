@@ -32,3 +32,11 @@ export const findByIdPost = createAsyncThunk(
         return res.data
     }
 )
+export const deletePost = createAsyncThunk(
+    'posts/deletePosts',
+    async (id)=>{
+        await axios.delete(`http://localhost:4000/posts/${id}`)
+        const res = await axios.get('http://localhost:4000/posts')
+        return res.data;
+    }
+)

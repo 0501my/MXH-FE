@@ -8,50 +8,81 @@ export default function EditPost() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {id} = useParams()
-    useEffect(() => {
-        dispatch(findByIdPost(id)).then(() => {
-        });
-    }, [])
+
     const post = useSelector(
         state => {
-            console.log(state)
             return state.posts.post
         }
     )
     const handleEditPost = (values) => {
         let data = {...values}
         dispatch(editPost(data)).then(() => {
-            console.log(data)
             navigate('/home')
         })
     }
+
+    useEffect(() => {
+        dispatch(findByIdPost(id)).then(() => {
+        });
+    }, [])
     return (
         <>
-            <Formik initialValues={post} onSubmit={(values) => {
+            <Formik initialValues={post}
+                    onSubmit={(values) => {
                 handleEditPost(values)
             }
             }
-
                     enableReinitialize={true}>
-                <Form>
-                    <div>
-                        <label>Status</label>
-                        <Field type="text" name={'status'}/>
-                    </div>
-                    <div>
-                        <label>Content</label>
-                        <Field type="text" name={'content'}/>
-                    </div>
-                    <div>
-                        <label>Time</label>
-                        <Field type="text" name={'time'}/>
-                    </div>
-                    <div>
-                        <label>Image</label>
-                        <Field type="text" name={'image'}/>
-                    </div>
-                    <button type="submit">EDIT</button>
-                </Form>
+                    <section>
+                        <div className="gap gray-bg">
+                            <div className="container">
+                                <div className="row merged20">
+                                    <div className="col-lg-9">
+                                        <div className="forum-warper">
+                                            <div className="central-meta">
+                                                <div className="title-block">
+                                                    <div className="row">
+                                                        <div className="col-lg-6">
+                                                            <div className="align-left">
+                                                                <h5>Edit Post</h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="forum-form">
+                                            <div className="central-meta">
+                                                <Form method="post" className="c-form">
+                                                    <div className="select-options">
+                                                        <Field as={'select'} className="select" name={'status'}>
+                                                            <option value={'public'}>Public</option>
+                                                            <option value={'friendonly'}>Friend only</option>
+                                                            <option value={'onlyme'}>Only me</option>
+                                                        </Field>
+                                                    </div>
+                                                    <div>
+                                                        <label>Content</label>
+                                                        <Field as={'textarea'} type="text" name={'content'} />
+                                                    </div>
+                                                    <div>
+                                                        <label>Image</label>
+                                                        <Field type="text"  name={'image'}/>
+                                                    </div>
+                                                    <div>
+                                                        <button className="main-btn" type="submit" >Edit
+                                                        </button>
+                                                    </div>
+                                                </Form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
             </Formik>
         </>
     )
