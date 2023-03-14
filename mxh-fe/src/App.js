@@ -9,6 +9,7 @@ import AddPost from "./pages/AddPost";
 import PersonalPage from "./pages/PersonalPage";
 import EditPost from "./pages/EditPost";
 import Register from "./pages/Register";
+import Header from "./component/Header";
 
 function App() {
   return (

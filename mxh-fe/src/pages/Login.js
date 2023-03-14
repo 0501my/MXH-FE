@@ -14,9 +14,12 @@ const Login = () => {
     const handleSubmit = async (values) => {
         console.log(localStorage.getItem('status') === 'User is not exit')
         await dispatch(AccountsLogin(values));
-        if (localStorage.getItem('status') === 'User is not exit' || localStorage.getItem('status') === 'Password is wrong' || localStorage.getItem('status') == null || localStorage.getItem('status') === undefined) {
+        if (localStorage.getItem('status') === 'User is not exit'
+            || localStorage.getItem('status') === 'Password is wrong'
+            || localStorage.getItem('status') == null
+            || localStorage.getItem('status') === undefined) {
             alert('User or password incorrect')
-            navigate(('/accounts/login'))
+            navigate(('/'))
         } else {
             navigate('/home')
         }
@@ -102,7 +105,7 @@ const Login = () => {
                                                 <div className="we-form mt-6">
                                                     <input type="checkbox"/><label>remember me</label>
                                                     <button type="submit"
-                                                            className="we-form mt-6">Login
+                                                            className="we-form mt-6  btn-danger">Login
                                                     </button>
                                                 </div>
 
@@ -110,8 +113,11 @@ const Login = () => {
                                         </Formik>
                                         <Link className="with-smedia google" href="#" title="" data-ripple=""><i
                                             className="fa fa-google-plus"></i></Link>
-                                        <span>don't have an account? <Link className="we-account underline"
-                                                                        title="" to={"/registers"}>register now</Link></span>
+                                        <span className="col-12">don't have an account?
+                                            <Link className="we-account "
+                                                  title="" to={"/registers"}>
+                                                <h6 className="we-account"
+                                                    style={{color: "purple"}}>register now</h6></Link></span>
                                     </div>
                                 </div>
                             </div>

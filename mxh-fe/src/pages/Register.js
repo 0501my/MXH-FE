@@ -118,7 +118,7 @@ const Register = () => {
                                                 </Form>
                                                 <div className="we-form mt-6">
                                                     <button type="submit"
-                                                            className="we-form mt-6">Register
+                                                            className="we-form mt-6 btn-outline-danger">Register
                                                     </button>
                                                 </div>
 
@@ -126,6 +126,9 @@ const Register = () => {
                                         </Formik>
                                         <Link className="with-smedia google" href="#" title="" data-ripple=""><i
                                             className="fa fa-google-plus"></i></Link>
+                                        <span className="col-12">Do you already have an account???
+                                            <Link className="we-account" to={"/"}>
+                                            <h6 style={{color : "purple"}}>Login now</h6></Link></span>
                                     </div>
                                 </div>
                             </div>
