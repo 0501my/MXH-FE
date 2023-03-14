@@ -22,7 +22,6 @@ function App() {
             <Route path="posts/:id" element={<EditPost/>}/>
             <Route path={"personalPage"} element={<PersonalPage/>}/>
         </Route>
-
     </Routes>
   )
 }

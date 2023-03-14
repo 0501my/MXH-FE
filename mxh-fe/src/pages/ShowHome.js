@@ -22,8 +22,6 @@ const ShowHome = () => {
             })
         ))
     }
-
-
     return (
         <>
             <div className="theme-layout">
@@ -466,13 +464,27 @@ const ShowHome = () => {
                                                                             <div className="more-post-optns"><i
                                                                                 className="ti-more-alt"></i>
                                                                                 <ul>
-                                                                                    <li><i
-                                                                                        className="fa fa-pencil-square-o"></i>Edit
-                                                                                        Post
-                                                                                    </li>
-                                                                                    <li><i className="fa fa-trash-o"></i>Delete
-                                                                                        Post
-                                                                                    </li>
+                                                                                    <li><Link to={`posts/${it.idPost}`}><i className="fa fa-pencil-square-o"> &nbsp; Edit Post</i></Link></li>
+                                                                                    <li><i className="fa fa-trash-o" onClick={() => {
+                                                                                        swal({
+                                                                                            title: "Are you sure?",
+                                                                                            text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                                            icon: "warning",
+                                                                                            buttons: true,
+                                                                                            dangerMode: true,
+                                                                                        })
+                                                                                            .then((willDelete) => {
+                                                                                                if (willDelete) {
+                                                                                                    swal("Poof! Your imaginary file has been deleted!", {
+                                                                                                        icon: "success",
+                                                                                                    }).then(() => {
+                                                                                                        handleDelete(it.idPost)
+                                                                                                    });
+                                                                                                } else {
+                                                                                                    swal("Your imaginary file is safe!")
+                                                                                                }
+                                                                                            });
+                                                                                    }}>&nbsp; Delete Post</i></li>
                                                                                 </ul>
                                                                             </div>
                                                                         </div>
