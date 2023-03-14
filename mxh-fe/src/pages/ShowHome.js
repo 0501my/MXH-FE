@@ -234,7 +234,7 @@ const ShowHome = () => {
                 </div>
 
                 <section>
-                    <div className="gap2 gray-bg">
+                    <div className="gap2 gray-bg py-5 mt-4">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-12">
