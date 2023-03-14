@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getPosts} from "../services/PostService";
 import {Link} from "react-router-dom";
+import Header from "../component/Header";
 
 
 const ShowHome = () => {
@@ -19,6 +20,7 @@ const ShowHome = () => {
 
     return (
         <>
+
             <div>
                 Show Home
             </div>
@@ -33,6 +35,8 @@ const ShowHome = () => {
                 </>
             ))}
 
+            <>
+            </>
         </>
 
     )
