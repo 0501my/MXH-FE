@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {deletePost, getPosts} from "../services/PostService";
-import {Form, Link, useNavigate} from "react-router-dom";
+import {addPosts, deletePost, getPosts} from "../services/PostService";
+import { Link, useNavigate} from "react-router-dom";
 import swal from "sweetalert";
+import {Field, Form, Formik} from "formik";
 
 const ShowHome = () => {
     const navigate = useNavigate();
@@ -10,17 +11,19 @@ const ShowHome = () => {
         return state.posts.posts
     });
 
+    const account = useSelector(state =>{
+        return state.account.account
+    })
+
+
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getPosts())
-    })
+    },[])
+
     const handleDelete = async (id) => {
-        dispatch(deletePost(id)).then(() => (
-            dispatch(getPosts()).then(() => {
-                navigate('/home')
-            })
-        ))
+        dispatch(deletePost(id))
     }
     return (
         <>
@@ -384,67 +387,71 @@ const ShowHome = () => {
                                                     <figure>
                                                         <img src="images/resources/admin.jpg" alt=""/>
                                                     </figure>
+                                                    <Formik initialValues={{content:"",}} onSubmit={(values)=>{
+                                                        values.account = account.idAccount;
+                                                        dispatch(addPosts(values))
+                                                    }}>
+                                                        <Form>
                                                     <div className="newpst-input">
-                                                        <form method="post">
-                                                            <textarea rows="2"
-                                                                      placeholder="Share some what you are thinking?"></textarea>
-                                                        </form>
+                                                        <Field as={'textarea'} name={'content'} rows="2" placeholder="Share some what you are thinking?"/>
                                                     </div>
                                                     <div className="attachments">
-                                                        <ul>
-                                                            <li>
-													<span className="add-loc">
-														<i className="fa fa-map-marker"></i>
-													</span>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fa fa-music"></i>
-                                                                <label className="fileContainer">
-                                                                    <input type="file"/>
-                                                                </label>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fa fa-image"></i>
-                                                                <label className="fileContainer">
-                                                                    <input type="file"/>
-                                                                </label>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fa fa-video-camera"></i>
-                                                                <label className="fileContainer">
-                                                                    <input type="file"/>
-                                                                </label>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fa fa-camera"></i>
-                                                                <label className="fileContainer">
-                                                                    <input type="file"/>
-                                                                </label>
-                                                            </li>
-                                                            <li className="preview-btn">
-                                                                <button className="post-btn-preview" type="submit"
-                                                                        data-ripple="">Preview
-                                                                </button>
-                                                            </li>
-                                                        </ul>
+                                                        {/*<ul>*/}
+                                                    {/*        <li>*/}
+													{/*<span className="add-loc">*/}
+													{/*	<i className="fa fa-map-marker"></i>*/}
+													{/*</span>*/}
+                                                    {/*        </li>*/}
+                                                    {/*        <li>*/}
+                                                    {/*            <i className="fa fa-music"></i>*/}
+                                                    {/*            <label className="fileContainer">*/}
+                                                    {/*                <input type="file"/>*/}
+                                                    {/*            </label>*/}
+                                                    {/*        </li>*/}
+                                                    {/*        <li>*/}
+                                                    {/*            <i className="fa fa-image"></i>*/}
+                                                    {/*            <label className="fileContainer">*/}
+                                                    {/*                <input type="file"/>*/}
+                                                    {/*            </label>*/}
+                                                    {/*        </li>*/}
+                                                    {/*        <li>*/}
+                                                    {/*            <i className="fa fa-video-camera"></i>*/}
+                                                    {/*            <label className="fileContainer">*/}
+                                                    {/*                <input type="file"/>*/}
+                                                    {/*            </label>*/}
+                                                    {/*        </li>*/}
+                                                    {/*        <li>*/}
+                                                    {/*            <i className="fa fa-camera"></i>*/}
+                                                    {/*            <label className="fileContainer">*/}
+                                                    {/*                <input type="file"/>*/}
+                                                    {/*            </label>*/}
+                                                    {/*        </li>*/}
+                                                    {/*        <li className="preview-btn">*/}
+                                                    {/*            <button className="post-btn-preview" type="submit"*/}
+                                                    {/*                    data-ripple="">Preview*/}
+                                                    {/*            </button>*/}
+                                                    {/*        </li>*/}
+                                                    {/*    </ul>*/}
                                                         <button className="post-btn" type="submit" data-ripple="">Post
                                                         </button>
                                                     </div>
-                                                    <div className="add-location-post">
-                                                        <span>Drag map point to selected area</span>
-                                                        <div className="row">
-                                                            <div className="col-lg-6">
-                                                                <label className="control-label">Lat :</label>
-                                                                <input type="text" className="" id="us3-lat"/>
-                                                            </div>
-                                                            <div className="col-lg-6">
-                                                                <label>Long :</label>
-                                                                <input type="text" className="" id="us3-lon"/>
-                                                            </div>
-                                                        </div>
-                                                        {/*map*/}
-                                                        <div id="us3"></div>
-                                                    </div>
+                                                    {/*<div className="add-location-post">*/}
+                                                    {/*    <span>Drag map point to selected area</span>*/}
+                                                    {/*    <div className="row">*/}
+                                                    {/*        <div className="col-lg-6">*/}
+                                                    {/*            <label className="control-label">Lat :</label>*/}
+                                                    {/*            <input type="text" className="" id="us3-lat"/>*/}
+                                                    {/*        </div>*/}
+                                                    {/*        <div className="col-lg-6">*/}
+                                                    {/*            <label>Long :</label>*/}
+                                                    {/*            <input type="text" className="" id="us3-lon"/>*/}
+                                                    {/*        </div>*/}
+                                                    {/*    </div>*/}
+                                                    {/*    /!*map*!/*/}
+                                                    {/*    <div id="us3"></div>*/}
+                                                    {/*</div>*/}
+                                                    </Form>
+                                                </Formik>
                                                 </div>
                                             </div>
                                             {/*add post new box*/}
@@ -475,10 +482,11 @@ const ShowHome = () => {
                                                                                         })
                                                                                             .then((willDelete) => {
                                                                                                 if (willDelete) {
-                                                                                                    swal("Poof! Your imaginary file has been deleted!", {
-                                                                                                        icon: "success",
-                                                                                                    }).then(() => {
-                                                                                                        handleDelete(it.idPost)
+                                                                                                    handleDelete(it.idPost)
+                                                                                                    .then(() => {
+                                                                                                        swal("Poof! Your imaginary file has been deleted!", {
+                                                                                                            icon: "success",
+                                                                                                        })
                                                                                                     });
                                                                                                 } else {
                                                                                                     swal("Your imaginary file is safe!")
