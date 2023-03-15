@@ -1,16 +1,37 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Field, Form, Formik} from "formik";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {AccountsLogin} from "../services/AccountService";
+import {AccountsLogin, AccountsLoginGG, AccountsRegister} from "../services/AccountService";
+import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 
 const Login = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const initialValuesAdd = {
         username: "",
         password: "",
     };
+    let [userGG, setUserGG] = useState({})
+    const checkUSer = useSelector(state => {
+        return state.account.checkUser;
+    })
+
+    async function check() {
+        if (checkUSer === false) {
+            console.log(userGG)
+            await dispatch(AccountsRegister(userGG))
+            await dispatch(AccountsLogin(userGG))
+            navigate('/home')
+        }
+        if (checkUSer === true) {
+            dispatch(AccountsLogin(userGG))
+            navigate('/home')
+        }
+    }
+
+    check()
     const handleSubmit = async (values) => {
         console.log(localStorage.getItem('status') === 'User is not exit')
         await dispatch(AccountsLogin(values));
@@ -91,6 +112,7 @@ const Login = () => {
                                             <i className="fa fa-key"></i>login
                                             <span>sign in now and meet the awesome Friends around the world.</span>
                                         </div>
+                                        <div className="row">
                                         <Formik className="we-form" initialValues={initialValuesAdd}
                                                 onSubmit={handleSubmit}>
                                             <Form>
@@ -108,17 +130,36 @@ const Login = () => {
                                                             className="we-form mt-6  btn-danger">Login
                                                     </button>
                                                 </div>
-
                                             </Form>
                                         </Formik>
-                                        <Link className="with-smedia google" href="#" title="" data-ripple=""><i
-                                            className="fa fa-google-plus"></i></Link>
+                                    </div>
+                                        <div className="row">
+                                            <div className="">
+                                                <GoogleOAuthProvider
+                                                    clientId="1004137847361-3p3lh814vts1f6ts9e2al867rjrjp9gc.apps.googleusercontent.com">
+                                                    <GoogleLogin
+                                                        onSuccess={async credentialResponse => {
+                                                            const decoded = jwt_decode(credentialResponse.credential);
+                                                            let user = {username: decoded.email, password: decoded.sub};
+                                                            await setUserGG(user)
+                                                            await dispatch(AccountsLoginGG(user))
+                                                        }}
+                                                        onError={() => {
+                                                            console.log('Login Failed');
+                                                        }}
+                                                    />
+                                                </GoogleOAuthProvider>
+                                            </div>
+
+                                        </div>
+
                                         <span className="col-12">don't have an account?
                                             <Link className="we-account "
                                                   title="" to={"/registers"}>
                                                 <h6 className="we-account"
                                                     style={{color: "purple"}}>register now</h6></Link></span>
                                     </div>
+
                                 </div>
                             </div>
                         </div>

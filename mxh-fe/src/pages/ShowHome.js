@@ -18,7 +18,6 @@ const ShowHome = () => {
         return state.account.account
     })
 
-    console.log(account,333)
     const dispatch = useDispatch();
 
     useEffect(() => {

@@ -14,6 +14,12 @@ export const AccountsLogin = createAsyncThunk (
         return await axios.post('http://localhost:4000/accounts/login', data);
     }
 )
+export const AccountsLoginGG = createAsyncThunk (
+    'accounts/accountsLoginGG',
+    async (data) => {
+        return await axios.post('http://localhost:4000/accounts/loginGG', data);
+    }
+)
 export const AccountsLogout = createAsyncThunk (
     'accounts/accountsLogout',
     async () => {

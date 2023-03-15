@@ -5,12 +5,13 @@ import {
     AccountsEdit,
     AccountsLogin,
     AccountsLogout,
-    AccountsRegister
+    AccountsRegister, AccountsLoginGG
 } from "../../services/AccountService";
 
 const initialState = {
     account: [],
     accountShow: localStorage.getItem('accountShow'),
+    checkUser: null
 }
 const accountSlice = createSlice({
     name: 'account',
@@ -46,6 +47,9 @@ const accountSlice = createSlice({
             state.userShow = true
             localStorage.setItem('accountShow', state.accountShow)
             localStorage.clear()
+        })
+        builder.addCase(AccountsLoginGG.fulfilled, (state, {payload}) => {
+            state.checkUser = payload.data
         })
     }
 })
