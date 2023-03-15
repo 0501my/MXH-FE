@@ -38,7 +38,7 @@ export const AccountsEdit = createAsyncThunk (
 export const changePassword = createAsyncThunk(
     'accounts/changePassword',
     async (data)=>{
-        const response = await axios.post(`http://localhost:4000/accounts/changePassword/`+data[1],data[0]);
+        const response = await axios.post(`http://localhost:4000/accounts/changePassword/`+data.id,data);
         return response.data
     }
 )

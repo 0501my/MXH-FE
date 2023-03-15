@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {Link} from "react-router-dom";
 
 const Header = () => {
     return (
@@ -11,7 +12,7 @@ const Header = () => {
 				<a className="" href="#menu"><i className="fa fa-align-justify"></i></a>
 			</span>
                     <span className="mh-text">
-				<a href="newsfeed.html" title=""><img src="images/logo2.png" alt=""/></a>
+				<a href="newsfeed.html" title=""><img src="/images/logo2.png" alt=""/></a>
 			</span>
                     <span className="mh-btns-right">
 				<a className="fa fa-sliders" href="#shoppingbag"></a>
@@ -217,7 +218,7 @@ const Header = () => {
 
             <div className="topbar stick" style={{position : "fixed" , width : "100%"}}>
                 <div className="logo">
-                    <a title="" href="newsfeed.html"><img src="images/logo.png" alt=""/></a>
+                    <a title="" href="/home"><img src="/images/logo.png" alt=""/></a>
                 </div>
                 <div className="top-area">
                     <div className="main-menu">
@@ -458,7 +459,7 @@ const Header = () => {
                     </ul>
                     <div className="user-img">
                         <h5>Jack Carter</h5>
-                        <img src="images/resources/admin.jpg" alt=""/>
+                        <Link to="/home/MyAbout"><img src="/images/resources/admin.jpg" alt=""/></Link>
                         <span className="status f-online"></span>
                         <div className="user-setting">
                             <span className="seting-title">Chat setting <a href="#" title="">see all</a></span>
