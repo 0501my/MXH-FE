@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import ShowHome from "./pages/ShowHome";
 import Register from "./pages/Register";
 import MyAbout from "./pages/MyAbout";
+import MyTimeLine from "./pages/MyTimeLine";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/home" element={<Home/>}>
             <Route path={""} element={<ShowHome/>}/>
             <Route path={"MyAbout"} element={<MyAbout/>}/>
+            <Route path={"MyTimeLine/:idAccount"} element={<MyTimeLine/>}/>
         </Route>
     </Routes>
   )

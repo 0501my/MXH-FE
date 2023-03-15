@@ -4,6 +4,7 @@ import {editPost} from "../services/PostService";
 import {AccountsEdit, changePassword} from "../services/AccountService";
 import {useDispatch, useSelector} from "react-redux";
 import * as Yup from "yup";
+import {Link} from "react-router-dom";
 
 const MyAbout = ()=> {
     const [check, setCheck] = useState(false)
@@ -103,7 +104,7 @@ const MyAbout = ()=> {
                                                 <div className="col-lg-10 col-md-9">
                                                     <ul className="profile-menu">
                                                         <li>
-                                                            <a className="" href="timeline.html">Timeline</a>
+                                                            <Link className="" to={`/home/MyTimeLine/${account.idAccount}`}>Timeline</Link>
                                                         </li>
                                                         <li>
                                                             <a className="active" href="about.html">About</a>
