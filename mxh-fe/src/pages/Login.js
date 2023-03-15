@@ -152,22 +152,24 @@ const Login = () => {
                                                 </Form>
                                             </Formik>
                                         </div>
-                                        <div className="row">
-                                            <div className="">
-                                                <GoogleOAuthProvider
-                                                    clientId="1004137847361-3p3lh814vts1f6ts9e2al867rjrjp9gc.apps.googleusercontent.com">
-                                                    <GoogleLogin
-                                                        onSuccess={async credentialResponse => {
-                                                            const decoded = jwt_decode(credentialResponse.credential);
-                                                            let user = {username: decoded.email, password: decoded.sub};
-                                                            await setUserGG(user)
-                                                            await dispatch(AccountsLoginGG(user))
-                                                        }}
-                                                        onError={() => {
-                                                            console.log('Login Failed');
-                                                        }}
-                                                    />
-                                                </GoogleOAuthProvider>
+                                        <div className="row" >
+                                            <div>
+                                                    <GoogleOAuthProvider
+                                                        clientId="1004137847361-3p3lh814vts1f6ts9e2al867rjrjp9gc.apps.googleusercontent.com">
+                                                        <GoogleLogin
+                                                            onSuccess={async credentialResponse => {
+                                                                const decoded = jwt_decode(credentialResponse.credential);
+                                                                let user = {username: decoded.email, password: decoded.sub};
+                                                                await setUserGG(user)
+                                                                await dispatch(AccountsLoginGG(user))
+                                                            }}
+                                                            onError={() => {
+                                                                console.log('Login Failed');
+                                                            }}
+
+                                                        />
+                                                    </GoogleOAuthProvider>
+
                                             </div>
 
                                         </div>

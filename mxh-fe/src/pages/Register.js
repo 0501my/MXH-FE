@@ -19,7 +19,9 @@ const Register = () => {
         password: Yup.string()
             .required("Vui lòng nhập mật khẩu")
             .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
-            .max(32, "Mật khẩu chỉ có nhiều nhất 14 ký tự")
+            .max(32, "Mật khẩu chỉ có nhiều nhất 14 ký tự"),
+        passwordAgain : Yup.string()
+            .required("Vui lòng nhập mật khẩu confirm")
     });
     const handleSubmit = async (values) => {
         if (values.password !== values.passwordAgain) {
@@ -124,7 +126,9 @@ const Register = () => {
                                                 <Form className="we-form mt-6">
                                                     <Field type="password" placeholder="passwordAgain"
                                                            name="passwordAgain"/>
-
+                                                    <alert>
+                                                        <ErrorMessage name={"passwordAgain"}></ErrorMessage>
+                                                    </alert>
                                                 </Form>
                                                 <div className="we-form mt-6">
                                                     <button type="submit"
