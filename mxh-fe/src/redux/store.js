@@ -2,12 +2,14 @@ import {configureStore} from "@reduxjs/toolkit";
 
 import accountSlice from "./slice/AccountSlice";
 import postReducer from "./slice/PostSlice";
+import currentPostReducer from "./slice/PostSlice";
 
 
 const Store = configureStore({
     reducer: {
         account: accountSlice,
-        posts : postReducer
+        posts : postReducer,
+        currentPost : currentPostReducer
     },
 
     middleware: getDefaultMiddleware =>

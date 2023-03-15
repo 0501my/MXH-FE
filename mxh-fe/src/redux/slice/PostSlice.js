@@ -4,7 +4,7 @@ import {addPosts, deletePost, editPost, findByIdPost, getPosts} from "../../serv
 
 const initialState = {
     posts: [],
-    post : {}
+    currentPost : {}
 }
 const postSlice = createSlice({
         name: 'posts',
@@ -18,10 +18,10 @@ const postSlice = createSlice({
                 state.posts = action.payload
             });
             builder.addCase(editPost.fulfilled,(state , {payload})=>{
-                state.posts = payload.data;
+                state.posts = payload;
             })
             builder.addCase(findByIdPost.fulfilled,(state, action)=>{
-                state.post = action.payload;
+                state.currentPost = action.payload;
             });
             builder.addCase(deletePost.fulfilled, (state, action) => {
                 state.posts = action.payload;

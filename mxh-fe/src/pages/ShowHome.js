@@ -1,26 +1,46 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {deletePost, getPosts} from "../services/PostService";
-import {Form, Link, useNavigate} from "react-router-dom";
+import {deletePost, editPost, findByIdPost, getPosts} from "../services/PostService";
+import {Link, useNavigate} from "react-router-dom";
 import swal from "sweetalert";
+import {Form,Field, Formik} from "formik";
 
 const ShowHome = () => {
     const navigate = useNavigate();
     const posts = useSelector(state => {
+        console.log(state,222)
         return state.posts.posts
     });
+    const currentPost = useSelector(state => {
+        return state.currentPost.currentPost
+    })
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getPosts())
-    })
+    },[])
     const handleDelete = async (id) => {
         dispatch(deletePost(id)).then(() => (
             dispatch(getPosts()).then(() => {
                 navigate('/home')
             })
         ))
+    }
+    const handleEditPost = (values) => {
+        let data = {...values}
+        dispatch(editPost(data)).then(() => {
+            navigate('/home')
+            setCheck(false)
+        })
+    }
+
+
+    const [check, setCheck] = useState(false)
+    const checkId = async (id) => {
+        dispatch(findByIdPost(id)).then(() => {
+        })
+
     }
     return (
         <>
@@ -464,33 +484,46 @@ const ShowHome = () => {
                                                                             <div className="more-post-optns"><i
                                                                                 className="ti-more-alt"></i>
                                                                                 <ul>
-                                                                                    <li><Link to={`posts/${it.idPost}`}><i className="fa fa-pencil-square-o"> &nbsp; Edit Post</i></Link></li>
-                                                                                    <li><i className="fa fa-trash-o" onClick={() => {
-                                                                                        swal({
-                                                                                            title: "Are you sure?",
-                                                                                            text: "Once deleted, you will not be able to recover this imaginary file!",
-                                                                                            icon: "warning",
-                                                                                            buttons: true,
-                                                                                            dangerMode: true,
-                                                                                        })
-                                                                                            .then((willDelete) => {
-                                                                                                if (willDelete) {
-                                                                                                    swal("Poof! Your imaginary file has been deleted!", {
-                                                                                                        icon: "success",
-                                                                                                    }).then(() => {
-                                                                                                        handleDelete(it.idPost)
-                                                                                                    });
-                                                                                                } else {
-                                                                                                    swal("Your imaginary file is safe!")
-                                                                                                }
-                                                                                            });
-                                                                                    }}>&nbsp; Delete Post</i></li>
+                                                                                    <li><i
+                                                                                        className="fa fa-pencil-square-o"
+                                                                                        onClick={() => {
+                                                                                            setCheck(true)
+                                                                                            checkId(it.idPost)
+                                                                                        }}
+                                                                                    >Edit Post</i>
+                                                                                    </li>
+                                                                                    <li><i className="fa fa-trash-o"
+                                                                                           onClick={() => {
+                                                                                               swal({
+                                                                                                   title: "Are you sure?",
+                                                                                                   text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                                                   icon: "warning",
+                                                                                                   buttons: true,
+                                                                                                   dangerMode: true,
+                                                                                               })
+                                                                                                   .then((willDelete) => {
+                                                                                                       if (willDelete) {
+                                                                                                           swal("Poof! Your imaginary file has been deleted!", {
+                                                                                                               icon: "success",
+                                                                                                           }).then(() => {
+                                                                                                               handleDelete(it.idPost)
+                                                                                                           });
+                                                                                                       } else {
+                                                                                                           swal("Your imaginary file is safe!")
+                                                                                                       }
+                                                                                                   });
+                                                                                           }}>&nbsp; Delete Post</i>
+                                                                                    </li>
                                                                                 </ul>
                                                                             </div>
                                                                         </div>
-                                                                        <ins><a href={`/Home/personalPage/${it.account.idAccount}`} title="">{it.account.username}</a> Post Album
+                                                                        <ins><a
+                                                                            href={`/Home/personalPage/${it.account.idAccount}`}
+                                                                            title="">{it.account.username}</a> Post
+                                                                            Album
                                                                         </ins>
-                                                                        <span><i className="fa fa-globe"></i> published: {it.time} </span>
+                                                                        <span><i
+                                                                            className="fa fa-globe"></i> published: {it.time} </span>
                                                                     </div>
 
 
@@ -515,13 +548,16 @@ const ShowHome = () => {
                                                                             <ul className="like-dislike">
                                                                                 <li><a className="bg-purple" href="#"
                                                                                        title="Save to Pin Post"><i
-                                                                                    className="fa fa-thumb-tack"></i></a></li>
+                                                                                    className="fa fa-thumb-tack"></i></a>
+                                                                                </li>
                                                                                 <li><a className="bg-blue" href="#"
                                                                                        title="Like Post"><i
-                                                                                    className="ti-thumb-up"></i></a></li>
+                                                                                    className="ti-thumb-up"></i></a>
+                                                                                </li>
                                                                                 <li><a className="bg-red" href="#"
                                                                                        title="dislike Post"><i
-                                                                                    className="ti-thumb-down"></i></a></li>
+                                                                                    className="ti-thumb-down"></i></a>
+                                                                                </li>
                                                                             </ul>
                                                                         </figure>
                                                                         <div className="we-video-info">
@@ -566,19 +602,24 @@ const ShowHome = () => {
                                                                     </div>
 
 
-                                                                    <div className="coment-area" >
+                                                                    <div className="coment-area">
                                                                         <ul className="we-comet">
                                                                             <li>
                                                                                 <div className="comet-avatar">
-                                                                                    <img src="images/resources/nearly3.jpg"
-                                                                                         alt=""/>
+                                                                                    <img
+                                                                                        src="images/resources/nearly3.jpg"
+                                                                                        alt=""/>
                                                                                 </div>
                                                                                 <div className="we-comment">
-                                                                                    <h5><a href="time-line.html" title="">Jason
+                                                                                    <h5><a href="time-line.html"
+                                                                                           title="">Jason
                                                                                         borne</a></h5>
-                                                                                    <p>we are working for the dance and sing
-                                                                                        songs. this video is very awesome for
-                                                                                        the youngster. please vote this video
+                                                                                    <p>we are working for the dance and
+                                                                                        sing
+                                                                                        songs. this video is very
+                                                                                        awesome for
+                                                                                        the youngster. please vote this
+                                                                                        video
                                                                                         and like our channel</p>
                                                                                     <div className="inline-itms">
                                                                                         <span>1 year ago</span>
@@ -593,14 +634,17 @@ const ShowHome = () => {
                                                                             </li>
                                                                             <li>
                                                                                 <div className="comet-avatar">
-                                                                                    <img src="images/resources/comet-4.jpg"
-                                                                                         alt=""/>
+                                                                                    <img
+                                                                                        src="images/resources/comet-4.jpg"
+                                                                                        alt=""/>
                                                                                 </div>
                                                                                 <div className="we-comment">
                                                                                     <h5><a href="time-line.html"
                                                                                            title="">Sophia</a></h5>
-                                                                                    <p>we are working for the dance and sing
-                                                                                        songs. this video is very awesome for
+                                                                                    <p>we are working for the dance and
+                                                                                        sing
+                                                                                        songs. this video is very
+                                                                                        awesome for
                                                                                         the youngster.
                                                                                         <i className="em em-smiley"></i>
                                                                                     </p>
@@ -621,15 +665,17 @@ const ShowHome = () => {
                                                                             </li>
                                                                             <li className="post-comment">
                                                                                 <div className="comet-avatar">
-                                                                                    <img src="images/resources/nearly1.jpg"
-                                                                                         alt=""/>
+                                                                                    <img
+                                                                                        src="images/resources/nearly1.jpg"
+                                                                                        alt=""/>
                                                                                 </div>
                                                                                 <div className="post-comt-box">
                                                                                     <form method="post">
                                                                                 <textarea
                                                                                     placeholder="Post your comment"></textarea>
                                                                                         <div className="add-smiles">
-                                                                                            <div className="uploadimage">
+                                                                                            <div
+                                                                                                className="uploadimage">
                                                                                                 <i className="fa fa-image"></i>
                                                                                                 <label
                                                                                                     className="fileContainer">
@@ -639,7 +685,8 @@ const ShowHome = () => {
                                                                                             <span
                                                                                                 className="em em-expressionless"
                                                                                                 title="add icon"></span>
-                                                                                            <div className="smiles-bunch">
+                                                                                            <div
+                                                                                                className="smiles-bunch">
                                                                                                 <i className="em em---1"></i>
                                                                                                 <i className="em em-smiley"></i>
                                                                                                 <i className="em em-anguished"></i>
@@ -824,7 +871,8 @@ const ShowHome = () => {
                                                         All</a></h4>
                                                     <ul className="recent-links">
                                                         <li>
-                                                            <figure><img src="images/resources/recentlink-1.jpg" alt=""/>
+                                                            <figure><img src="images/resources/recentlink-1.jpg"
+                                                                         alt=""/>
                                                             </figure>
                                                             <div className="re-links-meta">
                                                                 <h6><a href="#" title="">moira's fade reaches much
@@ -833,7 +881,8 @@ const ShowHome = () => {
                                                             </div>
                                                         </li>
                                                         <li>
-                                                            <figure><img src="images/resources/recentlink-2.jpg" alt=""/>
+                                                            <figure><img src="images/resources/recentlink-2.jpg"
+                                                                         alt=""/>
                                                             </figure>
                                                             <div className="re-links-meta">
                                                                 <h6><a href="#" title="">daniel asks if we want him to
@@ -842,7 +891,8 @@ const ShowHome = () => {
                                                             </div>
                                                         </li>
                                                         <li>
-                                                            <figure><img src="images/resources/recentlink-3.jpg" alt=""/>
+                                                            <figure><img src="images/resources/recentlink-3.jpg"
+                                                                         alt=""/>
                                                             </figure>
                                                             <div className="re-links-meta">
                                                                 <h6><a href="#" title="">the pitnik overwatch
@@ -865,6 +915,65 @@ const ShowHome = () => {
                     </div>
                 </section>
             </div>
+            {
+                check ? <>
+                    <Formik initialValues={currentPost}
+                            onSubmit={(values) => {
+                                handleEditPost(values)
+                            }
+                            }
+                            enableReinitialize={true}>
+
+                        <div className="popup-wraper active">
+                            <div className="popup">
+                                <span className="popup-closed" onClick={() => {
+                                    setCheck(false)
+                                }}><i className="ti-close"></i></span>
+                                <div className="popup-meta">
+                                    <div className="popup-head">
+                                        <h5>Edit Post</h5>
+                                    </div>
+                                    <div className="forum-form">
+                                        <div className="postbox">
+                                            <div className="new-postbox">
+                                                <Form>
+                                                <div className="newpst-input">
+                                                        <div>
+                                                        <label>Content</label>
+                                                        <Field as={'textarea'} type="text" name={'content'}/>
+                                                        </div>
+                                                        <div className="select-options">
+                                                    <hr/>
+                                                    <Field as={'select'} className="select" name={'status'}>
+                                                        <option value={'public'}>Public</option>
+                                                        <option value={'friendonly'}>Friend only</option>
+                                                        <option value={'onlyme'}>Only me</option>
+                                                    </Field>
+                                                </div>
+                                                  <div className="attachments">
+                                                        <li>
+                                                            <i className="fa fa-camera"></i>
+                                                            <label className="fileContainer">
+                                                                <input type="file"/>
+                                                            </label>
+                                                        </li>
+                                                  </div>
+                                                    <button className="post-btn" type="submit" data-ripple="">Edit
+                                                    </button>
+                                                </div>
+                                                </Form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </Formik>
+                </> : <>
+
+                </>
+            }
 
         </>
 
