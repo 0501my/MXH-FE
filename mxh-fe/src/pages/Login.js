@@ -23,11 +23,11 @@ const Login = () => {
             console.log(userGG)
             await dispatch(AccountsRegister(userGG))
             await dispatch(AccountsLogin(userGG))
-            navigate('/home')
+             navigate('/home')
         }
         if (checkUSer === true) {
-            dispatch(AccountsLogin(userGG))
-            navigate('/home')
+            await dispatch(AccountsLogin(userGG))
+             navigate('/home')
         }
     }
 
