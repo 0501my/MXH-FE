@@ -20,7 +20,7 @@ const Header = () => {
                 </nav>
             </div>
 
-            <div className="topbar stick" style={{position : "fixed" , width : "100%"}}>
+            <div className="topbar stick" style={{position: "fixed", width: "100%"}}>
                 <div className="logo">
                     <a title="" href="newsfeed.html"><img src="images/logo3.png" alt=""/></a>
                 </div>
@@ -47,29 +47,29 @@ const Header = () => {
                                 <i className="fa fa-user"></i><em className="bg-red">5</em>
                             </a>
 
-                                        <div className="dropdowns ps-container ps-theme-default ps-active-y active"
-                                             data-ps-id="58dd6af9-103b-546e-3b06-b3019d40412f">
-                                            <span>5 New Requests <a href="#" title="">View all Requests</a></span>
-                                            <ul className="drops-menu">
-                                                <li>
-                                                    <div>
-                                                        <figure>
-                                                            <img src="images/resources/thumb-2.jpg" alt=""></img>
-                                                        </figure>
+                            <div className="dropdowns ps-container ps-theme-default ps-active-y active"
+                                 data-ps-id="58dd6af9-103b-546e-3b06-b3019d40412f">
+                                <span>5 New Requests <a href="#" title="">View all Requests</a></span>
+                                <ul className="drops-menu">
+                                    <li>
+                                        <div>
+                                            <figure>
+                                                <img src="images/resources/thumb-2.jpg" alt=""></img>
+                                            </figure>
 
-                                                        <div className="mesg-meta">
-                                                            <h6><a href="#" title="">Loren</a></h6>
-                                                            <span><b>Amy</b> is mutule friend</span>
-                                                            <i>yesterday</i>
-                                                        </div>
-                                                        <div className="add-del-friends">
-                                                            <a href="#" title=""><i className="fa fa-heart"></i></a>
-                                                            <a href="#" title=""><i className="fa fa-trash"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                            <div className="mesg-meta">
+                                                <h6><a href="#" title="">Loren</a></h6>
+                                                <span><b>Amy</b> is mutule friend</span>
+                                                <i>yesterday</i>
+                                            </div>
+                                            <div className="add-del-friends">
+                                                <a href="#" title=""><i className="fa fa-heart"></i></a>
+                                                <a href="#" title=""><i className="fa fa-trash"></i></a>
+                                            </div>
                                         </div>
+                                    </li>
+                                </ul>
+                            </div>
 
                         </li>
                         <li>

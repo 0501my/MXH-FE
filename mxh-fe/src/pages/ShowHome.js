@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {deletePost, editPost, findByIdPost, getPosts,addPosts} from "../services/PostService";
+import {deletePost, editPost, findByIdPost, getPosts, addPosts} from "../services/PostService";
 import {Link, useNavigate} from "react-router-dom";
 import swal from "sweetalert";
-import {Form,Field, Formik} from "formik";
+import {Form, Field, Formik} from "formik";
 
 const ShowHome = () => {
     const navigate = useNavigate();
@@ -14,7 +14,7 @@ const ShowHome = () => {
         return state.currentPost.currentPost
     })
 
-    const account = useSelector(state =>{
+    const account = useSelector(state => {
         return state.account.account
     })
 
@@ -22,7 +22,7 @@ const ShowHome = () => {
 
     useEffect(() => {
         dispatch(getPosts())
-    },[])
+    }, [])
     const handleDelete = async (id) => {
         dispatch(deletePost(id))
     }
@@ -53,9 +53,6 @@ const ShowHome = () => {
 				<a className="fa fa-sliders" href="#shoppingbag"></a>
 			</span>
                     </div>
-
-
-
                 </div>
 
                 <section>
@@ -133,7 +130,7 @@ const ShowHome = () => {
                                                         </li>
                                                         <li>
                                                             <i className="ti-power-off"></i>
-                                                            <a as={'button'}  onClick={()=>{
+                                                            <a as={'button'} onClick={() => {
                                                                 localStorage.clear();
                                                                 navigate('/')
 
@@ -208,72 +205,74 @@ const ShowHome = () => {
                                                     <figure>
                                                         <img src="images/resources/admin.jpg" alt=""/>
                                                     </figure>
-                                                    <Formik initialValues={{content:"",}} onSubmit={(values)=>{
+                                                    <Formik initialValues={{content: "",}} onSubmit={(values) => {
                                                         values.account = account.idAccount;
                                                         dispatch(addPosts(values))
                                                         document.getElementById('add-form').reset();
                                                     }}>
-                                                        <Form id = 'add-form'>
-                                                    <div className="newpst-input">
-                                                        <Field as={'textarea'} name={'content'} rows="2" placeholder="Share some what you are thinking?"/>
-                                                    </div>
-                                                    <div className="attachments">
-                                                        {/*<ul>*/}
-                                                    {/*        <li>*/}
-													{/*<span className="add-loc">*/}
-													{/*	<i className="fa fa-map-marker"></i>*/}
-													{/*</span>*/}
-                                                    {/*        </li>*/}
-                                                    {/*        <li>*/}
-                                                    {/*            <i className="fa fa-music"></i>*/}
-                                                    {/*            <label className="fileContainer">*/}
-                                                    {/*                <input type="file"/>*/}
-                                                    {/*            </label>*/}
-                                                    {/*        </li>*/}
-                                                    {/*        <li>*/}
-                                                    {/*            <i className="fa fa-image"></i>*/}
-                                                    {/*            <label className="fileContainer">*/}
-                                                    {/*                <input type="file"/>*/}
-                                                    {/*            </label>*/}
-                                                    {/*        </li>*/}
-                                                    {/*        <li>*/}
-                                                    {/*            <i className="fa fa-video-camera"></i>*/}
-                                                    {/*            <label className="fileContainer">*/}
-                                                    {/*                <input type="file"/>*/}
-                                                    {/*            </label>*/}
-                                                    {/*        </li>*/}
-                                                    {/*        <li>*/}
-                                                    {/*            <i className="fa fa-camera"></i>*/}
-                                                    {/*            <label className="fileContainer">*/}
-                                                    {/*                <input type="file"/>*/}
-                                                    {/*            </label>*/}
-                                                    {/*        </li>*/}
-                                                    {/*        <li className="preview-btn">*/}
-                                                    {/*            <button className="post-btn-preview" type="submit"*/}
-                                                    {/*                    data-ripple="">Preview*/}
-                                                    {/*            </button>*/}
-                                                    {/*        </li>*/}
-                                                    {/*    </ul>*/}
-                                                        <button className="post-btn" type="submit" data-ripple="">Post
-                                                        </button>
-                                                    </div>
-                                                    {/*<div className="add-location-post">*/}
-                                                    {/*    <span>Drag map point to selected area</span>*/}
-                                                    {/*    <div className="row">*/}
-                                                    {/*        <div className="col-lg-6">*/}
-                                                    {/*            <label className="control-label">Lat :</label>*/}
-                                                    {/*            <input type="text" className="" id="us3-lat"/>*/}
-                                                    {/*        </div>*/}
-                                                    {/*        <div className="col-lg-6">*/}
-                                                    {/*            <label>Long :</label>*/}
-                                                    {/*            <input type="text" className="" id="us3-lon"/>*/}
-                                                    {/*        </div>*/}
-                                                    {/*    </div>*/}
-                                                    {/*    /!*map*!/*/}
-                                                    {/*    <div id="us3"></div>*/}
-                                                    {/*</div>*/}
-                                                    </Form>
-                                                </Formik>
+                                                        <Form id='add-form'>
+                                                            <div className="newpst-input">
+                                                                <Field as={'textarea'} name={'content'} rows="2"
+                                                                       placeholder="Share some what you are thinking?"/>
+                                                            </div>
+                                                            <div className="attachments">
+                                                                {/*<ul>*/}
+                                                                {/*        <li>*/}
+                                                                {/*<span className="add-loc">*/}
+                                                                {/*	<i className="fa fa-map-marker"></i>*/}
+                                                                {/*</span>*/}
+                                                                {/*        </li>*/}
+                                                                {/*        <li>*/}
+                                                                {/*            <i className="fa fa-music"></i>*/}
+                                                                {/*            <label className="fileContainer">*/}
+                                                                {/*                <input type="file"/>*/}
+                                                                {/*            </label>*/}
+                                                                {/*        </li>*/}
+                                                                {/*        <li>*/}
+                                                                {/*            <i className="fa fa-image"></i>*/}
+                                                                {/*            <label className="fileContainer">*/}
+                                                                {/*                <input type="file"/>*/}
+                                                                {/*            </label>*/}
+                                                                {/*        </li>*/}
+                                                                {/*        <li>*/}
+                                                                {/*            <i className="fa fa-video-camera"></i>*/}
+                                                                {/*            <label className="fileContainer">*/}
+                                                                {/*                <input type="file"/>*/}
+                                                                {/*            </label>*/}
+                                                                {/*        </li>*/}
+                                                                {/*        <li>*/}
+                                                                {/*            <i className="fa fa-camera"></i>*/}
+                                                                {/*            <label className="fileContainer">*/}
+                                                                {/*                <input type="file"/>*/}
+                                                                {/*            </label>*/}
+                                                                {/*        </li>*/}
+                                                                {/*        <li className="preview-btn">*/}
+                                                                {/*            <button className="post-btn-preview" type="submit"*/}
+                                                                {/*                    data-ripple="">Preview*/}
+                                                                {/*            </button>*/}
+                                                                {/*        </li>*/}
+                                                                {/*    </ul>*/}
+                                                                <button className="post-btn" type="submit"
+                                                                        data-ripple="">Post
+                                                                </button>
+                                                            </div>
+                                                            {/*<div className="add-location-post">*/}
+                                                            {/*    <span>Drag map point to selected area</span>*/}
+                                                            {/*    <div className="row">*/}
+                                                            {/*        <div className="col-lg-6">*/}
+                                                            {/*            <label className="control-label">Lat :</label>*/}
+                                                            {/*            <input type="text" className="" id="us3-lat"/>*/}
+                                                            {/*        </div>*/}
+                                                            {/*        <div className="col-lg-6">*/}
+                                                            {/*            <label>Long :</label>*/}
+                                                            {/*            <input type="text" className="" id="us3-lon"/>*/}
+                                                            {/*        </div>*/}
+                                                            {/*    </div>*/}
+                                                            {/*    /!*map*!/*/}
+                                                            {/*    <div id="us3"></div>*/}
+                                                            {/*</div>*/}
+                                                        </Form>
+                                                    </Formik>
                                                 </div>
                                             </div>
                                             {/*add post new box*/}
@@ -292,40 +291,40 @@ const ShowHome = () => {
                                                                         <div className="more">
                                                                             {account.idAccount === it.account.idAccount &&
                                                                                 <div className="more-post-optns"><i
-                                                                                className="ti-more-alt"></i>
-                                                                                <ul>
-                                                                                    <li><i
-                                                                                        className="fa fa-pencil-square-o"
-                                                                                        onClick={() => {
-                                                                                            setCheck(true)
-                                                                                            checkId(it.idPost)
-                                                                                        }}
-                                                                                    >Edit Post</i>
-                                                                                    </li>
-                                                                                    <li><i className="fa fa-trash-o"
-                                                                                           onClick={() => {
-                                                                                               swal({
-                                                                                                   title: "Are you sure?",
-                                                                                                   text: "Once deleted, you will not be able to recover this imaginary file!",
-                                                                                                   icon: "warning",
-                                                                                                   buttons: true,
-                                                                                                   dangerMode: true,
-                                                                                               })
-                                                                                                   .then((willDelete) => {
-                                                                                                       if (willDelete) {
-                                                                                                           handleDelete(it.idPost).then(() => {
-                                                                                                               swal("Poof! Your imaginary file has been deleted!", {
-                                                                                                                   icon: "success",
-                                                                                                               })
-                                                                                                           });
-                                                                                                       } else {
-                                                                                                           swal("Your imaginary file is safe!")
-                                                                                                       }
-                                                                                                   });
-                                                                                           }}>&nbsp; Delete Post</i>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
+                                                                                    className="ti-more-alt"></i>
+                                                                                    <ul>
+                                                                                        <li><i
+                                                                                            className="fa fa-pencil-square-o"
+                                                                                            onClick={() => {
+                                                                                                setCheck(true)
+                                                                                                checkId(it.idPost)
+                                                                                            }}
+                                                                                        >Edit Post</i>
+                                                                                        </li>
+                                                                                        <li><i className="fa fa-trash-o"
+                                                                                               onClick={() => {
+                                                                                                   swal({
+                                                                                                       title: "Are you sure?",
+                                                                                                       text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                                                       icon: "warning",
+                                                                                                       buttons: true,
+                                                                                                       dangerMode: true,
+                                                                                                   })
+                                                                                                       .then((willDelete) => {
+                                                                                                           if (willDelete) {
+                                                                                                               handleDelete(it.idPost).then(() => {
+                                                                                                                   swal("Poof! Your imaginary file has been deleted!", {
+                                                                                                                       icon: "success",
+                                                                                                                   })
+                                                                                                               });
+                                                                                                           } else {
+                                                                                                               swal("Your imaginary file is safe!")
+                                                                                                           }
+                                                                                                       });
+                                                                                               }}>&nbsp; Delete Post</i>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
                                                                             }
 
                                                                         </div>
@@ -750,30 +749,30 @@ const ShowHome = () => {
                                         <div className="postbox">
                                             <div className="new-postbox">
                                                 <Form>
-                                                <div className="newpst-input">
+                                                    <div className="newpst-input">
                                                         <div>
-                                                        <label>Content</label>
-                                                        <Field as={'textarea'} type="text" name={'content'}/>
+                                                            <label>Content</label>
+                                                            <Field as={'textarea'} type="text" name={'content'}/>
                                                         </div>
                                                         <div className="select-options">
-                                                    <hr/>
-                                                    <Field as={'select'} className="select" name={'status'}>
-                                                        <option value={'public'}>Public</option>
-                                                        <option value={'friendonly'}>Friend only</option>
-                                                        <option value={'onlyme'}>Only me</option>
-                                                    </Field>
-                                                </div>
-                                                  <div className="attachments">
-                                                        <li>
-                                                            <i className="fa fa-camera"></i>
-                                                            <label className="fileContainer">
-                                                                <input type="file"/>
-                                                            </label>
-                                                        </li>
-                                                  </div>
-                                                    <button className="post-btn" type="submit" data-ripple="">Edit
-                                                    </button>
-                                                </div>
+                                                            <hr/>
+                                                            <Field as={'select'} className="select" name={'status'}>
+                                                                <option value={'public'}>Public</option>
+                                                                <option value={'friendonly'}>Friend only</option>
+                                                                <option value={'onlyme'}>Only me</option>
+                                                            </Field>
+                                                        </div>
+                                                        <div className="attachments">
+                                                            <li>
+                                                                <i className="fa fa-camera"></i>
+                                                                <label className="fileContainer">
+                                                                    <input type="file"/>
+                                                                </label>
+                                                            </li>
+                                                        </div>
+                                                        <button className="post-btn" type="submit" data-ripple="">Edit
+                                                        </button>
+                                                    </div>
                                                 </Form>
                                             </div>
                                         </div>
