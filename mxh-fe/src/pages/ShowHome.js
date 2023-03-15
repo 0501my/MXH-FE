@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {deletePost, editPost, findByIdPost, getPosts} from "../services/PostService";
+import {deletePost, editPost, findByIdPost, getPosts,addPosts} from "../services/PostService";
 import {Link, useNavigate} from "react-router-dom";
 import swal from "sweetalert";
 import {Form,Field, Formik} from "formik";
@@ -18,7 +18,7 @@ const ShowHome = () => {
         return state.account.account
     })
 
-
+    console.log(account,333)
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -407,8 +407,9 @@ const ShowHome = () => {
                                                     <Formik initialValues={{content:"",}} onSubmit={(values)=>{
                                                         values.account = account.idAccount;
                                                         dispatch(addPosts(values))
+                                                        document.getElementById('add-form').reset();
                                                     }}>
-                                                        <Form>
+                                                        <Form id = 'add-form'>
                                                     <div className="newpst-input">
                                                         <Field as={'textarea'} name={'content'} rows="2" placeholder="Share some what you are thinking?"/>
                                                     </div>
@@ -485,7 +486,8 @@ const ShowHome = () => {
                                                                     </figure>
                                                                     <div className="friend-name">
                                                                         <div className="more">
-                                                                            <div className="more-post-optns"><i
+                                                                            {account.idAccount === it.account.idAccount &&
+                                                                                <div className="more-post-optns"><i
                                                                                 className="ti-more-alt"></i>
                                                                                 <ul>
                                                                                     <li><i
@@ -507,10 +509,10 @@ const ShowHome = () => {
                                                                                                })
                                                                                                    .then((willDelete) => {
                                                                                                        if (willDelete) {
-                                                                                                           swal("Poof! Your imaginary file has been deleted!", {
-                                                                                                               icon: "success",
-                                                                                                           }).then(() => {
-                                                                                                               handleDelete(it.idPost)
+                                                                                                           handleDelete(it.idPost).then(() => {
+                                                                                                               swal("Poof! Your imaginary file has been deleted!", {
+                                                                                                                   icon: "success",
+                                                                                                               })
                                                                                                            });
                                                                                                        } else {
                                                                                                            swal("Your imaginary file is safe!")
@@ -520,6 +522,8 @@ const ShowHome = () => {
                                                                                     </li>
                                                                                 </ul>
                                                                             </div>
+                                                                            }
+
                                                                         </div>
                                                                         <ins><a
                                                                             href={`/Home/personalPage/${it.account.idAccount}`}
@@ -919,6 +923,7 @@ const ShowHome = () => {
                     </div>
                 </section>
             </div>
+
             {
                 check ? <>
                     <Formik initialValues={currentPost}
