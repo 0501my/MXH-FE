@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik, validateYupSchema} from "formik";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AccountsLogin, AccountsLoginGG, AccountsRegister} from "../services/AccountService";
 import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
+import * as Yup from "yup";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -42,9 +43,19 @@ const Login = () => {
             alert('User or password incorrect')
             navigate(('/'))
         } else {
+            alert("Đăng nhập thành công")
             navigate('/home')
         }
     };
+    const validationSchema = Yup.object().shape({
+        username: Yup.string().required("Vui lòng nhập tên đăng nhập")
+            .matches(/^[a-zA-Z0-9]/),
+        password: Yup.string()
+            .required("Vui lòng nhập mật khẩu")
+            .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
+            .max(32, "Mật khẩu chỉ có nhiều nhất 14 ký tự")
+    });
+
 
     return (
         <>
@@ -113,26 +124,34 @@ const Login = () => {
                                             <span>sign in now and meet the awesome Friends around the world.</span>
                                         </div>
                                         <div className="row">
-                                        <Formik className="we-form" initialValues={initialValuesAdd}
-                                                onSubmit={handleSubmit}>
-                                            <Form>
-                                                <Form className="we-form mt-6">
-                                                    <Field type="text" placeholder="UserName" name="username"/>
-                                                </Form>
+                                            <Formik className="we-form" initialValues={initialValuesAdd}
+                                                    validationSchema={validationSchema}
+                                                    onSubmit={handleSubmit}>
+                                                <Form>
+                                                    <Form className="we-form mt-6">
+                                                        <Field type="text" placeholder="UserName" name="username"/>
+                                                        <alert>
+                                                            <ErrorMessage name={"username"}/>
+                                                        </alert>
+                                                    </Form>
 
-                                                <Form className="we-form mt-6">
-                                                    <Field type="password" placeholder="Password" name="password"/>
+                                                    <Form className="we-form mt-6">
+                                                        <Field type="password" placeholder="Password" name="password"/>
+                                                        <alert>
+                                                            <ErrorMessage name={"password"}/>
+                                                        </alert>
 
+
+                                                    </Form>
+                                                    <div className="we-form mt-6">
+                                                        <input type="checkbox"/><label>remember me</label>
+                                                        <button type="submit"
+                                                                className="we-form mt-6  btn-danger">Login
+                                                        </button>
+                                                    </div>
                                                 </Form>
-                                                <div className="we-form mt-6">
-                                                    <input type="checkbox"/><label>remember me</label>
-                                                    <button type="submit"
-                                                            className="we-form mt-6  btn-danger">Login
-                                                    </button>
-                                                </div>
-                                            </Form>
-                                        </Formik>
-                                    </div>
+                                            </Formik>
+                                        </div>
                                         <div className="row">
                                             <div className="">
                                                 <GoogleOAuthProvider

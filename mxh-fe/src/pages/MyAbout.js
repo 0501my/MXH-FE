@@ -1,8 +1,9 @@
 import React, {useState} from "react";
-import {Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import {editPost} from "../services/PostService";
 import {AccountsEdit, changePassword} from "../services/AccountService";
 import {useDispatch, useSelector} from "react-redux";
+import * as Yup from "yup";
 
 const MyAbout = ()=> {
     const [check, setCheck] = useState(false)
@@ -12,6 +13,15 @@ const MyAbout = ()=> {
     })
 
     const dispatch = useDispatch()
+
+    const validationSchema = Yup.object().shape({
+        newPassword: Yup.string()
+            .required("Vui lòng nhập mật khẩu")
+            .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
+            .max(32, "Mật khẩu chỉ có nhiều nhất 14 ký tự"),
+        repeatPassword: Yup.string()
+            .required("Vui lòng nhập mật khẩu confirm")
+    });
 
 
 
@@ -425,16 +435,18 @@ const MyAbout = ()=> {
 
             {
                 check ? <>
-                    <Formik initialValues={
-                        {
-
-                        }
-                    }
+                    <Formik initialValues={{}}
+                            validationSchema={validationSchema}
                             onSubmit={(values) => {
-                                values.id = account.idAccount
-                                dispatch(changePassword(values)).then(()=>{
-                                    setCheck(false)
-                                })
+                                values.id = account.idAccount;
+                                if(values.repeatPassword === values.newPassword){
+                                    dispatch(changePassword(values)).then(()=>{
+                                        setCheck(false)
+                                    })
+                                }else {
+                                    alert(' can not')
+                                }
+
 
                             }
                             }
@@ -456,15 +468,22 @@ const MyAbout = ()=> {
                                                     <div className="newpst-input">
                                                         <div>
                                                             <label>oldPassword</label>
-                                                            <Field   type="text" name={'oldPassword'}/>
+                                                            <Field   type="password"  name={'oldPassword'}/>
+
                                                         </div>
                                                         <div>
                                                             <label>newPassword</label>
-                                                            <Field  type="text" name={'newPassword'}/>
+                                                            <Field  type="password" name={'newPassword'}/>
+                                                            <alert>
+                                                                <ErrorMessage name={"newPassword"}></ErrorMessage>
+                                                            </alert>
                                                         </div>
                                                         <div>
                                                             <label>repeatPassword</label>
-                                                            <Field  type="text" name={'repeatPassword'}/>
+                                                            <Field  type="password" name={'repeatPassword'}/>
+                                                            <alert>
+                                                                <ErrorMessage name={"repeatPassword"}></ErrorMessage>
+                                                            </alert>
                                                         </div>
                                                         <button className="post-btn" type="submit" data-ripple="">Edit
                                                         </button>

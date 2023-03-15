@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {deletePost, editPost, findByIdPost, getPosts,addPosts} from "../services/PostService";
+import {deletePost, editPost, findByIdPost, getPosts, addPosts} from "../services/PostService";
 import {Link, useNavigate} from "react-router-dom";
 import swal from "sweetalert";
-import {Form,Field, Formik} from "formik";
+import {Form, Field, Formik} from "formik";
 
 const ShowHome = () => {
     const navigate = useNavigate();
@@ -14,7 +14,7 @@ const ShowHome = () => {
         return state.currentPost.currentPost
     })
 
-    const account = useSelector(state =>{
+    const account = useSelector(state => {
         return state.account.account
     })
 
@@ -22,7 +22,7 @@ const ShowHome = () => {
 
     useEffect(() => {
         dispatch(getPosts())
-    },[])
+    }, [])
     const handleDelete = async (id) => {
         dispatch(deletePost(id))
     }
@@ -44,217 +44,15 @@ const ShowHome = () => {
     return (
         <>
             <div className="theme-layout">
-
-                <div className="postoverlay"></div>
-
                 <div className="responsive-header">
                     <div className="mh-head first Sticky">
 			<span className="mh-btns-left">
 				<a className="" href="#menu"><i className="fa fa-align-justify"></i></a>
 			</span>
-                        <span className="mh-text">
-				<a href="newsfeed.html" title=""><img src="images/logo2.png" alt=""/></a>
-			</span>
                         <span className="mh-btns-right">
 				<a className="fa fa-sliders" href="#shoppingbag"></a>
 			</span>
                     </div>
-                    <div className="mh-head second">
-                        <form className="mh-form">
-                            <input placeholder="search"/>
-                            <a href="#/" className="fa fa-search"></a>
-                        </form>
-                    </div>
-                    <nav id="menu" className="res-menu">
-                        <ul>
-                            <li><span>Home Pages</span>
-                                <ul>
-                                    <li><a href="index.html" title="">Pitnik Default</a></li>
-                                    <li><a href="company-landing.html" title="">Company Landing</a></li>
-                                    <li><a href="pitrest.html" title="">Pitrest</a></li>
-                                    <li><a href="redpit.html" title="">Redpit</a></li>
-                                    <li><a href="redpit-category.html" title="">Redpit Category</a></li>
-                                    <li><a href="soundnik.html" title="">Soundnik</a></li>
-                                    <li><a href="soundnik-detail.html" title="">Soundnik Single</a></li>
-                                    <li><a href="career.html" title="">Pitjob</a></li>
-                                    <li><a href="shop.html" title="">Shop</a></li>
-                                    <li><a href="classified.html" title="">Classified</a></li>
-                                    <li><a href="pitpoint.html" title="">PitPoint</a></li>
-                                    <li><a href="pittube.html" title="">Pittube</a></li>
-                                    <li><a href="chat-messenger.html" title="">Messenger</a></li>
-                                </ul>
-                            </li>
-                            <li><span>Pittube</span>
-                                <ul>
-                                    <li><a href="pittube.html" title="">Pittube</a></li>
-                                    <li><a href="pittube-detail.html" title="">Pittube single</a></li>
-                                    <li><a href="pittube-category.html" title="">Pittube Category</a></li>
-                                    <li><a href="pittube-channel.html" title="">Pittube Channel</a></li>
-                                    <li><a href="pittube-search-result.html" title="">Pittube Search Result</a></li>
-                                </ul>
-                            </li>
-                            <li><span>PitPoint</span>
-                                <ul>
-                                    <li><a href="pitpoint.html" title="">PitPoint</a></li>
-                                    <li><a href="pitpoint-detail.html" title="">Pitpoint Detail</a></li>
-                                    <li><a href="pitpoint-list.html" title="">Pitpoint List style</a></li>
-                                    <li><a href="pitpoint-without-baner.html" title="">Pitpoint without Banner</a></li>
-                                    <li><a href="pitpoint-search-result.html" title="">Pitpoint Search</a></li>
-                                </ul>
-                            </li>
-                            <li><span>Pitjob</span>
-                                <ul>
-                                    <li><a href="career.html" title="">Pitjob</a></li>
-                                    <li><a href="career-detail.html" title="">Pitjob Detail</a></li>
-                                    <li><a href="career-search-result.html" title="">Job seach page</a></li>
-                                    <li><a href="social-post-detail.html" title="">Social Post Detail</a></li>
-                                </ul>
-                            </li>
-                            <li><span>Timeline</span>
-                                <ul>
-                                    <li><a href="timeline.html" title="">Timeline</a></li>
-                                    <li><a href="timeline-photos.html" title="">Timeline Photos</a></li>
-                                    <li><a href="timeline-videos.html" title="">Timeline Videos</a></li>
-                                    <li><a href="timeline-groups.html" title="">Timeline Groups</a></li>
-                                    <li><a href="timeline-friends.html" title="">Timeline Friends</a></li>
-                                    <li><a href="timeline-friends2.html" title="">Timeline Friends-2</a></li>
-                                    <li><a href="about.html" title="">Timeline About</a></li>
-                                    <li><a href="blog-posts.html" title="">Timeline Blog</a></li>
-                                    <li><a href="friends-birthday.html" title="">Friends' Birthday</a></li>
-                                    <li><a href="newsfeed.html" title="">Newsfeed</a></li>
-                                    <li><a href="search-result.html" title="">Search Result</a></li>
-                                </ul>
-                            </li>
-                            <li><span>Favourit Page</span>
-                                <ul>
-                                    <li><a href="fav-page.html" title="">Favourit Page</a></li>
-                                    <li><a href="fav-favers.html" title="">Fav Page Likers</a></li>
-                                    <li><a href="fav-events.html" title="">Fav Events</a></li>
-                                    <li><a href="fav-event-invitations.html" title="">Fav Event Invitations</a></li>
-                                    <li><a href="event-calendar.html" title="">Event Calendar</a></li>
-                                    <li><a href="fav-page-create.html" title="">Create New Page</a></li>
-                                    <li><a href="price-plans.html" title="">Price Plan</a></li>
-                                </ul>
-                            </li>
-                            <li><span>Forum</span>
-                                <ul>
-                                    <li><a href="forum.html" title="">Forum</a></li>
-                                    <li><a href="forum-create-topic.html" title="">Forum Create Topic</a></li>
-                                    <li><a href="forum-open-topic.html" title="">Forum Open Topic</a></li>
-                                    <li><a href="forums-category.html" title="">Forum Category</a></li>
-                                </ul>
-                            </li>
-                            <li><span>Featured</span>
-                                <ul>
-                                    <li><a href="chat-messenger.html" title="">Messenger (Chatting)</a></li>
-                                    <li><a href="notifications.html" title="">Notifications</a></li>
-                                    <li><a href="badges.html" title="">Badges</a></li>
-                                    <li><a href="faq.html" title="">Faq's</a></li>
-                                    <li><a href="contribution.html" title="">Contriburion Page</a></li>
-                                    <li><a href="manage-page.html" title="">Manage Page</a></li>
-                                    <li><a href="weather-forecast.html" title="">weather-forecast</a></li>
-                                    <li><a href="statistics.html" title="">Statics/Analytics</a></li>
-                                    <li><a href="shop-cart.html" title="">Shop Cart</a></li>
-                                </ul>
-                            </li>
-                            <li><span>Account Setting</span>
-                                <ul>
-                                    <li><a href="setting.html" title="">Setting</a></li>
-                                    <li><a href="privacy.html" title="">Privacy</a></li>
-                                    <li><a href="support-and-help.html" title="">Support & Help</a></li>
-                                    <li><a href="support-and-help-detail.html" title="">Support Detail</a></li>
-                                    <li><a href="support-and-help-search-result.html" title="">Support Search</a></li>
-                                </ul>
-                            </li>
-                            <li><span>Authentication</span>
-                                <ul>
-                                    <li><a href="login.html" title="">Login Page</a></li>
-                                    <li><a href="register.html" title="">Register Page</a></li>
-                                    <li><a href="logout.html" title="">Logout Page</a></li>
-                                    <li><a href="coming-soon.html" title="">Coming Soon</a></li>
-                                    <li><a href="error-404.html" title="">Error 404</a></li>
-                                    <li><a href="error-404-2.html" title="">Error 404-2</a></li>
-                                    <li><a href="error-500.html" title="">Error 500</a></li>
-                                </ul>
-                            </li>
-                            <li><span>Tools</span>
-                                <ul>
-                                    <li><a href="typography.html" title="">Typography</a></li>
-                                    <li><a href="popup-modals.html" title="">Popups/Modals</a></li>
-                                    <li><a href="post-versions.html" title="">Post Versions</a></li>
-                                    <li><a href="sliders.html" title="">Sliders / Carousel</a></li>
-                                    <li><a href="google-map.html" title="">Google Maps</a></li>
-                                    <li><a href="widgets.html" title="">Widgets</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                    <nav id="shoppingbag">
-                        <div>
-                            <div className="">
-                                <form method="post">
-                                    <div className="setting-row">
-                                        <span>use night mode</span>
-                                        <input type="checkbox" id="nightmode"/>
-                                        <label htmlFor="nightmode" data-on-label="ON" data-off-label="OFF"></label>
-                                    </div>
-                                    <div className="setting-row">
-                                        <span>Notifications</span>
-                                        <input type="checkbox" id="switch2"/>
-                                        <label htmlFor="switch2" data-on-label="ON" data-off-label="OFF"></label>
-                                    </div>
-                                    <div className="setting-row">
-                                        <span>Notification sound</span>
-                                        <input type="checkbox" id="switch3"/>
-                                        <label htmlFor="switch3" data-on-label="ON" data-off-label="OFF"></label>
-                                    </div>
-                                    <div className="setting-row">
-                                        <span>My profile</span>
-                                        <input type="checkbox" id="switch4"/>
-                                        <label htmlFor="switch4" data-on-label="ON" data-off-label="OFF"></label>
-                                    </div>
-                                    <div className="setting-row">
-                                        <span>Show profile</span>
-                                        <input type="checkbox" id="switch5"/>
-                                        <label htmlFor="switch5" data-on-label="ON" data-off-label="OFF"></label>
-                                    </div>
-                                </form>
-                                <h4 className="panel-title">Account Setting</h4>
-                                <form method="post">
-                                    <div className="setting-row">
-                                        <span>Sub users</span>
-                                        <input type="checkbox" id="switch6"/>
-                                        <label htmlFor="switch6" data-on-label="ON" data-off-label="OFF"></label>
-                                    </div>
-                                    <div className="setting-row">
-                                        <span>personal account</span>
-                                        <input type="checkbox" id="switch7"/>
-                                        <label htmlFor="switch7" data-on-label="ON" data-off-label="OFF"></label>
-                                    </div>
-                                    <div className="setting-row">
-                                        <span>Business account</span>
-                                        <input type="checkbox" id="switch8"/>
-                                        <label htmlFor="switch8" data-on-label="ON" data-off-label="OFF"></label>
-                                    </div>
-                                    <div className="setting-row">
-                                        <span>Show me online</span>
-                                        <input type="checkbox" id="switch9"/>
-                                        <label htmlFor="switch9" data-on-label="ON" data-off-label="OFF"></label>
-                                    </div>
-                                    <div className="setting-row">
-                                        <span>Delete history</span>
-                                        <input type="checkbox" id="switch10"/>
-                                        <label htmlFor="switch10" data-on-label="ON" data-off-label="OFF"></label>
-                                    </div>
-                                    <div className="setting-row">
-                                        <span>Expose author name</span>
-                                        <input type="checkbox" id="switch11"/>
-                                        <label htmlFor="switch11" data-on-label="ON" data-off-label="OFF"></label>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </nav>
                 </div>
 
                 <section>
@@ -332,7 +130,7 @@ const ShowHome = () => {
                                                         </li>
                                                         <li>
                                                             <i className="ti-power-off"></i>
-                                                            <a as={'button'}  onClick={()=>{
+                                                            <a as={'button'} onClick={() => {
                                                                 localStorage.clear();
                                                                 navigate('/')
 
@@ -407,72 +205,74 @@ const ShowHome = () => {
                                                     <figure>
                                                         <img src="images/resources/admin.jpg" alt=""/>
                                                     </figure>
-                                                    <Formik initialValues={{content:"",}} onSubmit={(values)=>{
+                                                    <Formik initialValues={{content: "",}} onSubmit={(values) => {
                                                         values.account = account.idAccount;
                                                         dispatch(addPosts(values))
                                                         document.getElementById('add-form').reset();
                                                     }}>
-                                                        <Form id = 'add-form'>
-                                                    <div className="newpst-input">
-                                                        <Field as={'textarea'} name={'content'} rows="2" placeholder="Share some what you are thinking?"/>
-                                                    </div>
-                                                    <div className="attachments">
-                                                        {/*<ul>*/}
-                                                    {/*        <li>*/}
-													{/*<span className="add-loc">*/}
-													{/*	<i className="fa fa-map-marker"></i>*/}
-													{/*</span>*/}
-                                                    {/*        </li>*/}
-                                                    {/*        <li>*/}
-                                                    {/*            <i className="fa fa-music"></i>*/}
-                                                    {/*            <label className="fileContainer">*/}
-                                                    {/*                <input type="file"/>*/}
-                                                    {/*            </label>*/}
-                                                    {/*        </li>*/}
-                                                    {/*        <li>*/}
-                                                    {/*            <i className="fa fa-image"></i>*/}
-                                                    {/*            <label className="fileContainer">*/}
-                                                    {/*                <input type="file"/>*/}
-                                                    {/*            </label>*/}
-                                                    {/*        </li>*/}
-                                                    {/*        <li>*/}
-                                                    {/*            <i className="fa fa-video-camera"></i>*/}
-                                                    {/*            <label className="fileContainer">*/}
-                                                    {/*                <input type="file"/>*/}
-                                                    {/*            </label>*/}
-                                                    {/*        </li>*/}
-                                                    {/*        <li>*/}
-                                                    {/*            <i className="fa fa-camera"></i>*/}
-                                                    {/*            <label className="fileContainer">*/}
-                                                    {/*                <input type="file"/>*/}
-                                                    {/*            </label>*/}
-                                                    {/*        </li>*/}
-                                                    {/*        <li className="preview-btn">*/}
-                                                    {/*            <button className="post-btn-preview" type="submit"*/}
-                                                    {/*                    data-ripple="">Preview*/}
-                                                    {/*            </button>*/}
-                                                    {/*        </li>*/}
-                                                    {/*    </ul>*/}
-                                                        <button className="post-btn" type="submit" data-ripple="">Post
-                                                        </button>
-                                                    </div>
-                                                    {/*<div className="add-location-post">*/}
-                                                    {/*    <span>Drag map point to selected area</span>*/}
-                                                    {/*    <div className="row">*/}
-                                                    {/*        <div className="col-lg-6">*/}
-                                                    {/*            <label className="control-label">Lat :</label>*/}
-                                                    {/*            <input type="text" className="" id="us3-lat"/>*/}
-                                                    {/*        </div>*/}
-                                                    {/*        <div className="col-lg-6">*/}
-                                                    {/*            <label>Long :</label>*/}
-                                                    {/*            <input type="text" className="" id="us3-lon"/>*/}
-                                                    {/*        </div>*/}
-                                                    {/*    </div>*/}
-                                                    {/*    /!*map*!/*/}
-                                                    {/*    <div id="us3"></div>*/}
-                                                    {/*</div>*/}
-                                                    </Form>
-                                                </Formik>
+                                                        <Form id='add-form'>
+                                                            <div className="newpst-input">
+                                                                <Field as={'textarea'} name={'content'} rows="2"
+                                                                       placeholder="Share some what you are thinking?"/>
+                                                            </div>
+                                                            <div className="attachments">
+                                                                {/*<ul>*/}
+                                                                {/*        <li>*/}
+                                                                {/*<span className="add-loc">*/}
+                                                                {/*	<i className="fa fa-map-marker"></i>*/}
+                                                                {/*</span>*/}
+                                                                {/*        </li>*/}
+                                                                {/*        <li>*/}
+                                                                {/*            <i className="fa fa-music"></i>*/}
+                                                                {/*            <label className="fileContainer">*/}
+                                                                {/*                <input type="file"/>*/}
+                                                                {/*            </label>*/}
+                                                                {/*        </li>*/}
+                                                                {/*        <li>*/}
+                                                                {/*            <i className="fa fa-image"></i>*/}
+                                                                {/*            <label className="fileContainer">*/}
+                                                                {/*                <input type="file"/>*/}
+                                                                {/*            </label>*/}
+                                                                {/*        </li>*/}
+                                                                {/*        <li>*/}
+                                                                {/*            <i className="fa fa-video-camera"></i>*/}
+                                                                {/*            <label className="fileContainer">*/}
+                                                                {/*                <input type="file"/>*/}
+                                                                {/*            </label>*/}
+                                                                {/*        </li>*/}
+                                                                {/*        <li>*/}
+                                                                {/*            <i className="fa fa-camera"></i>*/}
+                                                                {/*            <label className="fileContainer">*/}
+                                                                {/*                <input type="file"/>*/}
+                                                                {/*            </label>*/}
+                                                                {/*        </li>*/}
+                                                                {/*        <li className="preview-btn">*/}
+                                                                {/*            <button className="post-btn-preview" type="submit"*/}
+                                                                {/*                    data-ripple="">Preview*/}
+                                                                {/*            </button>*/}
+                                                                {/*        </li>*/}
+                                                                {/*    </ul>*/}
+                                                                <button className="post-btn" type="submit"
+                                                                        data-ripple="">Post
+                                                                </button>
+                                                            </div>
+                                                            {/*<div className="add-location-post">*/}
+                                                            {/*    <span>Drag map point to selected area</span>*/}
+                                                            {/*    <div className="row">*/}
+                                                            {/*        <div className="col-lg-6">*/}
+                                                            {/*            <label className="control-label">Lat :</label>*/}
+                                                            {/*            <input type="text" className="" id="us3-lat"/>*/}
+                                                            {/*        </div>*/}
+                                                            {/*        <div className="col-lg-6">*/}
+                                                            {/*            <label>Long :</label>*/}
+                                                            {/*            <input type="text" className="" id="us3-lon"/>*/}
+                                                            {/*        </div>*/}
+                                                            {/*    </div>*/}
+                                                            {/*    /!*map*!/*/}
+                                                            {/*    <div id="us3"></div>*/}
+                                                            {/*</div>*/}
+                                                        </Form>
+                                                    </Formik>
                                                 </div>
                                             </div>
                                             {/*add post new box*/}
@@ -491,40 +291,40 @@ const ShowHome = () => {
                                                                         <div className="more">
                                                                             {account.idAccount === it.account.idAccount &&
                                                                                 <div className="more-post-optns"><i
-                                                                                className="ti-more-alt"></i>
-                                                                                <ul>
-                                                                                    <li><i
-                                                                                        className="fa fa-pencil-square-o"
-                                                                                        onClick={() => {
-                                                                                            setCheck(true)
-                                                                                            checkId(it.idPost)
-                                                                                        }}
-                                                                                    >Edit Post</i>
-                                                                                    </li>
-                                                                                    <li><i className="fa fa-trash-o"
-                                                                                           onClick={() => {
-                                                                                               swal({
-                                                                                                   title: "Are you sure?",
-                                                                                                   text: "Once deleted, you will not be able to recover this imaginary file!",
-                                                                                                   icon: "warning",
-                                                                                                   buttons: true,
-                                                                                                   dangerMode: true,
-                                                                                               })
-                                                                                                   .then((willDelete) => {
-                                                                                                       if (willDelete) {
-                                                                                                           handleDelete(it.idPost).then(() => {
-                                                                                                               swal("Poof! Your imaginary file has been deleted!", {
-                                                                                                                   icon: "success",
-                                                                                                               })
-                                                                                                           });
-                                                                                                       } else {
-                                                                                                           swal("Your imaginary file is safe!")
-                                                                                                       }
-                                                                                                   });
-                                                                                           }}>&nbsp; Delete Post</i>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
+                                                                                    className="ti-more-alt"></i>
+                                                                                    <ul>
+                                                                                        <li><i
+                                                                                            className="fa fa-pencil-square-o"
+                                                                                            onClick={() => {
+                                                                                                setCheck(true)
+                                                                                                checkId(it.idPost)
+                                                                                            }}
+                                                                                        >Edit Post</i>
+                                                                                        </li>
+                                                                                        <li><i className="fa fa-trash-o"
+                                                                                               onClick={() => {
+                                                                                                   swal({
+                                                                                                       title: "Are you sure?",
+                                                                                                       text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                                                       icon: "warning",
+                                                                                                       buttons: true,
+                                                                                                       dangerMode: true,
+                                                                                                   })
+                                                                                                       .then((willDelete) => {
+                                                                                                           if (willDelete) {
+                                                                                                               handleDelete(it.idPost).then(() => {
+                                                                                                                   swal("Poof! Your imaginary file has been deleted!", {
+                                                                                                                       icon: "success",
+                                                                                                                   })
+                                                                                                               });
+                                                                                                           } else {
+                                                                                                               swal("Your imaginary file is safe!")
+                                                                                                           }
+                                                                                                       });
+                                                                                               }}>&nbsp; Delete Post</i>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
                                                                             }
 
                                                                         </div>
@@ -949,30 +749,30 @@ const ShowHome = () => {
                                         <div className="postbox">
                                             <div className="new-postbox">
                                                 <Form>
-                                                <div className="newpst-input">
+                                                    <div className="newpst-input">
                                                         <div>
-                                                        <label>Content</label>
-                                                        <Field as={'textarea'} type="text" name={'content'}/>
+                                                            <label>Content</label>
+                                                            <Field as={'textarea'} type="text" name={'content'}/>
                                                         </div>
                                                         <div className="select-options">
-                                                    <hr/>
-                                                    <Field as={'select'} className="select" name={'status'}>
-                                                        <option value={'public'}>Public</option>
-                                                        <option value={'friendonly'}>Friend only</option>
-                                                        <option value={'onlyme'}>Only me</option>
-                                                    </Field>
-                                                </div>
-                                                  <div className="attachments">
-                                                        <li>
-                                                            <i className="fa fa-camera"></i>
-                                                            <label className="fileContainer">
-                                                                <input type="file"/>
-                                                            </label>
-                                                        </li>
-                                                  </div>
-                                                    <button className="post-btn" type="submit" data-ripple="">Edit
-                                                    </button>
-                                                </div>
+                                                            <hr/>
+                                                            <Field as={'select'} className="select" name={'status'}>
+                                                                <option value={'public'}>Public</option>
+                                                                <option value={'friendonly'}>Friend only</option>
+                                                                <option value={'onlyme'}>Only me</option>
+                                                            </Field>
+                                                        </div>
+                                                        <div className="attachments">
+                                                            <li>
+                                                                <i className="fa fa-camera"></i>
+                                                                <label className="fileContainer">
+                                                                    <input type="file"/>
+                                                                </label>
+                                                            </li>
+                                                        </div>
+                                                        <button className="post-btn" type="submit" data-ripple="">Edit
+                                                        </button>
+                                                    </div>
                                                 </Form>
                                             </div>
                                         </div>

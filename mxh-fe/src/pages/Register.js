@@ -14,11 +14,14 @@ const Register = () => {
         passwordAgain: "",
     };
     const validationSchema = Yup.object().shape({
-        username: Yup.string().required("Vui lòng nhập tên đăng nhập"),
+        username: Yup.string().required("Vui lòng nhập tên đăng nhập")
+            .matches(/^[a-zA-Z0-9]/),
         password: Yup.string()
             .required("Vui lòng nhập mật khẩu")
             .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
-            .max(14, "Mật khẩu chỉ có nhiều nhất 14 ký tự")
+            .max(32, "Mật khẩu chỉ có nhiều nhất 14 ký tự"),
+        passwordAgain: Yup.string()
+            .required("Vui lòng nhập mật khẩu confirm")
     });
     const handleSubmit = async (values) => {
         if (values.password !== values.passwordAgain) {
@@ -101,19 +104,31 @@ const Register = () => {
                                             <span>Register now and meet the awesome Friends around the world.</span>
                                         </div>
                                         <Formik className="we-form" initialValues={initialValuesAdd}
+                                                validationSchema={validationSchema}
                                                 onSubmit={handleSubmit}>
                                             <Form>
                                                 <Form className="we-form mt-6">
                                                     <Field type="text" placeholder="UserName" name="username"/>
+                                                    <alert>
+                                                        <ErrorMessage name={"username"}></ErrorMessage>
+                                                    </alert>
+
                                                 </Form>
 
                                                 <Form className="we-form mt-6">
                                                     <Field type="password" placeholder="Password" name="password"/>
+                                                    <alert>
+                                                        <ErrorMessage name={"password"}></ErrorMessage>
+                                                    </alert>
+
 
                                                 </Form>
                                                 <Form className="we-form mt-6">
                                                     <Field type="password" placeholder="passwordAgain"
                                                            name="passwordAgain"/>
+                                                    <alert>
+                                                        <ErrorMessage name={"passwordAgain"}></ErrorMessage>
+                                                    </alert>
 
                                                 </Form>
                                                 <div className="we-form mt-6">
@@ -128,7 +143,7 @@ const Register = () => {
                                             className="fa fa-google-plus"></i></Link>
                                         <span className="col-12">Do you already have an account???
                                             <Link className="we-account" to={"/"}>
-                                            <h6 style={{color : "purple"}}>Login now</h6></Link></span>
+                                            <h6 style={{color: "purple"}}>Login now</h6></Link></span>
                                     </div>
                                 </div>
                             </div>
