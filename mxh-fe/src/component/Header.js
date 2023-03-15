@@ -1,6 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
+import {Link, useNavigate} from "react-router-dom";
 
 const Header = () => {
+    const navigate = useNavigate()
     return (
         <>
             <div className="postoverlay"></div>
@@ -10,6 +12,11 @@ const Header = () => {
 			<span className="mh-btns-left">
 				<a className="" href="#menu"><i className="fa fa-align-justify"></i></a>
 			</span>
+
+                    <span className="mh-text">
+				<a href="newsfeed.html" title=""><img src="/images/logo2.png" alt=""/></a>
+			</span>
+
                     <span className="mh-btns-right">
 				<a className="fa fa-sliders" href="#shoppingbag"></a>
 			</span>
@@ -22,7 +29,9 @@ const Header = () => {
 
             <div className="topbar stick" style={{position: "fixed", width: "100%"}}>
                 <div className="logo">
-                    <a title="" href="newsfeed.html"><img src="images/logo3.png" alt=""/></a>
+
+                    <a title="" href="/home"><img src="/images/logo3.png" alt=""/></a>
+
                 </div>
                 <div className="top-area">
                     <div className="main-menu">
@@ -263,7 +272,7 @@ const Header = () => {
                     </ul>
                     <div className="user-img">
                         <h5>Jack Carter</h5>
-                        <img src="images/resources/admin.jpg" alt=""/>
+                        <Link  to="/home/MyAbout"><img className="ml-3" src="/images/resources/admin.jpg" alt=""/></Link>
                         <span className="status f-online"></span>
                         <div className="user-setting">
                             <span className="seting-title">Chat setting <a href="#" title="">see all</a></span>
@@ -287,7 +296,12 @@ const Header = () => {
                             </ul>
                         </div>
                     </div>
-                    <span className="ti-settings main-menu" data-ripple=""></span>
+                    <a as={'button'} onClick={() => {
+                        localStorage.clear();
+                        navigate('/')
+
+                    }}><i className="ml-3 ti-power-off " style={{fontSize:20}} ></i>
+                   </a>
                 </div>
                 <nav>
                     <ul className="nav-list">

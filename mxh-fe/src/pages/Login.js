@@ -11,8 +11,7 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const initialValuesAdd = {
-        username: "",
-        password: "",
+        username: "", password: "",
     };
     let [userGG, setUserGG] = useState({})
     const checkUSer = useSelector(state => {
@@ -36,10 +35,7 @@ const Login = () => {
     const handleSubmit = async (values) => {
         console.log(localStorage.getItem('status') === 'User is not exit')
         await dispatch(AccountsLogin(values));
-        if (localStorage.getItem('status') === 'User is not exit'
-            || localStorage.getItem('status') === 'Password is wrong'
-            || localStorage.getItem('status') == null
-            || localStorage.getItem('status') === undefined) {
+        if (localStorage.getItem('status') === 'User is not exit' || localStorage.getItem('status') === 'Password is wrong' || localStorage.getItem('status') == null || localStorage.getItem('status') === undefined) {
             alert('User or password incorrect')
             navigate(('/'))
         } else {
@@ -49,16 +45,14 @@ const Login = () => {
     };
     const validationSchema = Yup.object().shape({
         username: Yup.string().required("Vui lòng nhập tên đăng nhập")
-            .matches(/^[a-zA-Z0-9]/),
-        password: Yup.string()
+            .matches(/^[a-zA-Z0-9]/), password: Yup.string()
             .required("Vui lòng nhập mật khẩu")
             .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
             .max(32, "Mật khẩu chỉ có nhiều nhất 14 ký tự")
     });
 
 
-    return (
-        <>
+    return (<>
             <div className="www-layout">
                 <section>
                     <div className="gap no-gap signin whitish medium-opacity">
@@ -152,23 +146,23 @@ const Login = () => {
                                                 </Form>
                                             </Formik>
                                         </div>
-                                        <div className="row" >
+                                        <div className="row">
                                             <div>
-                                                    <GoogleOAuthProvider
-                                                        clientId="1004137847361-3p3lh814vts1f6ts9e2al867rjrjp9gc.apps.googleusercontent.com">
-                                                        <GoogleLogin
-                                                            onSuccess={async credentialResponse => {
-                                                                const decoded = jwt_decode(credentialResponse.credential);
-                                                                let user = {username: decoded.email, password: decoded.sub};
-                                                                await setUserGG(user)
-                                                                await dispatch(AccountsLoginGG(user))
-                                                            }}
-                                                            onError={() => {
-                                                                console.log('Login Failed');
-                                                            }}
+                                                <GoogleOAuthProvider
+                                                    clientId="1004137847361-3p3lh814vts1f6ts9e2al867rjrjp9gc.apps.googleusercontent.com">
+                                                    <GoogleLogin
+                                                        onSuccess={async credentialResponse => {
+                                                            const decoded = jwt_decode(credentialResponse.credential);
+                                                            let user = {username: decoded.email, password: decoded.sub};
+                                                            await setUserGG(user)
+                                                            await dispatch(AccountsLoginGG(user))
+                                                        }}
+                                                        onError={() => {
+                                                            console.log('Login Failed');
+                                                        }}
 
-                                                        />
-                                                    </GoogleOAuthProvider>
+                                                    />
+                                                </GoogleOAuthProvider>
 
                                             </div>
 
