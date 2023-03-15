@@ -332,7 +332,11 @@ const ShowHome = () => {
                                                         </li>
                                                         <li>
                                                             <i className="ti-power-off"></i>
-                                                            <a href="landing.html" title="">Logout</a>
+                                                            <a as={'button'}  onClick={()=>{
+                                                                localStorage.clear();
+                                                                navigate('/')
+
+                                                            }}>Logout</a>
                                                         </li>
                                                     </ul>
                                                 </div>
