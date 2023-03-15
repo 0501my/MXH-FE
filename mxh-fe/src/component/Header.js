@@ -1,8 +1,13 @@
 import React from 'react';
 import {Link, useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const Header = () => {
     const navigate = useNavigate()
+    const user = useSelector(state=>{
+        return state.account.account
+
+    })
     return (
         <>
             <div className="postoverlay"></div>
@@ -55,30 +60,6 @@ const Header = () => {
                             <a title="Friend Requests">
                                 <i className="fa fa-user"></i><em className="bg-red">5</em>
                             </a>
-
-                            <div className="dropdowns ps-container ps-theme-default ps-active-y active"
-                                 data-ps-id="58dd6af9-103b-546e-3b06-b3019d40412f">
-                                <span>5 New Requests <a href="#" title="">View all Requests</a></span>
-                                <ul className="drops-menu">
-                                    <li>
-                                        <div>
-                                            <figure>
-                                                <img src="images/resources/thumb-2.jpg" alt=""></img>
-                                            </figure>
-
-                                            <div className="mesg-meta">
-                                                <h6><a href="#" title="">Loren</a></h6>
-                                                <span><b>Amy</b> is mutule friend</span>
-                                                <i>yesterday</i>
-                                            </div>
-                                            <div className="add-del-friends">
-                                                <a href="#" title=""><i className="fa fa-heart"></i></a>
-                                                <a href="#" title=""><i className="fa fa-trash"></i></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
 
                         </li>
                         <li>
@@ -230,7 +211,7 @@ const Header = () => {
                                     <li>
                                         <a className="show-mesg" href="#" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-5.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-5.jpg" alt=""/>
                                                 <span className="status f-away"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -271,8 +252,8 @@ const Header = () => {
                         </li>
                     </ul>
                     <div className="user-img">
-                        <h5>Jack Carter</h5>
-                        <Link  to="/home/MyAbout"><img className="ml-3" src="/images/resources/admin.jpg" alt=""/></Link>
+                        <h5>{user.username}</h5>
+                        <Link  to="/home/MyAbout"><img style={{borderRadius:'50%'}} className="ml-3" src="/images/resources/admin.jpg" alt=""/></Link>
                         <span className="status f-online"></span>
                         <div className="user-setting">
                             <span className="seting-title">Chat setting <a href="#" title="">see all</a></span>
