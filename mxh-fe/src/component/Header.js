@@ -3,13 +3,11 @@ import {Link, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 
 const Header = () => {
-
-    const navigate = useNavigate();
-
+    const navigate = useNavigate()
     const account = useSelector(state => {
         return state.account.account
-    })
 
+    })
 
     return (
         <>
@@ -38,7 +36,7 @@ const Header = () => {
             <div className="topbar stick" style={{position: "fixed", width: "100%"}}>
                 <div className="logo">
 
-                    <a title="" href="/home"><img src="/images/logo3.png" alt=""/></a>
+                    <Link title="" to="/home"><img src="/images/logo3.png" alt=""/></Link>
 
                 </div>
                 <div className="top-area">
@@ -214,7 +212,7 @@ const Header = () => {
                                     <li>
                                         <a className="show-mesg" href="#" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-5.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-5.jpg" alt=""/>
                                                 <span className="status f-away"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -256,7 +254,11 @@ const Header = () => {
                     </ul>
                     <div className="user-img">
                         <h5>{account.name}</h5>
-                        <Link  to={`/Home/PersonalPage/MyTimeLine/${account.idAccount}`}><img style={{borderRadius:'50%'}} className="ml-3" src="/images/resources/admin.jpg" alt=""/></Link>
+
+                        <Link to={`/home/PersonalPage/MyTimeline/${account.idAccount}`}><img style={{borderRadius: '50%'}} className="ml-3"
+                                                      src="/images/resources/admin.jpg" alt=""/></Link>
+
+
                         <span className="status f-online"></span>
                         <div className="user-setting">
                             <span className="seting-title">Chat setting <a href="#" title="">see all</a></span>
@@ -284,8 +286,8 @@ const Header = () => {
                         localStorage.clear();
                         navigate('/')
 
-                    }}><i className="ml-3 ti-power-off " style={{fontSize:20}} ></i>
-                   </a>
+                    }}><i className="ml-3 ti-power-off " style={{fontSize: 20}}></i>
+                    </a>
                 </div>
                 <nav>
                     <ul className="nav-list">

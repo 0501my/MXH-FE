@@ -8,15 +8,13 @@ import * as Yup from "yup";
 const PersonalPage = () => {
 
     const {idAccount} = useParams();
-
     const [check, setCheck] = useState(false);
+    const [timeLine, setTimeLine] = useState('active');
+    const [about, setAbout] = useState('');
 
     const account = useSelector(state => {
         return state.account.account
     })
-
-    console.log(account.idAccount)
-    console.log(idAccount)
 
     const dispatch = useDispatch()
 
@@ -106,10 +104,16 @@ const PersonalPage = () => {
                                             <div className="col-lg-10 col-md-9">
                                                 <ul className="profile-menu">
                                                     <li>
-                                                        <Link className="active" to={`/home/PersonalPage/MyTimeLine/${idAccount}`}>Timeline</Link>
+                                                        <Link className={timeLine} to={`/home/PersonalPage/MyTimeLine/${idAccount}`} onClick={()=>{
+                                                            setTimeLine('active')
+                                                            setAbout('')
+                                                        }}>Timeline</Link>
                                                     </li>
                                                     <li>
-                                                        <Link className="" to={`/home/PersonalPage/MyAbout/${idAccount}`}>About</Link>
+                                                        <Link className={about} to={`/home/PersonalPage/MyAbout/${idAccount}`} onClick={()=>{
+                                                            setTimeLine('')
+                                                            setAbout('active')
+                                                        }}>About</Link>
                                                     </li>
                                                     <li>
                                                         <a className="" href="timeline-friends.html">Friends</a>
@@ -184,7 +188,7 @@ const PersonalPage = () => {
                         enableReinitialize={true}>
 
                     <div className="popup-wraper active">
-                        <div className="popup" style={{width:300, textAlignLast:"center"}}>
+                        <div className="popup" style={{width:400,height:400, textAlignLast:"center"}}>
                                 <span className="popup-closed" onClick={() => {
                                     setCheck(false)
                                 }}><i className="ti-close"></i></span>
@@ -205,6 +209,7 @@ const PersonalPage = () => {
                                                     <div>
                                                         <label>newPassword</label>
                                                         <Field  type="password" name={'newPassword'}/>
+                                                        <br/>
                                                         <alert>
                                                             <ErrorMessage name={"newPassword"}></ErrorMessage>
                                                         </alert>
@@ -212,6 +217,7 @@ const PersonalPage = () => {
                                                     <div>
                                                         <label>repeatPassword</label>
                                                         <Field  type="password" name={'repeatPassword'}/>
+                                                        <br/>
                                                         <alert>
                                                             <ErrorMessage name={"repeatPassword"}></ErrorMessage>
                                                         </alert>

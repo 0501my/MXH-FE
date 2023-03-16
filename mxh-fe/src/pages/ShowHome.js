@@ -67,7 +67,7 @@ const ShowHome = () => {
                                                 <div className="widget whitish low-opacity">
                                                     <div className="bg-image"></div>
                                                     <div className="dob-head">
-                                                        <img src="images/resources/sug-page-5.jpg" alt=""/>
+                                                        <img src="/images/resources/sug-page-5.jpg" alt=""/>
                                                         <span>22nd Birthday</span>
                                                         <div className="dob">
                                                             <i>19</i>
@@ -75,7 +75,7 @@ const ShowHome = () => {
                                                         </div>
                                                     </div>
                                                     <div className="dob-meta">
-                                                        <figure><img src="images/resources/dob-cake.gif" alt=""/>
+                                                        <figure><img src="/images/resources/dob-cake.gif" alt=""/>
                                                         </figure>
                                                         <h6><a href="#" title="">Lucy Carbel</a> valentine's birthday
                                                         </h6>
@@ -329,8 +329,8 @@ const ShowHome = () => {
 
                                                                         </div>
                                                                         <ins><a
-                                                                            href={`/Home/personalPage/${it.account.idAccount}`}
-                                                                            title="">{it.account.username}</a> Post
+                                                                            href={`/Home/PersonalPage/MyTimeLine/${it.account.idAccount}`}
+                                                                            title="">{it.account.name}</a> Post
                                                                             Album
                                                                         </ins>
                                                                         <span><i
