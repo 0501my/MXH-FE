@@ -5,7 +5,7 @@ import {AccountsEdit, changePassword} from "../services/AccountService";
 import {useDispatch, useSelector} from "react-redux";
 import * as Yup from "yup";
 
-const MyAbout = ()=> {
+const MyAbout = () => {
     const [check, setCheck] = useState(false)
 
 
@@ -24,12 +24,9 @@ const MyAbout = ()=> {
     });
 
 
-
-
-
-    return(
+    return (
         <>
-            <section style={{marginTop:50}}>
+            <section style={{marginTop: 50}}>
                 <div className="gap2 gray-bg">
                     <div className="container">
                         <div className="row">
@@ -44,40 +41,40 @@ const MyAbout = ()=> {
                                                 </label>
                                             </div>
                                             <img src="/images/resources/profile-image.jpg" alt=""/>
-                                                <ul className="profile-controls">
-                                                    <li><a href="#" title="Add friend" data-toggle="tooltip"><i
-                                                        className="fa fa-user-plus"></i></a></li>
-                                                    <li><a href="#" title="Follow" data-toggle="tooltip"><i
-                                                        className="fa fa-star"></i></a></li>
-                                                    <li><a className="send-mesg" href="#" title="Send Message"
-                                                           data-toggle="tooltip"><i className="fa fa-comment"></i></a>
-                                                    </li>
-                                                    <li>
-                                                        <div className="edit-seting" title="Edit Profile image"><i
-                                                            className="fa fa-sliders"></i>
-                                                            <ul className="more-dropdown">
-                                                                <li><a href="setting.html" title="">Update Profile
-                                                                    Photo</a></li>
-                                                                <li><a href="setting.html" title="">Update Header
-                                                                    Photo</a></li>
+                                            <ul className="profile-controls">
+                                                <li><a href="#" title="Add friend" data-toggle="tooltip"><i
+                                                    className="fa fa-user-plus"></i></a></li>
+                                                <li><a href="#" title="Follow" data-toggle="tooltip"><i
+                                                    className="fa fa-star"></i></a></li>
+                                                <li><a className="send-mesg" href="#" title="Send Message"
+                                                       data-toggle="tooltip"><i className="fa fa-comment"></i></a>
+                                                </li>
+                                                <li>
+                                                    <div className="edit-seting" title="Edit Profile image"><i
+                                                        className="fa fa-sliders"></i>
+                                                        <ul className="more-dropdown">
+                                                            <li><a href="setting.html" title="">Update Profile
+                                                                Photo</a></li>
+                                                            <li><a href="setting.html" title="">Update Header
+                                                                Photo</a></li>
 
-                                                                <li><a href="support-and-help.html" title="">Find
-                                                                    Support</a></li>
-                                                                <li><a className="bad-report" href="#" title="">Report
-                                                                    Profile</a></li>
-                                                                <li><a href="#" title="">Block Profile</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                                <ol className="pit-rate">
-                                                    <li className="rated"><i className="fa fa-star"></i></li>
-                                                    <li className="rated"><i className="fa fa-star"></i></li>
-                                                    <li className="rated"><i className="fa fa-star"></i></li>
-                                                    <li className="rated"><i className="fa fa-star"></i></li>
-                                                    <li className=""><i className="fa fa-star"></i></li>
-                                                    <li><span>4.7/5</span></li>
-                                                </ol>
+                                                            <li><a href="support-and-help.html" title="">Find
+                                                                Support</a></li>
+                                                            <li><a className="bad-report" href="#" title="">Report
+                                                                Profile</a></li>
+                                                            <li><a href="#" title="">Block Profile</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <ol className="pit-rate">
+                                                <li className="rated"><i className="fa fa-star"></i></li>
+                                                <li className="rated"><i className="fa fa-star"></i></li>
+                                                <li className="rated"><i className="fa fa-star"></i></li>
+                                                <li className="rated"><i className="fa fa-star"></i></li>
+                                                <li className=""><i className="fa fa-star"></i></li>
+                                                <li><span>4.7/5</span></li>
+                                            </ol>
                                         </figure>
                                         <div className="profile-section">
                                             <div className="row">
@@ -85,12 +82,12 @@ const MyAbout = ()=> {
                                                     <div className="profile-author">
                                                         <div className="profile-author-thumb">
                                                             <img alt="author" src="/images/resources/author.jpg"/>
-                                                                <div className="edit-dp">
-                                                                    <label className="fileContainer">
-                                                                        <i className="fa fa-camera"></i>
-                                                                        <input type="file"/>
-                                                                    </label>
-                                                                </div>
+                                                            <div className="edit-dp">
+                                                                <label className="fileContainer">
+                                                                    <i className="fa fa-camera"></i>
+                                                                    <input type="file"/>
+                                                                </label>
+                                                            </div>
                                                         </div>
 
                                                         <div className="author-content">
@@ -126,7 +123,7 @@ const MyAbout = ()=> {
                                                                         <a onClick={() => {
                                                                             setCheck(true)
                                                                         }}
-                                                                            >Account Settings</a>
+                                                                        >Account Settings</a>
                                                                     </li>
                                                                     <li>
                                                                         <a href="statistics.html">Profile Analytics</a>
@@ -438,11 +435,11 @@ const MyAbout = ()=> {
                             validationSchema={validationSchema}
                             onSubmit={(values) => {
                                 values.id = account.idAccount;
-                                if(values.repeatPassword === values.newPassword){
-                                    dispatch(changePassword(values)).then(()=>{
+                                if (values.repeatPassword === values.newPassword) {
+                                    dispatch(changePassword(values)).then(() => {
                                         setCheck(false)
                                     })
-                                }else {
+                                } else {
                                     alert(' can not')
                                 }
 
@@ -452,7 +449,7 @@ const MyAbout = ()=> {
                             enableReinitialize={true}>
 
                         <div className="popup-wraper active">
-                            <div className="popup" style={{width:300, textAlignLast:"center"}}>
+                            <div className="popup" style={{width: 300, textAlignLast: "center"}}>
                                 <span className="popup-closed" onClick={() => {
                                     setCheck(false)
                                 }}><i className="ti-close"></i></span>
@@ -467,19 +464,19 @@ const MyAbout = ()=> {
                                                     <div className="newpst-input">
                                                         <div>
                                                             <label>oldPassword</label>
-                                                            <Field   type="password"  name={'oldPassword'}/>
+                                                            <Field type="password" name={'oldPassword'}/>
 
                                                         </div>
                                                         <div>
                                                             <label>newPassword</label>
-                                                            <Field  type="password" name={'newPassword'}/>
+                                                            <Field type="password" name={'newPassword'}/>
                                                             <alert>
                                                                 <ErrorMessage name={"newPassword"}></ErrorMessage>
                                                             </alert>
                                                         </div>
                                                         <div>
                                                             <label>repeatPassword</label>
-                                                            <Field  type="password" name={'repeatPassword'}/>
+                                                            <Field type="password" name={'repeatPassword'}/>
                                                             <alert>
                                                                 <ErrorMessage name={"repeatPassword"}></ErrorMessage>
                                                             </alert>
