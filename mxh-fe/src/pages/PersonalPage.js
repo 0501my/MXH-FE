@@ -15,9 +15,6 @@ const PersonalPage = () => {
         return state.account.account
     })
 
-    console.log(account.idAccount)
-    console.log(idAccount)
-
     const dispatch = useDispatch()
 
     const validationSchema = Yup.object().shape({

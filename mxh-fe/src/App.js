@@ -19,7 +19,7 @@ function App() {
             <Route path={""} element={<ShowHome/>}/>
 
             <Route path={"PersonalPage"} element={<PersonalPage/>}>
-            <Route path={"MyAbout"} element={<MyAbout/>}/>
+            <Route path={"MyAbout/:idAccount"} element={<MyAbout/>}/>
             <Route path={"MyTimeLine/:idAccount"} element={<MyTimeLine/>}/>
             </Route>
         </Route>

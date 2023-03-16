@@ -329,8 +329,8 @@ const ShowHome = () => {
 
                                                                         </div>
                                                                         <ins><a
-                                                                            href={`/Home/personalPage/${it.account.idAccount}`}
-                                                                            title="">{it.account.username}</a> Post
+                                                                            href={`/Home/PersonalPage/MyTimeLine/${it.account.idAccount}`}
+                                                                            title="">{it.account.name}</a> Post
                                                                             Album
                                                                         </ins>
                                                                         <span><i
