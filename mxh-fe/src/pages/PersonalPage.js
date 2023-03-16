@@ -15,6 +15,9 @@ const PersonalPage = () => {
         return state.account.account
     })
 
+    console.log(account.idAccount)
+    console.log(idAccount)
+
     const dispatch = useDispatch()
 
     const validationSchema = Yup.object().shape({
@@ -118,17 +121,22 @@ const PersonalPage = () => {
                                                         <a className="" href="timeline-videos.html">Videos</a>
                                                     </li>
                                                     <li>
-                                                        <div className="more">
-                                                            <i className="fa fa-ellipsis-h"></i>
-                                                            <ul className="more-dropdown">
-                                                                <li>
-                                                                    <a href="#">Account Settings</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="statistics.html">Profile Analytics</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+                                                        {account.idAccount == idAccount &&
+                                                            <div className="more">
+                                                                <i className="fa fa-ellipsis-h"></i>
+                                                                <ul className="more-dropdown">
+                                                                    <li>
+                                                                        <a as={'i'} onClick={()=>{
+                                                                            setCheck(true)}
+                                                                        }>Account Settings</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="statistics.html">Profile Analytics</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        }
+
                                                     </li>
                                                 </ul>
                                                 <ol className="folw-detail">
@@ -156,13 +164,14 @@ const PersonalPage = () => {
             </div>
         </section>
              {
-            check ? <>
+              check ? <>
                 <Formik initialValues={{}}
                         validationSchema={validationSchema}
                         onSubmit={(values) => {
                             values.id = account.idAccount;
                             if(values.repeatPassword === values.newPassword){
                                 dispatch(changePassword(values)).then(()=>{
+                                    alert('Change password success!!')
                                     setCheck(false)
                                 })
                             }else {
