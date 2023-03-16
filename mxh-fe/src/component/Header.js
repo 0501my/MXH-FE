@@ -1,14 +1,14 @@
 import React from 'react';
 import {Link, useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {AccountsLogout} from "../services/AccountService";
 
 const Header = () => {
     const navigate = useNavigate()
     const account = useSelector(state => {
         return state.account.account
-
     })
-
+    const dispatch = useDispatch()
     return (
         <>
             <div className="postoverlay"></div>
@@ -73,7 +73,7 @@ const Header = () => {
                                     <li>
                                         <a href="notifications.html" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-1.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-1.jpg" alt=""/>
                                                 <span className="status f-online"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -86,7 +86,7 @@ const Header = () => {
                                     <li>
                                         <a href="notifications.html" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-2.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-2.jpg" alt=""/>
                                                 <span className="status f-online"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -103,7 +103,7 @@ const Header = () => {
                                     <li>
                                         <a href="notifications.html" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-3.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-3.jpg" alt=""/>
                                                 <span className="status f-online"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -112,7 +112,7 @@ const Header = () => {
                                                 <i>Sunday</i>
                                                 <figure>
                                                     <span>"Celebrity looks Beautiful in that outfit! We should see each"</span>
-                                                    <img src="images/resources/admin.jpg" alt=""/>
+                                                    <img src="/images/resources/admin.jpg" alt=""/>
                                                 </figure>
                                             </div>
                                         </a>
@@ -120,7 +120,7 @@ const Header = () => {
                                     <li>
                                         <a href="notifications.html" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-4.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-4.jpg" alt=""/>
                                                 <span className="status f-online"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -134,7 +134,7 @@ const Header = () => {
                                     <li>
                                         <a href="notifications.html" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-5.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-5.jpg" alt=""/>
                                                 <span className="status f-online"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -158,7 +158,7 @@ const Header = () => {
                                     <li>
                                         <a className="show-mesg" href="#" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-1.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-1.jpg" alt=""/>
                                                 <span className="status f-online"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -171,7 +171,7 @@ const Header = () => {
                                     <li>
                                         <a className="show-mesg" href="#" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-2.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-2.jpg" alt=""/>
                                                 <span className="status f-offline"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -184,7 +184,7 @@ const Header = () => {
                                     <li>
                                         <a className="show-mesg" href="#" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-3.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-3.jpg" alt=""/>
                                                 <span className="status f-online"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -254,10 +254,12 @@ const Header = () => {
                     </ul>
                     <div className="user-img">
                         <h5>{account.name}</h5>
+
                         <Link to={`/home/PersonalPage/MyTimeline/${account.idAccount}`}>
-                            <img style={{borderRadius: '50%', width:"40px"}} className="ml-3"
+                            <img style={{borderRadius: '50%', width: "40px"}} className="ml-3"
                                  src={account.avatar}></img>
                         </Link>
+
 
                         <span className="status f-online"></span>
                         <div className="user-setting">
@@ -282,10 +284,9 @@ const Header = () => {
                             </ul>
                         </div>
                     </div>
-                    <a as={'button'} onClick={() => {
+                    <a is={'button'} onClick={ () => {
                         localStorage.clear();
                         navigate('/')
-
                     }}><i className="ml-3 ti-power-off " style={{fontSize: 20}}></i>
                     </a>
                 </div>

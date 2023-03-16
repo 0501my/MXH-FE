@@ -66,7 +66,7 @@ const ShowHome = () => {
                                                 <div className="widget whitish low-opacity">
                                                     <div className="bg-image"></div>
                                                     <div className="dob-head">
-                                                        <img src="images/resources/sug-page-5.jpg" alt=""/>
+                                                        <img src="/images/resources/sug-page-5.jpg" alt=""/>
                                                         <span>22nd Birthday</span>
                                                         <div className="dob">
                                                             <i>19</i>
@@ -74,7 +74,7 @@ const ShowHome = () => {
                                                         </div>
                                                     </div>
                                                     <div className="dob-meta">
-                                                        <figure><img src="images/resources/dob-cake.gif" alt=""/>
+                                                        <figure><img src="/images/resources/dob-cake.gif" alt=""/>
                                                         </figure>
                                                         <h6><a href="#" title="">Lucy Carbel</a> valentine's birthday
                                                         </h6>
@@ -202,7 +202,7 @@ const ShowHome = () => {
                                                 <span className="create-post">Create post</span>
                                                 <div className="new-postbox">
                                                     <figure>
-                                                        <img src="images/resources/admin.jpg" alt=""/>
+                                                        <img src={account.avatar} style={{width : "40px"}} alt=""/>
                                                     </figure>
                                                     <Formik initialValues={{content: "",}} onSubmit={(values) => {
                                                         values.account = account.idAccount;
@@ -283,7 +283,7 @@ const ShowHome = () => {
                                                             <div className="user-post">
                                                                 <div className="friend-info">
                                                                     <figure>
-                                                                        <img src={it.account.avatar} alt="#"/>
+                                                                        <img  src={it.account.avatar} alt="#"/>
                                                                     </figure>
                                                                     <div className="friend-name">
                                                                         <div className="more">
@@ -343,7 +343,7 @@ const ShowHome = () => {
                                                                             <div className="img-bunch">
                                                                                 <figure>
                                                                                     <a className="strip"
-                                                                                       href="images/resources/album1.jpg"
+                                                                                       href="/images/resources/album1.jpg"
                                                                                        title=""
                                                                                        data-strip-group="mygroup"
                                                                                        data-strip-group-options="loop: false">

@@ -8,8 +8,9 @@ import * as Yup from "yup";
 const PersonalPage = () => {
 
     const {idAccount} = useParams();
-
     const [check, setCheck] = useState(false);
+    const [timeLine, setTimeLine] = useState('active');
+    const [about, setAbout] = useState('');
 
     const account = useSelector(state => {
         return state.account.account
@@ -84,7 +85,7 @@ const PersonalPage = () => {
                                             <div className="col-lg-2 col-md-3">
                                                 <div className="profile-author">
                                                     <div className="profile-author-thumb">
-                                                        <img alt="author" src="/images/resources/author.jpg"/>
+                                                        <img alt="author" src={account.avatar}/>
                                                         <div className="edit-dp">
                                                             <label className="fileContainer">
                                                                 <i className="fa fa-camera"></i>
@@ -94,19 +95,24 @@ const PersonalPage = () => {
                                                     </div>
 
                                                     <div className="author-content">
-                                                        <a className="h4 author-name" href="about.html">Jack
-                                                            Carter</a>
-                                                        <div className="country">Ontario, CA</div>
+                                                        <a className="h4 author-name" href="about.html">{account.name}</a>
+                                                        <div className="country">{account.address}</div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="col-lg-10 col-md-9">
                                                 <ul className="profile-menu">
                                                     <li>
-                                                        <Link className="active" to={`/home/PersonalPage/MyTimeLine/${idAccount}`}>Timeline</Link>
+                                                        <Link className={timeLine} to={`/home/PersonalPage/MyTimeLine/${idAccount}`} onClick={()=>{
+                                                            setTimeLine('active')
+                                                            setAbout('')
+                                                        }}>Timeline</Link>
                                                     </li>
                                                     <li>
-                                                        <Link className="" to={`/home/PersonalPage/MyAbout/${idAccount}`}>About</Link>
+                                                        <Link className={about} to={`/home/PersonalPage/MyAbout/${idAccount}`} onClick={()=>{
+                                                            setTimeLine('')
+                                                            setAbout('active')
+                                                        }}>About</Link>
                                                     </li>
                                                     <li>
                                                         <a className="" href="timeline-friends.html">Friends</a>
@@ -181,7 +187,7 @@ const PersonalPage = () => {
                         enableReinitialize={true}>
 
                     <div className="popup-wraper active">
-                        <div className="popup" style={{width:300, textAlignLast:"center"}}>
+                        <div className="popup" style={{width:400,height:400, textAlignLast:"center"}}>
                                 <span className="popup-closed" onClick={() => {
                                     setCheck(false)
                                 }}><i className="ti-close"></i></span>
@@ -202,6 +208,7 @@ const PersonalPage = () => {
                                                     <div>
                                                         <label>newPassword</label>
                                                         <Field  type="password" name={'newPassword'}/>
+                                                        <br/>
                                                         <alert>
                                                             <ErrorMessage name={"newPassword"}></ErrorMessage>
                                                         </alert>
@@ -209,6 +216,7 @@ const PersonalPage = () => {
                                                     <div>
                                                         <label>repeatPassword</label>
                                                         <Field  type="password" name={'repeatPassword'}/>
+                                                        <br/>
                                                         <alert>
                                                             <ErrorMessage name={"repeatPassword"}></ErrorMessage>
                                                         </alert>
