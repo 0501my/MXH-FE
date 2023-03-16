@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Field, Form, Formik} from "formik";
 
 import {useDispatch, useSelector} from "react-redux";
-import {AccountsEdit, findById} from "../services/AccountService";
+import {AccountsEdit, findById, searchOtherAccount} from "../services/AccountService";
 import {useParams} from "react-router-dom";
 
 
@@ -14,7 +14,11 @@ const MyAbout = () => {
     const account = useSelector(state => {
         return state.account.account
     })
+    const otherAccount = useSelector(state => {
+        return state.account.otherAccount
+    })
     useEffect(() => {
+        dispatch(searchOtherAccount(idAccount));
         if(idAccount == account.idAccount){
             dispatch(findById(idAccount));
             setEditInfo(true)
@@ -35,13 +39,13 @@ const MyAbout = () => {
                     }
                     <div className="personal-head">
                                                     <span className="f-title"><i
-                                                        className="ml-3 fa fa-user"></i> Name: {account.name}</span>
+                                                        className="ml-3 fa fa-user"></i> Name: {otherAccount.name}</span>
 
-                        <span className="f-title"><i className="ml-3 fa fa-birthday-cake"></i> Birthday:{account.birthday}</span>
+                        <span className="f-title"><i className="ml-3 fa fa-birthday-cake"></i> Birthday:{otherAccount.birthday}</span>
                         <span className="f-title"><i
-                            className="ml-3 fa fa-male"></i> Gender: {account.german}</span>
+                            className="ml-3 fa fa-male"></i> Gender: {otherAccount.german}</span>
                         <span className=" f-title"><i
-                            className="ml-3 fa fa-globe"></i> Country:{account.address}</span>
+                            className="ml-3 fa fa-globe"></i> Country:{otherAccount.address}</span>
 
                     </div>
                 </div>
@@ -56,6 +60,7 @@ const MyAbout = () => {
                     values.idAccount = account.idAccount
                     dispatch(AccountsEdit(values)).then(()=>{
                         dispatch(findById(idAccount))
+                        dispatch(searchOtherAccount(idAccount))
                         alert('Cập Nhật Thành Công')
                         setCheck (false)
                     })

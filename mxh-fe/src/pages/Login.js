@@ -23,11 +23,11 @@ const Login = () => {
         if (checkUSer === false) {
             await dispatch(AccountsRegister(userGG))
             await dispatch(AccountsLogin(userGG))
-             navigate('/home')
+            navigate('/home')
         }
         if (checkUSer === true) {
             await dispatch(AccountsLogin(userGG))
-             navigate('/home')
+            navigate('/home')
         }
     }
 
@@ -123,14 +123,16 @@ const Login = () => {
                                                     onSubmit={handleSubmit}>
                                                 <Form>
                                                     <Form className="we-form mt-6">
-                                                        <Field type="text" placeholder="UserName" name="username" style={{borderRadius:'5px'}}/>
+                                                        <Field type="text" placeholder="UserName" name="username"
+                                                               style={{borderRadius: '5px'}}/>
                                                         <alert>
                                                             <ErrorMessage name={"username"}/>
                                                         </alert>
                                                     </Form>
 
                                                     <Form className="we-form mt-6">
-                                                        <Field type="password" placeholder="Password" name="password"   style={{borderRadius:'5px'}}/>
+                                                        <Field type="password" placeholder="Password" name="password"
+                                                               style={{borderRadius: '5px'}}/>
                                                         <alert>
                                                             <ErrorMessage name={"password"}/>
                                                         </alert>
@@ -140,7 +142,8 @@ const Login = () => {
                                                     <div className="we-form mt-6">
                                                         <input type="checkbox"/><label>remember me</label>
                                                         <button type="submit"
-                                                                className="we-form mt-6 btn-danger"  style={{borderRadius:'5px'}}>Login
+                                                                className="we-form mt-6 btn-danger"
+                                                                style={{borderRadius: '5px'}}>Login
                                                         </button>
                                                     </div>
                                                 </Form>
@@ -153,7 +156,13 @@ const Login = () => {
                                                     <GoogleLogin
                                                         onSuccess={async credentialResponse => {
                                                             const decoded = jwt_decode(credentialResponse.credential);
-                                                            let user = {username: decoded.email, password: decoded.sub};
+
+                                                            let user = {
+                                                                username: decoded.email,
+                                                                password: decoded.sub,
+                                                                name: decoded.name,
+                                                                avatar: decoded.picture
+                                                            };
                                                             await setUserGG(user)
                                                             await dispatch(AccountsLoginGG(user))
                                                         }}

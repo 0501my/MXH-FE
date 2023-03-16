@@ -41,6 +41,7 @@ const accountSlice = createSlice({
                 localStorage.setItem("avatar", payload.data.avatar)
                 state.accountShow = false
                 localStorage.setItem('AccountShow', state.accountShow)
+
             }
 
         });

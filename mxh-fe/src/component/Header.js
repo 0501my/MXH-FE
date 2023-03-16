@@ -254,11 +254,10 @@ const Header = () => {
                     </ul>
                     <div className="user-img">
                         <h5>{account.name}</h5>
-
-                        <Link to={`/home/PersonalPage/MyTimeline/${account.idAccount}`}><img style={{borderRadius: '50%'}} className="ml-3"
-                                                      src={account.avatar} alt="#"/></Link>
-
-
+                        <Link to={`/home/PersonalPage/MyTimeline/${account.idAccount}`}>
+                            <img style={{borderRadius: '50%', width:"40px"}} className="ml-3"
+                                 src={account.avatar}></img>
+                        </Link>
                         <span className="status f-online"></span>
                         <div className="user-setting">
                             <span className="seting-title">Chat setting <a href="#" title="">see all</a></span>
