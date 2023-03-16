@@ -64,30 +64,6 @@ const Header = () => {
                                 <i className="fa fa-user"></i><em className="bg-red">5</em>
                             </a>
 
-                            <div className="dropdowns ps-container ps-theme-default ps-active-y active"
-                                 data-ps-id="58dd6af9-103b-546e-3b06-b3019d40412f">
-                                <span>5 New Requests <a href="#" title="">View all Requests</a></span>
-                                <ul className="drops-menu">
-                                    <li>
-                                        <div>
-                                            <figure>
-                                                <img src="images/resources/thumb-2.jpg" alt=""></img>
-                                            </figure>
-
-                                            <div className="mesg-meta">
-                                                <h6><a href="#" title="">Loren</a></h6>
-                                                <span><b>Amy</b> is mutule friend</span>
-                                                <i>yesterday</i>
-                                            </div>
-                                            <div className="add-del-friends">
-                                                <a href="#" title=""><i className="fa fa-heart"></i></a>
-                                                <a href="#" title=""><i className="fa fa-trash"></i></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-
                         </li>
                         <li>
                             <a href="#" title="Notification" data-ripple="">
@@ -99,7 +75,7 @@ const Header = () => {
                                     <li>
                                         <a href="notifications.html" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-1.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-1.jpg" alt=""/>
                                                 <span className="status f-online"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -112,7 +88,7 @@ const Header = () => {
                                     <li>
                                         <a href="notifications.html" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-2.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-2.jpg" alt=""/>
                                                 <span className="status f-online"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -129,7 +105,7 @@ const Header = () => {
                                     <li>
                                         <a href="notifications.html" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-3.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-3.jpg" alt=""/>
                                                 <span className="status f-online"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -138,7 +114,7 @@ const Header = () => {
                                                 <i>Sunday</i>
                                                 <figure>
                                                     <span>"Celebrity looks Beautiful in that outfit! We should see each"</span>
-                                                    <img src="images/resources/admin.jpg" alt=""/>
+                                                    <img src="/images/resources/admin.jpg" alt=""/>
                                                 </figure>
                                             </div>
                                         </a>
@@ -146,7 +122,7 @@ const Header = () => {
                                     <li>
                                         <a href="notifications.html" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-4.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-4.jpg" alt=""/>
                                                 <span className="status f-online"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -160,7 +136,7 @@ const Header = () => {
                                     <li>
                                         <a href="notifications.html" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-5.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-5.jpg" alt=""/>
                                                 <span className="status f-online"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -184,7 +160,7 @@ const Header = () => {
                                     <li>
                                         <a className="show-mesg" href="#" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-1.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-1.jpg" alt=""/>
                                                 <span className="status f-online"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -197,7 +173,7 @@ const Header = () => {
                                     <li>
                                         <a className="show-mesg" href="#" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-2.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-2.jpg" alt=""/>
                                                 <span className="status f-offline"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -210,7 +186,7 @@ const Header = () => {
                                     <li>
                                         <a className="show-mesg" href="#" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-3.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-3.jpg" alt=""/>
                                                 <span className="status f-online"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -280,7 +256,7 @@ const Header = () => {
                     </ul>
                     <div className="user-img">
                         <h5>{account.name}</h5>
-                        <Link  to={`/Home/PersonalPage/MyTimeLine/${account.idAccount}`}><img className="ml-3" src="/images/resources/admin.jpg" alt=""/></Link>
+                        <Link  to={`/Home/PersonalPage/MyTimeLine/${account.idAccount}`}><img style={{borderRadius:'50%'}} className="ml-3" src="/images/resources/admin.jpg" alt=""/></Link>
                         <span className="status f-online"></span>
                         <div className="user-setting">
                             <span className="seting-title">Chat setting <a href="#" title="">see all</a></span>
