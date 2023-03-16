@@ -3,9 +3,10 @@ import {ErrorMessage, Field, Form, Formik, validateYupSchema} from "formik";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AccountsLogin, AccountsLoginGG, AccountsRegister} from "../services/AccountService";
-import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
+import {GoogleLogin, GoogleOAuthProvider, useGoogleLogin} from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 import * as Yup from "yup";
+import GoogleButton from 'react-google-button'
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -20,7 +21,6 @@ const Login = () => {
 
     async function check() {
         if (checkUSer === false) {
-            console.log(userGG)
             await dispatch(AccountsRegister(userGG))
             await dispatch(AccountsLogin(userGG))
             navigate('/home')
@@ -123,14 +123,14 @@ const Login = () => {
                                                     onSubmit={handleSubmit}>
                                                 <Form>
                                                     <Form className="we-form mt-6">
-                                                        <Field type="text" placeholder="UserName" name="username"/>
+                                                        <Field type="text" placeholder="UserName" name="username" style={{borderRadius:'5px'}}/>
                                                         <alert>
                                                             <ErrorMessage name={"username"}/>
                                                         </alert>
                                                     </Form>
 
                                                     <Form className="we-form mt-6">
-                                                        <Field type="password" placeholder="Password" name="password"/>
+                                                        <Field type="password" placeholder="Password" name="password"   style={{borderRadius:'5px'}}/>
                                                         <alert>
                                                             <ErrorMessage name={"password"}/>
                                                         </alert>
@@ -140,14 +140,14 @@ const Login = () => {
                                                     <div className="we-form mt-6">
                                                         <input type="checkbox"/><label>remember me</label>
                                                         <button type="submit"
-                                                                className="we-form mt-6  btn-danger">Login
+                                                                className="we-form mt-6 btn-danger"  style={{borderRadius:'5px'}}>Login
                                                         </button>
                                                     </div>
                                                 </Form>
                                             </Formik>
                                         </div>
                                         <div className="row">
-                                            <div>
+                                            <div className={'col-12 d-flex justify-content-center'}>
                                                 <GoogleOAuthProvider
                                                     clientId="1004137847361-3p3lh814vts1f6ts9e2al867rjrjp9gc.apps.googleusercontent.com">
                                                     <GoogleLogin
@@ -160,10 +160,8 @@ const Login = () => {
                                                         onError={() => {
                                                             console.log('Login Failed');
                                                         }}
-
                                                     />
                                                 </GoogleOAuthProvider>
-
                                             </div>
 
                                         </div>

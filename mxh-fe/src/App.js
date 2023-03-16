@@ -9,16 +9,16 @@ import MyAbout from "./pages/MyAbout";
 
 
 function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Login/>}/>
-        <Route path="/registers" element={<Register/>}/>
-        <Route path="/home" element={<Home/>}>
-            <Route path={""} element={<ShowHome/>}/>
-            <Route path={"MyAbout"} element={<MyAbout/>}/>
-        </Route>
-    </Routes>
-  )
+    return (
+        <Routes>
+            <Route path="/" element={<Login/>}/>
+            <Route path="/registers" element={<Register/>}/>
+            <Route path="/home" element={<Home/>}>
+                <Route path={""} element={<ShowHome/>}/>
+                <Route path={"MyAbout"} element={<MyAbout/>}/>
+            </Route>
+        </Routes>
+    )
 }
 
 export default App;

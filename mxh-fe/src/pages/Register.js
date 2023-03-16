@@ -102,7 +102,7 @@ const Register = () => {
                                             onSubmit={handleSubmit}>
                                         <Form>
                                             <Form className="we-form mt-6">
-                                                <Field type="text" placeholder="UserName" name="username"/>
+                                                <Field type="text" placeholder="UserName" name="username" style={{borderRadius:'5px'}}/>
                                                 <alert>
                                                     <ErrorMessage name={"username"}></ErrorMessage>
                                                 </alert>
@@ -110,7 +110,7 @@ const Register = () => {
                                             </Form>
 
                                             <Form className="we-form mt-6">
-                                                <Field type="password" placeholder="Password" name="password"/>
+                                                <Field type="password" placeholder="Password" name="password" style={{borderRadius:'5px'}}/>
                                                 <alert>
                                                     <ErrorMessage name={"password"}></ErrorMessage>
                                                 </alert>
@@ -119,21 +119,19 @@ const Register = () => {
                                             </Form>
                                             <Form className="we-form mt-6">
                                                 <Field type="password" placeholder="passwordAgain"
-                                                       name="passwordAgain"/>
+                                                       name="passwordAgain" style={{borderRadius:'5px'}}/>
                                                 <alert>
                                                     <ErrorMessage name={"passwordAgain"}></ErrorMessage>
                                                 </alert>
                                             </Form>
                                             <div className="we-form mt-6">
                                                 <button type="submit"
-                                                        className="we-form mt-6 btn-outline-danger">Register
+                                                        className="we-form mt-6 btn-outline-danger " style={{borderRadius:'5px'}}>Register
                                                 </button>
                                             </div>
 
                                         </Form>
                                     </Formik>
-                                    <Link className="with-smedia google" href="#" title="" data-ripple=""><i
-                                        className="fa fa-google-plus"></i></Link>
                                     <span className="col-12">Do you already have an account???
                                             <Link className="we-account" to={"/"}>
                                             <h6 style={{color: "purple"}}>Login now</h6></Link></span>

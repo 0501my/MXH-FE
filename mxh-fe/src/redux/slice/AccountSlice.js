@@ -23,7 +23,7 @@ const accountSlice = createSlice({
         builder.addCase(AccountsLogin.fulfilled, (state, {payload}) => {
             state.account = payload.data;
             localStorage.setItem("status", payload.data)
-            if (state.account != 'User is not exit' && state.account != 'Password is wrong') {
+            if (state.account !== 'User is not exit' && state.account !== 'Password is wrong') {
                 localStorage.setItem("isAccount", payload.data.idAccount)
                 localStorage.setItem("access_token", payload.data.token)
                 localStorage.setItem("status", payload.data)
