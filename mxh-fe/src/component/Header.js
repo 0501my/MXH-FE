@@ -36,7 +36,7 @@ const Header = () => {
             <div className="topbar stick" style={{position: "fixed", width: "100%"}}>
                 <div className="logo">
 
-                    <a title="" href="/home"><img src="/images/logo3.png" alt=""/></a>
+                    <Link title="" to="/home"><img src="/images/logo3.png" alt=""/></Link>
 
                 </div>
                 <div className="top-area">
