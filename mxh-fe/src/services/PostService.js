@@ -4,9 +4,8 @@ import axios from "axios";
 export const editPost = createAsyncThunk(
     'posts/editPost',
     async (data) => {
-        await axios.put(`http://localhost:4000/posts/${data.idPost}`, data);
-        const response = await axios.get('http://localhost:4000/posts');
-        return response.data;
+         const response = await axios.put(`http://localhost:4000/posts/${data.idPost}`, data);
+        return response.data[0];
     }
 )
 export const getPosts = createAsyncThunk(
@@ -20,9 +19,8 @@ export const getPosts = createAsyncThunk(
 export const addPosts = createAsyncThunk(
     'posts/addPosts',
     async (data) => {
-        await axios.post('http://localhost:4000/posts', data);
-        const response = await axios.get('http://localhost:4000/posts');
-        return response.data;
+        const response = await axios.post('http://localhost:4000/posts', data);
+        return response.data[0];
     }
 )
 export const findByIdPost = createAsyncThunk(
@@ -36,8 +34,7 @@ export const deletePost = createAsyncThunk(
     'posts/deletePosts',
     async (id)=>{
         await axios.delete(`http://localhost:4000/posts/${id}`)
-        const res = await axios.get('http://localhost:4000/posts')
-        return res.data;
+        return id;
     }
 )
 export const findByIdAccount = createAsyncThunk(

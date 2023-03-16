@@ -48,3 +48,10 @@ export const findById = createAsyncThunk(
         return res.data
     }
 )
+export const searchOtherAccount = createAsyncThunk(
+    'accounts/searchOtherAccount',
+    async (data) => {
+        const res = await axios.get(`http://localhost:4000/accounts/findById/${data}`);
+        return res.data
+    }
+)

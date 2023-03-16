@@ -256,7 +256,7 @@ const Header = () => {
                         <h5>{account.name}</h5>
 
                         <Link to={`/home/PersonalPage/MyTimeline/${account.idAccount}`}><img style={{borderRadius: '50%'}} className="ml-3"
-                                                      src="/images/resources/admin.jpg" alt=""/></Link>
+                                                      src={account.avatar} alt="#"/></Link>
 
 
                         <span className="status f-online"></span>

@@ -1,12 +1,20 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
-    changePassword, findById, AccountsEdit, AccountsLogin, AccountsLogout, AccountsRegister, AccountsLoginGG
+    changePassword,
+    findById,
+    AccountsEdit,
+    AccountsLogin,
+    AccountsLogout,
+    AccountsRegister,
+    AccountsLoginGG,
+    searchOtherAccount
 } from "../../services/AccountService";
 
 const initialState = {
     account: [],
     accountShow: localStorage.getItem('accountShow'),
-    checkUser: null
+    checkUser: null,
+    otherAccount:{}
 }
 const accountSlice = createSlice({
     name: 'account', initialState, reducers: {}, extraReducers: builder => {
@@ -43,6 +51,9 @@ const accountSlice = createSlice({
         })
         builder.addCase(AccountsLoginGG.fulfilled, (state, {payload}) => {
             state.checkUser = payload.data
+        })
+        builder.addCase(searchOtherAccount.fulfilled, (state, action) => {
+            state.otherAccount = action.payload
         })
     }
 })
