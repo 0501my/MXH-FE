@@ -61,7 +61,7 @@ const Login = () => {
                             <div className="row">
                                 <div className="col-lg-8">
                                     <div className="big-ad">
-                                        <figure><img src="images/logo3.png" alt=""/></figure>
+                                        <figure><img style={{width:150}} src="images/logo3.png" alt=""/></figure>
                                         <h1>Welcome to the Bug Men</h1>
                                         <p>
                                             Bug Men is a social network template that can be used to connect people. use

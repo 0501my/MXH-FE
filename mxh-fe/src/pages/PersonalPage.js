@@ -95,9 +95,8 @@ const PersonalPage = () => {
                                                     </div>
 
                                                     <div className="author-content">
-                                                        <a className="h4 author-name" href="about.html">Jack
-                                                            Carter</a>
-                                                        <div className="country">Ontario, CA</div>
+                                                        <a className="h4 author-name" href="about.html">{account.name}</a>
+                                                        <div className="country">{account.address}</div>
                                                     </div>
                                                 </div>
                                             </div>

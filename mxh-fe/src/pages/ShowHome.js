@@ -203,7 +203,7 @@ const ShowHome = () => {
                                                 <span className="create-post">Create post</span>
                                                 <div className="new-postbox">
                                                     <figure>
-                                                        <img src="images/resources/admin.jpg" alt=""/>
+                                                        <img src="/images/resources/admin.jpg" alt=""/>
                                                     </figure>
                                                     <Formik initialValues={{content: "",}} onSubmit={(values) => {
                                                         values.account = account.idAccount;
@@ -285,7 +285,7 @@ const ShowHome = () => {
                                                             <div className="user-post">
                                                                 <div className="friend-info">
                                                                     <figure>
-                                                                        <img src={it.account.avatar} alt="#"/>
+                                                                        <img  src={it.account.avatar} alt="#"/>
                                                                     </figure>
                                                                     <div className="friend-name">
                                                                         <div className="more">
@@ -346,7 +346,7 @@ const ShowHome = () => {
                                                                             <div className="img-bunch">
                                                                                 <figure>
                                                                                     <a className="strip"
-                                                                                       href="images/resources/album1.jpg"
+                                                                                       href="/images/resources/album1.jpg"
                                                                                        title=""
                                                                                        data-strip-group="mygroup"
                                                                                        data-strip-group-options="loop: false">
