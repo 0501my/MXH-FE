@@ -6,19 +6,25 @@ import Home from "./pages/Home";
 import ShowHome from "./pages/ShowHome";
 import Register from "./pages/Register";
 import MyAbout from "./pages/MyAbout";
+import MyTimeLine from "./pages/MyTimeLine";
+import PersonalPage from "./pages/PersonalPage";
 
 
 function App() {
-    return (
-        <Routes>
-            <Route path="/" element={<Login/>}/>
-            <Route path="/registers" element={<Register/>}/>
-            <Route path="/home" element={<Home/>}>
-                <Route path={""} element={<ShowHome/>}/>
-                <Route path={"MyAbout"} element={<MyAbout/>}/>
+  return (
+    <Routes>
+      <Route path="/" element={<Login/>}/>
+        <Route path="/registers" element={<Register/>}/>
+        <Route path="/home" element={<Home/>}>
+            <Route path={""} element={<ShowHome/>}/>
+
+            <Route path={"PersonalPage"} element={<PersonalPage/>}>
+            <Route path={"MyAbout"} element={<MyAbout/>}/>
+            <Route path={"MyTimeLine/:idAccount"} element={<MyTimeLine/>}/>
             </Route>
-        </Routes>
-    )
+        </Route>
+    </Routes>
+  )
 }
 
 export default App;
