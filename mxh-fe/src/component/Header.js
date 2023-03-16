@@ -1,14 +1,14 @@
 import React from 'react';
 import {Link, useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {AccountsLogout} from "../services/AccountService";
 
 const Header = () => {
     const navigate = useNavigate()
     const account = useSelector(state => {
         return state.account.account
-
     })
-
+    const dispatch = useDispatch()
     return (
         <>
             <div className="postoverlay"></div>
@@ -254,8 +254,9 @@ const Header = () => {
                     </ul>
                     <div className="user-img">
                         <h5>{account.name}</h5>
+
                         <Link to={`/home/PersonalPage/MyTimeline/${account.idAccount}`}>
-                            <img style={{borderRadius: '50%', width:"40px"}} className="ml-3"
+                            <img style={{borderRadius: '50%', width: "40px"}} className="ml-3"
                                  src={account.avatar}></img>
                         </Link>
                         <span className="status f-online"></span>
@@ -281,10 +282,9 @@ const Header = () => {
                             </ul>
                         </div>
                     </div>
-                    <a as={'button'} onClick={() => {
+                    <a is={'button'} onClick={ () => {
                         localStorage.clear();
                         navigate('/')
-
                     }}><i className="ml-3 ti-power-off " style={{fontSize: 20}}></i>
                     </a>
                 </div>

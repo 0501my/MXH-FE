@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
-import {ErrorMessage, Field, Form, Formik, validateYupSchema} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AccountsLogin, AccountsLoginGG, AccountsRegister} from "../services/AccountService";
-import {GoogleLogin, GoogleOAuthProvider, useGoogleLogin} from "@react-oauth/google";
+import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 import * as Yup from "yup";
-import GoogleButton from 'react-google-button'
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -24,14 +23,16 @@ const Login = () => {
             await dispatch(AccountsRegister(userGG))
             await dispatch(AccountsLogin(userGG))
             navigate('/home')
+            await alert("Login success")
         }
         if (checkUSer === true) {
             await dispatch(AccountsLogin(userGG))
             navigate('/home')
+            // await alert("Login success")
         }
     }
 
-    check()
+
     const handleSubmit = async (values) => {
         console.log(localStorage.getItem('status') === 'User is not exit')
         await dispatch(AccountsLogin(values));
@@ -51,7 +52,6 @@ const Login = () => {
             .max(32, "Mật khẩu chỉ có nhiều nhất 14 ký tự")
     });
 
-
     return (<>
             <div className="www-layout">
                 <section>
@@ -61,7 +61,7 @@ const Login = () => {
                             <div className="row">
                                 <div className="col-lg-8">
                                     <div className="big-ad">
-                                        <figure><img style={{width:150}} src="images/logo3.png" alt=""/></figure>
+                                        <figure><img style={{width: 150}} src="images/logo3.png" alt=""/></figure>
                                         <h1>Welcome to the Bug Men</h1>
                                         <p>
                                             Bug Men is a social network template that can be used to connect people. use
@@ -165,6 +165,8 @@ const Login = () => {
                                                             };
                                                             await setUserGG(user)
                                                             await dispatch(AccountsLoginGG(user))
+                                                            check().then()
+
                                                         }}
                                                         onError={() => {
                                                             console.log('Login Failed');
@@ -178,8 +180,7 @@ const Login = () => {
                                         <span className="col-12">don't have an account?
                                             <Link className="we-account "
                                                   title="" to={"/registers"}>
-                                                <h6 className="we-account"
-                                                    style={{color: "purple"}}>register now</h6></Link></span>
+                                                <h6 className="we-account">register now</h6></Link></span>
                                     </div>
 
                                 </div>

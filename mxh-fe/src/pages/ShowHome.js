@@ -202,7 +202,7 @@ const ShowHome = () => {
                                                 <span className="create-post">Create post</span>
                                                 <div className="new-postbox">
                                                     <figure>
-                                                        <img src={account.avatar} alt="#"/>
+                                                        <img src={account.avatar} style={{width : "40px"}} alt=""/>
                                                     </figure>
                                                     <Formik initialValues={{content: "",}} onSubmit={(values) => {
                                                         values.account = account.idAccount;

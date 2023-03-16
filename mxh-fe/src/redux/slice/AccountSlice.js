@@ -33,7 +33,7 @@ const accountSlice = createSlice({
         builder.addCase(AccountsLogin.fulfilled, (state, {payload}) => {
             state.account = payload.data;
             localStorage.setItem("status", payload.data)
-            if (state.account !== 'User is not exit' && state.account !== 'Password is wrong') {
+            if (state.account != 'User is not exit' && state.account != 'Password is wrong') {
                 localStorage.setItem("isAccount", payload.data.idAccount)
                 localStorage.setItem("access_token", payload.data.token)
                 localStorage.setItem("status", payload.data)
@@ -41,12 +41,11 @@ const accountSlice = createSlice({
                 localStorage.setItem("avatar", payload.data.avatar)
                 state.accountShow = false
                 localStorage.setItem('AccountShow', state.accountShow)
-
             }
 
         });
         builder.addCase(AccountsLogout.fulfilled, (state, {payload}) => {
-            state.userShow = true
+            state.accountShow = true
             localStorage.setItem('accountShow', state.accountShow)
             localStorage.clear()
         })

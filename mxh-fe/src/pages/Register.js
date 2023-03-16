@@ -134,7 +134,7 @@ const Register = () => {
                                     </Formik>
                                     <span className="col-12">Do you already have an account???
                                             <Link className="we-account" to={"/"}>
-                                            <h6 style={{color: "purple"}}>Login now</h6></Link></span>
+                                            <h6>Login now</h6></Link></span>
                                 </div>
                             </div>
                         </div>
