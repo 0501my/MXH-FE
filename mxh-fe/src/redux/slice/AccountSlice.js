@@ -28,8 +28,10 @@ const accountSlice = createSlice({
                 localStorage.setItem("access_token", payload.data.token)
                 localStorage.setItem("status", payload.data)
                 localStorage.setItem("nameAccount", payload.data.username)
+                localStorage.setItem("avatar", payload.data.avatar)
                 state.accountShow = false
                 localStorage.setItem('AccountShow', state.accountShow)
+
             }
 
         });

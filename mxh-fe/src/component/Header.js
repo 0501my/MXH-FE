@@ -254,8 +254,10 @@ const Header = () => {
                     </ul>
                     <div className="user-img">
                         <h5>{account.name}</h5>
-                        <Link to={`/home/PersonalPage/MyTimeline/${account.idAccount}`}><img style={{borderRadius: '50%'}} className="ml-3"
-                                                      src="/images/resources/admin.jpg" alt=""/></Link>
+                        <Link to={`/home/PersonalPage/MyTimeline/${account.idAccount}`}>
+                            <img style={{borderRadius: '50%', width:"40px"}} className="ml-3"
+                                 src={account.avatar}></img>
+                        </Link>
 
                         <span className="status f-online"></span>
                         <div className="user-setting">
