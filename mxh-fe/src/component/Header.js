@@ -1,8 +1,16 @@
 import React from 'react';
 import {Link, useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const Header = () => {
-    const navigate = useNavigate()
+
+    const navigate = useNavigate();
+
+    const account = useSelector(state => {
+        return state.account.account
+    })
+
+
     return (
         <>
             <div className="postoverlay"></div>
@@ -271,8 +279,8 @@ const Header = () => {
                         </li>
                     </ul>
                     <div className="user-img">
-                        <h5>Jack Carter</h5>
-                        <Link  to="/home/MyAbout"><img className="ml-3" src="/images/resources/admin.jpg" alt=""/></Link>
+                        <h5>{account.name}</h5>
+                        <Link  to={`/Home/PersonalPage/MyTimeLine/${account.idAccount}`}><img className="ml-3" src="/images/resources/admin.jpg" alt=""/></Link>
                         <span className="status f-online"></span>
                         <div className="user-setting">
                             <span className="seting-title">Chat setting <a href="#" title="">see all</a></span>
