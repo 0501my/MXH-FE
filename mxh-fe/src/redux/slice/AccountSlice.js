@@ -4,7 +4,9 @@ import {
 } from "../../services/AccountService";
 
 const initialState = {
-    account: [], accountShow: localStorage.getItem('accountShow'), checkUser: null
+    account: [],
+    accountShow: localStorage.getItem('accountShow'),
+    checkUser: null
 }
 const accountSlice = createSlice({
     name: 'account', initialState, reducers: {}, extraReducers: builder => {

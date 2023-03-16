@@ -9,12 +9,17 @@ import {useParams} from "react-router-dom";
 const MyAbout = () => {
     const {idAccount} = useParams()
     const [check, setCheck] = useState(false);
+    const [editInfo, setEditInfo] = useState(false);
     const dispatch = useDispatch()
     const account = useSelector(state => {
         return state.account.account
     })
     useEffect(() => {
-        dispatch(findById(idAccount))
+        if(idAccount == account.idAccount){
+            dispatch(findById(idAccount));
+            setEditInfo(true)
+        }
+
 
     }, [])
 
@@ -24,9 +29,10 @@ const MyAbout = () => {
             <aside className="sidebar">
                 <div className="central-meta stick-widget">
                     <span className="create-post">Personal Info</span>
-                    <p style={{textAlign:"right"}} as={'button'} onClick={()=>{
-                        setCheck(true)}
-                    }><i className="ti-more-alt"></i></p>
+                    {editInfo &&
+                        <p style={{textAlign:"right"}} as={'button'} onClick={()=>{setCheck(true)}}>
+                            <i className="ti-more-alt"></i></p>
+                    }
                     <div className="personal-head">
                                                     <span className="f-title"><i
                                                         className="ml-3 fa fa-user"></i> Name: {account.name}</span>
