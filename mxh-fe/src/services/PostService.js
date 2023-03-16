@@ -40,3 +40,10 @@ export const deletePost = createAsyncThunk(
         return res.data;
     }
 )
+export const findByIdAccount = createAsyncThunk(
+    'posts/findByIdAccount',
+    async (data) => {
+        const res = await axios.get(`http://localhost:4000/posts/${data}`);
+        return res.data
+    }
+)

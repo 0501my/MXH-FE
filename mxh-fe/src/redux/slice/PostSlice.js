@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {addPosts, deletePost, editPost, findByIdPost, getPosts} from "../../services/PostService";
+import {addPosts, deletePost, editPost, findByIdAccount, findByIdPost, getPosts} from "../../services/PostService";
 
 
 const initialState = {
@@ -26,7 +26,9 @@ const postSlice = createSlice({
             builder.addCase(deletePost.fulfilled, (state, action) => {
                 state.posts = action.payload;
             });
-
+            builder.addCase(findByIdAccount.fulfilled, (state, action) => {
+                state.posts = action.payload;
+            });
         }
     }
 )
