@@ -26,9 +26,11 @@ const Register = () => {
             let data = {
                 username: values.username, password: values.password
             }
-            await dispatch(AccountsRegister(data));
-            alert('Registered successfully')
-            navigate('/')
+            await dispatch(AccountsRegister(data)).then(()=>{
+                alert('Registered successfully')
+                navigate('/')
+            })
+
         }
 
     };

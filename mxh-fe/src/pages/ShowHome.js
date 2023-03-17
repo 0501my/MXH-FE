@@ -41,7 +41,8 @@ const ShowHome = () => {
         })
 
     }
-    return (<>
+    return (
+        <>
             <div className="theme-layout">
                 <div className="responsive-header">
                     <div className="mh-head first Sticky">
@@ -278,7 +279,8 @@ const ShowHome = () => {
 
 
                                             <div className="loadMore">
-                                                {posts !== undefined && posts.map(it => (<>
+                                                {posts !== undefined && posts.map(it => (
+                                                    <>
                                                         <div className="central-meta item">
                                                             <div className="user-post">
                                                                 <div className="friend-info">
@@ -322,7 +324,8 @@ const ShowHome = () => {
                                                                                                }}>&nbsp; Delete Post</i>
                                                                                         </li>
                                                                                     </ul>
-                                                                                </div>}
+                                                                                </div>
+                                                                            }
 
                                                                         </div>
                                                                         <ins><Link
@@ -521,7 +524,8 @@ const ShowHome = () => {
 
                                                             </div>
                                                         </div>
-                                                    </>))}
+                                                    </>
+                                                ))}
 
 
                                             </div>
@@ -723,62 +727,65 @@ const ShowHome = () => {
                 </section>
             </div>
 
-            {check ? <>
-                <Formik initialValues={currentPost}
-                        onSubmit={(values) => {
-                            handleEditPost(values)
-                        }}
-                        enableReinitialize={true}>
+            {
+                check ? <>
+                    <Formik initialValues={currentPost}
+                            onSubmit={(values) => {
+                                handleEditPost(values)
+                            }
+                            }
+                            enableReinitialize={true}>
 
-                    <div className="popup-wraper active">
-                        <div className="popup">
+                        <div className="popup-wraper active">
+                            <div className="popup">
                                 <span className="popup-closed" onClick={() => {
                                     setCheck(false)
                                 }}><i className="ti-close"></i></span>
-                            <div className="popup-meta">
-                                <div className="popup-head">
-                                    <h5>Edit Post</h5>
-                                </div>
-                                <div className="forum-form">
-                                    <div className="postbox">
-                                        <div className="new-postbox">
-                                            <Form>
-                                                <div className="newpst-input">
-                                                    <div>
-                                                        <label>Content</label>
-                                                        <Field as={'textarea'} type="text" name={'content'}/>
+                                <div className="popup-meta">
+                                    <div className="popup-head">
+                                        <h5>Edit Post</h5>
+                                    </div>
+                                    <div className="forum-form">
+                                        <div className="postbox">
+                                            <div className="new-postbox">
+                                                <Form>
+                                                    <div className="newpst-input">
+                                                        <div>
+                                                            <label>Content</label>
+                                                            <Field as={'textarea'} type="text" name={'content'}/>
+                                                        </div>
+                                                        <div className="select-options">
+                                                            <hr/>
+                                                            <Field as={'select'} className="select" name={'status'}>
+                                                                <option value={'public'}>Public</option>
+                                                                <option value={'friendonly'}>Friend only</option>
+                                                                <option value={'onlyme'}>Only me</option>
+                                                            </Field>
+                                                        </div>
+                                                        <div className="attachments">
+                                                            <li>
+                                                                <i className="fa fa-camera"></i>
+                                                                <label className="fileContainer">
+                                                                    <input type="file"/>
+                                                                </label>
+                                                            </li>
+                                                        </div>
+                                                        <button className="post-btn" type="submit" data-ripple="">Edit
+                                                        </button>
                                                     </div>
-                                                    <div className="select-options">
-                                                        <hr/>
-                                                        <Field as={'select'} className="select" name={'status'}>
-                                                            <option value={'public'}>Public</option>
-                                                            <option value={'friendonly'}>Friend only</option>
-                                                            <option value={'onlyme'}>Only me</option>
-                                                        </Field>
-                                                    </div>
-                                                    <div className="attachments">
-                                                        <li>
-                                                            <i className="fa fa-camera"></i>
-                                                            <label className="fileContainer">
-                                                                <input type="file"/>
-                                                            </label>
-                                                        </li>
-                                                    </div>
-                                                    <button className="post-btn" type="submit" data-ripple="">Edit
-                                                    </button>
-                                                </div>
-                                            </Form>
+                                                </Form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                </Formik>
-            </> : <>
+                    </Formik>
+                </> : <>
 
-            </>}
+                </>
+            }
 
         </>
 

@@ -5,8 +5,7 @@ import {useSelector} from "react-redux";
 const Header = () => {
     const navigate = useNavigate()
     const account = useSelector(state => {
-        return state.account.account
-
+        return state.account.currentAccount
     })
 
     return (

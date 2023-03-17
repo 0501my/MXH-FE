@@ -12,7 +12,7 @@ const MyAbout = () => {
     const [editInfo, setEditInfo] = useState(false);
     const dispatch = useDispatch()
     const account = useSelector(state => {
-        return state.account.account
+        return state.account.currentAccount
     })
     const otherAccount = useSelector(state => {
         return state.account.otherAccount
@@ -20,7 +20,6 @@ const MyAbout = () => {
     useEffect(() => {
         dispatch(searchOtherAccount(idAccount));
         if(idAccount == account.idAccount){
-            dispatch(findById(idAccount));
             setEditInfo(true)
         }
 
@@ -55,16 +54,17 @@ const MyAbout = () => {
             {
                 check ? <>
                     <Formik
-                    initialValues={account}
+                    initialValues={otherAccount}
                     onSubmit={(values)=>{
-                    values.idAccount = account.idAccount
+                    values.idAccount = idAccount;
+                    values.avatar = otherAccount.avatar;
                     dispatch(AccountsEdit(values)).then(()=>{
-                        dispatch(findById(idAccount))
                         dispatch(searchOtherAccount(idAccount))
                         alert('Cập Nhật Thành Công')
                         setCheck (false)
                     })
                     }}
+                    enableReinitialize={true}
                     >
                         <Form>
                         <div className="central-meta" >

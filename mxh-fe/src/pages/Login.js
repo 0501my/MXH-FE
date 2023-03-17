@@ -120,7 +120,9 @@ const Login = () => {
                                         <div className="row">
                                             <Formik className="we-form" initialValues={initialValuesAdd}
                                                     validationSchema={validationSchema}
-                                                    onSubmit={handleSubmit}>
+                                                    onSubmit={(values)=>{
+                                                        handleSubmit(values)
+                                                    }}>
                                                 <Form>
                                                     <Form className="we-form mt-6">
                                                         <Field type="text" placeholder="UserName" name="username"

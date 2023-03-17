@@ -13,7 +13,7 @@ const PersonalPage = () => {
     const [about, setAbout] = useState('');
 
     const account = useSelector(state => {
-        return state.account.account
+        return state.account.currentAccount
     })
     const otherAccount = useSelector(state => {
         return state.account.otherAccount
