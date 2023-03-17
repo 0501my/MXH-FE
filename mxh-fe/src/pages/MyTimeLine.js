@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {addPosts, deletePost, editPost, findByIdAccount, findByIdPost} from "../services/PostService";
 import {Field, Form, Formik} from "formik";
 import swal from "sweetalert";
+import {storage} from "../services/fireBase";
+import {ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 
 const MyTimeLine = () => {
     const {idAccount} = useParams();
@@ -20,10 +22,12 @@ const MyTimeLine = () => {
     })
 
     const dispatch = useDispatch();
+    const [images, setImages] = useState([]);
 
-    useEffect(() => {
-        dispatch(findByIdAccount(idAccount))
-    }, [])
+    const [urls, setUrls] = useState([]);
+    const [progress, setProgress] = useState(0);
+
+
     const handleDelete = async (id) => {
         dispatch(deletePost(id))
     }
@@ -34,6 +38,45 @@ const MyTimeLine = () => {
             setCheck(false)
         })
     }
+    const handleChange = (e) => {
+        for (let i = 0; i < e.target.files.length; i++) {
+            const newImage = e.target.files[i];
+            newImage["id"] = Math.random();
+            setImages((prevState) => [...prevState, newImage]);
+        }
+    };
+    const handleUpload = () => {
+        const promises = [];
+        if (images.length > 0) {
+            images.map((image) => {
+                const storageRef = ref(storage, `images/${image.name}`);
+                const uploadTask = uploadBytesResumable(storageRef, image);
+                promises.push(uploadTask);
+                uploadTask.on(
+                    "state_changed",
+                    (snapshot) => {
+                        const progress = Math.round(
+                            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                        );
+                        setProgress(progress);
+                    },
+                    (error) => {
+                        console.log(error);
+                    },
+                    async () => {
+                        await getDownloadURL(uploadTask.snapshot.ref).then((downloadURLs) => {
+                            setUrls(prevState => [...prevState, downloadURLs])
+                            console.log("File available at", downloadURLs);
+                        });
+                    }
+                );
+            });
+        }
+        Promise.all(promises)
+            .then(() => alert("All images uploaded"))
+            .catch((err) => console.log(err));
+
+    }
 
 
     const [check, setCheck] = useState(false)
@@ -42,6 +85,9 @@ const MyTimeLine = () => {
         })
 
     }
+    useEffect(() => {
+        dispatch(findByIdAccount(idAccount))
+    }, [])
 
     return (
         <>

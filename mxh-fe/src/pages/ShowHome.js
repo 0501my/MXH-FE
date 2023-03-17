@@ -204,12 +204,17 @@ const ShowHome = () => {
                                                     <figure>
                                                         <img src={account.avatar} style={{width : "40px"}} alt=""/>
                                                     </figure>
-                                                    <Formik initialValues={{content: "",}} onSubmit={(values) => {
+                                                    <Formik initialValues={{content: "",image : ""}} onSubmit={(values) => {
                                                         values.account = account.idAccount;
+                                                        values.image = urls[0]
                                                         dispatch(addPosts(values))
                                                         document.getElementById('add-form').reset();
                                                     }}>
                                                         <Form id='add-form'>
+                                                            <div className="newpst-input">
+                                                                <Field as={'textarea'} name={'content'} rows="2"
+                                                                       placeholder="Share some what you are thinking?"/>
+                                                            </div>
                                                             <div className="newpst-input">
                                                                 <Field as={'textarea'} name={'content'} rows="2"
                                                                        placeholder="Share some what you are thinking?"/>
