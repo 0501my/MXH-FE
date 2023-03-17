@@ -15,7 +15,7 @@ const ShowHome = () => {
     })
 
     const account = useSelector(state => {
-        return state.account.account
+        return state.account.currentAccount
     })
 
     const dispatch = useDispatch();
@@ -203,7 +203,7 @@ const ShowHome = () => {
                                                 <span className="create-post">Create post</span>
                                                 <div className="new-postbox">
                                                     <figure>
-                                                        <img src={account.avatar} alt="#"/>
+                                                        <img src={account.avatar} style={{width : "40px"}} alt=""/>
                                                     </figure>
                                                     <Formik initialValues={{content: "",}} onSubmit={(values) => {
                                                         values.account = account.idAccount;
@@ -289,7 +289,7 @@ const ShowHome = () => {
                                                                     </figure>
                                                                     <div className="friend-name">
                                                                         <div className="more">
-                                                                            {account.idAccount === it.account.idAccount &&
+                                                                            {account.idAccount == it.account.idAccount &&
                                                                                 <div className="more-post-optns"><i
                                                                                     className="ti-more-alt"></i>
                                                                                     <ul>

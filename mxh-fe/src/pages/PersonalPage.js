@@ -96,6 +96,7 @@ const PersonalPage = () => {
                                                 <div className="profile-author">
                                                     <div className="profile-author-thumb">
                                                         <img alt="author" src={otherAccount.avatar}/>
+
                                                         <div className="edit-dp">
                                                             <label className="fileContainer">
                                                                 <i className="fa fa-camera"></i>
@@ -105,7 +106,8 @@ const PersonalPage = () => {
                                                     </div>
 
                                                     <div className="author-content">
-                                                        <h5>{otherAccount.name}</h5>
+                                                        <a className="h4 author-name">{otherAccount.name}</a>
+                                                        <div className="country">{account.address}</div>
                                                     </div>
                                                 </div>
                                             </div>

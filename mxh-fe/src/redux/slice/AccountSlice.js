@@ -48,7 +48,7 @@ const accountSlice = createSlice({
 
         });
         builder.addCase(AccountsLogout.fulfilled, (state, {payload}) => {
-            state.userShow = true
+            state.accountShow = true
             localStorage.setItem('accountShow', state.accountShow)
             localStorage.clear()
         })
