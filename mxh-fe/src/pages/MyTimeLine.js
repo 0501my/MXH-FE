@@ -1,4 +1,4 @@
-import {Link, useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {addPosts, deletePost, editPost, findByIdAccount, findByIdPost} from "../services/PostService";
@@ -34,7 +34,6 @@ const MyTimeLine = () => {
     const handleEditPost = (values) => {
         let data = {...values}
         dispatch(editPost(data)).then(() => {
-            navigate('/home')
             setCheck(false)
         })
     }
@@ -247,82 +246,86 @@ const MyTimeLine = () => {
                                         {/*sidebar*/}
 
                                         <div className="col-lg-6">
-                                            <div className="central-meta postbox">
-                                                <span className="create-post">Create post</span>
-                                                <div className="new-postbox">
-                                                    <figure>
-                                                        <img src={account.avatar} style={{width : "40px"}} alt=""/>
-                                                    </figure>
-                                                    <Formik initialValues={{content: "",}} onSubmit={(values) => {
-                                                        values.account = account.idAccount;
-                                                        dispatch(addPosts(values))
-                                                        document.getElementById('add-form').reset();
-                                                    }}>
-                                                        <Form id='add-form'>
-                                                            <div className="newpst-input">
-                                                                <Field as={'textarea'} name={'content'} rows="2"
-                                                                       placeholder="Share some what you are thinking?"/>
-                                                            </div>
-                                                            <div className="attachments">
-                                                                {/*<ul>*/}
-                                                                {/*        <li>*/}
-                                                                {/*<span className="add-loc">*/}
-                                                                {/*	<i className="fa fa-map-marker"></i>*/}
-                                                                {/*</span>*/}
-                                                                {/*        </li>*/}
-                                                                {/*        <li>*/}
-                                                                {/*            <i className="fa fa-music"></i>*/}
-                                                                {/*            <label className="fileContainer">*/}
-                                                                {/*                <input type="file"/>*/}
-                                                                {/*            </label>*/}
-                                                                {/*        </li>*/}
-                                                                {/*        <li>*/}
-                                                                {/*            <i className="fa fa-image"></i>*/}
-                                                                {/*            <label className="fileContainer">*/}
-                                                                {/*                <input type="file"/>*/}
-                                                                {/*            </label>*/}
-                                                                {/*        </li>*/}
-                                                                {/*        <li>*/}
-                                                                {/*            <i className="fa fa-video-camera"></i>*/}
-                                                                {/*            <label className="fileContainer">*/}
-                                                                {/*                <input type="file"/>*/}
-                                                                {/*            </label>*/}
-                                                                {/*        </li>*/}
-                                                                {/*        <li>*/}
-                                                                {/*            <i className="fa fa-camera"></i>*/}
-                                                                {/*            <label className="fileContainer">*/}
-                                                                {/*                <input type="file"/>*/}
-                                                                {/*            </label>*/}
-                                                                {/*        </li>*/}
-                                                                {/*        <li className="preview-btn">*/}
-                                                                {/*            <button className="post-btn-preview" type="submit"*/}
-                                                                {/*                    data-ripple="">Preview*/}
-                                                                {/*            </button>*/}
-                                                                {/*        </li>*/}
-                                                                {/*    </ul>*/}
-                                                                <button className="post-btn" type="submit"
-                                                                        data-ripple="">Post
-                                                                </button>
-                                                            </div>
-                                                            {/*<div className="add-location-post">*/}
-                                                            {/*    <span>Drag map point to selected area</span>*/}
-                                                            {/*    <div className="row">*/}
-                                                            {/*        <div className="col-lg-6">*/}
-                                                            {/*            <label className="control-label">Lat :</label>*/}
-                                                            {/*            <input type="text" className="" id="us3-lat"/>*/}
-                                                            {/*        </div>*/}
-                                                            {/*        <div className="col-lg-6">*/}
-                                                            {/*            <label>Long :</label>*/}
-                                                            {/*            <input type="text" className="" id="us3-lon"/>*/}
-                                                            {/*        </div>*/}
-                                                            {/*    </div>*/}
-                                                            {/*    /!*map*!/*/}
-                                                            {/*    <div id="us3"></div>*/}
-                                                            {/*</div>*/}
-                                                        </Form>
-                                                    </Formik>
+
+                                            {account.idAccount == idAccount &&
+                                                <div className="central-meta postbox">
+                                                    <span className="create-post">Create post</span>
+                                                    <div className="new-postbox">
+                                                        <figure>
+                                                            <img src="images/resources/admin.jpg" alt=""/>
+                                                        </figure>
+                                                        <Formik initialValues={{content: "",}} onSubmit={(values) => {
+                                                            values.account = account.idAccount;
+                                                            dispatch(addPosts(values))
+                                                            document.getElementById('add-form').reset();
+                                                        }}>
+                                                            <Form id='add-form'>
+                                                                <div className="newpst-input">
+                                                                    <Field as={'textarea'} name={'content'} rows="2"
+                                                                           placeholder="Share some what you are thinking?"/>
+                                                                </div>
+                                                                <div className="attachments">
+                                                                    {/*<ul>*/}
+                                                                    {/*        <li>*/}
+                                                                    {/*<span className="add-loc">*/}
+                                                                    {/*	<i className="fa fa-map-marker"></i>*/}
+                                                                    {/*</span>*/}
+                                                                    {/*        </li>*/}
+                                                                    {/*        <li>*/}
+                                                                    {/*            <i className="fa fa-music"></i>*/}
+                                                                    {/*            <label className="fileContainer">*/}
+                                                                    {/*                <input type="file"/>*/}
+                                                                    {/*            </label>*/}
+                                                                    {/*        </li>*/}
+                                                                    {/*        <li>*/}
+                                                                    {/*            <i className="fa fa-image"></i>*/}
+                                                                    {/*            <label className="fileContainer">*/}
+                                                                    {/*                <input type="file"/>*/}
+                                                                    {/*            </label>*/}
+                                                                    {/*        </li>*/}
+                                                                    {/*        <li>*/}
+                                                                    {/*            <i className="fa fa-video-camera"></i>*/}
+                                                                    {/*            <label className="fileContainer">*/}
+                                                                    {/*                <input type="file"/>*/}
+                                                                    {/*            </label>*/}
+                                                                    {/*        </li>*/}
+                                                                    {/*        <li>*/}
+                                                                    {/*            <i className="fa fa-camera"></i>*/}
+                                                                    {/*            <label className="fileContainer">*/}
+                                                                    {/*                <input type="file"/>*/}
+                                                                    {/*            </label>*/}
+                                                                    {/*        </li>*/}
+                                                                    {/*        <li className="preview-btn">*/}
+                                                                    {/*            <button className="post-btn-preview" type="submit"*/}
+                                                                    {/*                    data-ripple="">Preview*/}
+                                                                    {/*            </button>*/}
+                                                                    {/*        </li>*/}
+                                                                    {/*    </ul>*/}
+                                                                    <button className="post-btn" type="submit"
+                                                                            data-ripple="">Post
+                                                                    </button>
+                                                                </div>
+                                                                {/*<div className="add-location-post">*/}
+                                                                {/*    <span>Drag map point to selected area</span>*/}
+                                                                {/*    <div className="row">*/}
+                                                                {/*        <div className="col-lg-6">*/}
+                                                                {/*            <label className="control-label">Lat :</label>*/}
+                                                                {/*            <input type="text" className="" id="us3-lat"/>*/}
+                                                                {/*        </div>*/}
+                                                                {/*        <div className="col-lg-6">*/}
+                                                                {/*            <label>Long :</label>*/}
+                                                                {/*            <input type="text" className="" id="us3-lon"/>*/}
+                                                                {/*        </div>*/}
+                                                                {/*    </div>*/}
+                                                                {/*    /!*map*!/*/}
+                                                                {/*    <div id="us3"></div>*/}
+                                                                {/*</div>*/}
+                                                            </Form>
+                                                        </Formik>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            }
+
                                             {/*add post new box*/}
 
 

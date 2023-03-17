@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, Outlet, useParams} from "react-router-dom";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {changePassword} from "../services/AccountService";
+import {changePassword, searchOtherAccount} from "../services/AccountService";
 import {useDispatch, useSelector} from "react-redux";
 import * as Yup from "yup";
 
@@ -13,10 +13,20 @@ const PersonalPage = () => {
     const [about, setAbout] = useState('');
 
     const account = useSelector(state => {
-        return state.account.account
+        return state.account.currentAccount
+    })
+    const otherAccount = useSelector(state => {
+        return state.account.otherAccount
     })
 
     const dispatch = useDispatch()
+
+
+    useEffect(()=>{
+        dispatch(searchOtherAccount(idAccount))
+    },[])
+
+
 
     const validationSchema = Yup.object().shape({
         newPassword: Yup.string()
@@ -85,7 +95,8 @@ const PersonalPage = () => {
                                             <div className="col-lg-2 col-md-3">
                                                 <div className="profile-author">
                                                     <div className="profile-author-thumb">
-                                                        <img alt="author" src={account.avatar}/>
+                                                        <img alt="author" src={otherAccount.avatar}/>
+
                                                         <div className="edit-dp">
                                                             <label className="fileContainer">
                                                                 <i className="fa fa-camera"></i>
@@ -95,7 +106,7 @@ const PersonalPage = () => {
                                                     </div>
 
                                                     <div className="author-content">
-                                                        <a className="h4 author-name" href="about.html">{account.name}</a>
+                                                        <a className="h4 author-name">{otherAccount.name}</a>
                                                         <div className="country">{account.address}</div>
                                                     </div>
                                                 </div>

@@ -26,9 +26,18 @@ const Register = () => {
             let data = {
                 username: values.username, password: values.password
             }
-            await dispatch(AccountsRegister(data));
-            alert('Registered successfully')
-            navigate('/')
+            await dispatch(AccountsRegister(data)).then((value)=>{
+                if(value.payload !== 'Username registered'){
+                    alert('Registered successfully')
+                    navigate('/')
+                }else {
+                    alert('Username registered')
+                    navigate('')
+                }
+
+
+            })
+
         }
 
     };
@@ -102,7 +111,8 @@ const Register = () => {
                                             onSubmit={handleSubmit}>
                                         <Form>
                                             <Form className="we-form mt-6">
-                                                <Field type="text" placeholder="UserName" name="username" style={{borderRadius:'5px'}}/>
+                                                <Field type="text" placeholder="UserName" name="username"
+                                                       style={{borderRadius: '5px'}}/>
                                                 <alert>
                                                     <ErrorMessage name={"username"}></ErrorMessage>
                                                 </alert>
@@ -110,7 +120,8 @@ const Register = () => {
                                             </Form>
 
                                             <Form className="we-form mt-6">
-                                                <Field type="password" placeholder="Password" name="password" style={{borderRadius:'5px'}}/>
+                                                <Field type="password" placeholder="Password" name="password"
+                                                       style={{borderRadius: '5px'}}/>
                                                 <alert>
                                                     <ErrorMessage name={"password"}></ErrorMessage>
                                                 </alert>
@@ -119,14 +130,15 @@ const Register = () => {
                                             </Form>
                                             <Form className="we-form mt-6">
                                                 <Field type="password" placeholder="passwordAgain"
-                                                       name="passwordAgain" style={{borderRadius:'5px'}}/>
+                                                       name="passwordAgain" style={{borderRadius: '5px'}}/>
                                                 <alert>
                                                     <ErrorMessage name={"passwordAgain"}></ErrorMessage>
                                                 </alert>
                                             </Form>
                                             <div className="we-form mt-6">
                                                 <button type="submit"
-                                                        className="we-form mt-6 btn-outline-danger " style={{borderRadius:'5px'}}>Register
+                                                        className="we-form mt-6 btn-outline-danger "
+                                                        style={{borderRadius: '5px'}}>Register
                                                 </button>
                                             </div>
 

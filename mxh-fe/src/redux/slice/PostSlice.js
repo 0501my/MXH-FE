@@ -15,16 +15,24 @@ const postSlice = createSlice({
                 state.posts = action.payload
             });
             builder.addCase(addPosts.fulfilled, (state, action) => {
-                state.posts = action.payload
+                state.posts.unshift(action.payload)
             });
-            builder.addCase(editPost.fulfilled,(state , {payload})=>{
-                state.posts = payload;
+            builder.addCase(editPost.fulfilled,(state , action)=>{
+                state.posts.map((it,id)=>{
+                    if(it.idPost === action.payload.idPost){
+                        state.posts[id] = action.payload
+                    }
+                })
             })
             builder.addCase(findByIdPost.fulfilled,(state, action)=>{
                 state.currentPost = action.payload;
             });
             builder.addCase(deletePost.fulfilled, (state, action) => {
-                state.posts = action.payload;
+                state.posts.map((it,id)=>{
+                    if(it.idPost === action.payload){
+                        state.posts.splice(id,1)
+                    }
+                })
             });
             builder.addCase(findByIdAccount.fulfilled, (state, action) => {
                 state.posts = action.payload;

@@ -1,14 +1,13 @@
 import React from 'react';
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {AccountsLogout} from "../services/AccountService";
+import {useSelector} from "react-redux";
 
 const Header = () => {
     const navigate = useNavigate()
     const account = useSelector(state => {
-        return state.account.account
+        return state.account.currentAccount
     })
-    const dispatch = useDispatch()
+
     return (
         <>
             <div className="postoverlay"></div>
@@ -259,8 +258,6 @@ const Header = () => {
                             <img style={{borderRadius: '50%', width: "40px"}} className="ml-3"
                                  src={account.avatar}></img>
                         </Link>
-
-
                         <span className="status f-online"></span>
                         <div className="user-setting">
                             <span className="seting-title">Chat setting <a href="#" title="">see all</a></span>
