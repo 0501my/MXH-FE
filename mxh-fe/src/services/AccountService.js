@@ -5,7 +5,7 @@ export const AccountsRegister = createAsyncThunk(
     'accounts/accountsRegister',
     async (data) => {
         const response = await axios.post('http://localhost:4000/accounts/register', data);
-        return data;
+        return response.data
     }
 )
 export const AccountsLogin = createAsyncThunk(
@@ -30,15 +30,15 @@ export const AccountsLogout = createAsyncThunk(
 export const AccountsEdit = createAsyncThunk(
     'accounts/accountsEdit',
     async (data) => {
-       const response = await axios.put(`http://localhost:4000/accounts/${data.idAccount}`, data);
-        return response.data
+       await axios.put(`http://localhost:4000/accounts/${data.idAccount}`, data);
+        return data
     }
 )
 export const changePassword = createAsyncThunk(
     'accounts/changePassword',
     async (data) => {
         const response = await axios.post(`http://localhost:4000/accounts/changePassword/` + data.id, data);
-        return response.data
+        return response.data.accountFind
     }
 )
 export const findById = createAsyncThunk(

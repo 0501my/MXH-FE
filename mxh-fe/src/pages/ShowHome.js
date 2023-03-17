@@ -15,14 +15,12 @@ const ShowHome = () => {
     })
 
     const account = useSelector(state => {
-        return state.account.account
+        return state.account.currentAccount
     })
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getPosts())
-    }, [])
+
     const handleDelete = async (id) => {
         dispatch(deletePost(id))
     }
@@ -41,7 +39,11 @@ const ShowHome = () => {
         })
 
     }
-    return (<>
+    useEffect(() => {
+        dispatch(getPosts())
+    }, [])
+    return (
+        <>
             <div className="theme-layout">
                 <div className="responsive-header">
                     <div className="mh-head first Sticky">
@@ -202,11 +204,14 @@ const ShowHome = () => {
                                                 <span className="create-post">Create post</span>
                                                 <div className="new-postbox">
                                                     <figure>
-                                                        <img src={account.avatar} style={{width : "40px"}} alt=""/>
+                                                        <img src={account.avatar} style={{width: 40,height:40}} alt=""/>
                                                     </figure>
                                                     <Formik initialValues={{content: "",}} onSubmit={(values) => {
                                                         values.account = account.idAccount;
                                                         dispatch(addPosts(values))
+                                                        swal(`Successful post.`, {
+                                                            icon: "success",
+                                                        })
                                                         document.getElementById('add-form').reset();
                                                     }}>
                                                         <Form id='add-form'>
@@ -274,20 +279,19 @@ const ShowHome = () => {
                                                     </Formik>
                                                 </div>
                                             </div>
-                                            {/*add post new box*/}
-
-
                                             <div className="loadMore">
-                                                {posts !== undefined && posts.map(it => (<>
+                                                {posts !== undefined && posts.map(it => (
+                                                    <>
                                                         <div className="central-meta item">
                                                             <div className="user-post">
                                                                 <div className="friend-info">
                                                                     <figure>
+
                                                                         <img style={{width:40,height:40}} src={it.account.avatar} alt="#"/>
                                                                     </figure>
                                                                     <div className="friend-name">
                                                                         <div className="more">
-                                                                            {account.idAccount === it.account.idAccount &&
+                                                                            {account.idAccount == it.account.idAccount &&
                                                                                 <div className="more-post-optns"><i
                                                                                     className="ti-more-alt"></i>
                                                                                     <ul>
@@ -322,7 +326,8 @@ const ShowHome = () => {
                                                                                                }}>&nbsp; Delete Post</i>
                                                                                         </li>
                                                                                     </ul>
-                                                                                </div>}
+                                                                                </div>
+                                                                            }
 
                                                                         </div>
                                                                         <ins><Link
@@ -401,7 +406,7 @@ const ShowHome = () => {
                                                                                 <a data-toggle="tooltip" title="Anderw"
                                                                                    href="#">
                                                                                     <img alt=""
-                                                                                         src="images/resources/userlist-1.jpg"/>
+                                                                                         src="/images/resources/userlist-1.jpg"/>
                                                                                 </a>
                                                                                 <span><strong>You</strong>, <b>Sarah</b> and <a
                                                                                     href="#" title="">24+ more</a> liked</span>
@@ -521,7 +526,8 @@ const ShowHome = () => {
 
                                                             </div>
                                                         </div>
-                                                    </>))}
+                                                    </>
+                                                ))}
 
 
                                             </div>
@@ -581,32 +587,32 @@ const ShowHome = () => {
                                                                     <div className="users-thumb-list">
                                                                         <a href="#" title="Anderw"
                                                                            data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-1.jpg"
+                                                                            <img src="/images/resources/userlist-1.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="frank" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-2.jpg"
+                                                                            <img src="/images/resources/userlist-2.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Sara" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-3.jpg"
+                                                                            <img src="/images/resources/userlist-3.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Amy" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-4.jpg"
+                                                                            <img src="/images/resources/userlist-4.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Ema" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-5.jpg"
+                                                                            <img src="/images/resources/userlist-5.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Sophie"
                                                                            data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-6.jpg"
+                                                                            <img src="/images/resources/userlist-6.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Maria" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-7.jpg"
+                                                                            <img src="/images/resources/userlist-7.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                     </div>
@@ -618,32 +624,32 @@ const ShowHome = () => {
                                                                     <div className="users-thumb-list">
                                                                         <a href="#" title="Anderw"
                                                                            data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-1.jpg"
+                                                                            <img src="/images/resources/userlist-1.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="frank" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-2.jpg"
+                                                                            <img src="/images/resources/userlist-2.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Sara" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-3.jpg"
+                                                                            <img src="/images/resources/userlist-3.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Amy" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-4.jpg"
+                                                                            <img src="/images/resources/userlist-4.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Ema" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-5.jpg"
+                                                                            <img src="/images/resources/userlist-5.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Sophie"
                                                                            data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-6.jpg"
+                                                                            <img src="/images/resources/userlist-6.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Maria" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-7.jpg"
+                                                                            <img src="/images/resources/userlist-7.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                     </div>
@@ -723,62 +729,68 @@ const ShowHome = () => {
                 </section>
             </div>
 
-            {check ? <>
-                <Formik initialValues={currentPost}
-                        onSubmit={(values) => {
-                            handleEditPost(values)
-                        }}
-                        enableReinitialize={true}>
+            {
+                check ? <>
+                    <Formik initialValues={currentPost}
+                            onSubmit={(values) => {
+                                handleEditPost(values)
+                                swal(`Successful post.`, {
+                                    icon: "success",
+                                })
+                            }
+                            }
+                            enableReinitialize={true}>
 
-                    <div className="popup-wraper active">
-                        <div className="popup">
+                        <div className="popup-wraper active">
+                            <div className="popup">
                                 <span className="popup-closed" onClick={() => {
                                     setCheck(false)
                                 }}><i className="ti-close"></i></span>
-                            <div className="popup-meta">
-                                <div className="popup-head">
-                                    <h5>Edit Post</h5>
-                                </div>
-                                <div className="forum-form">
-                                    <div className="postbox">
-                                        <div className="new-postbox">
-                                            <Form>
-                                                <div className="newpst-input">
-                                                    <div>
-                                                        <label>Content</label>
-                                                        <Field as={'textarea'} type="text" name={'content'}/>
+                                <div className="popup-meta">
+                                    <div className="popup-head">
+                                        <h5>Edit Post</h5>
+                                    </div>
+                                    <div className="forum-form">
+                                        <div className="postbox">
+                                            <div className="new-postbox">
+                                                <Form>
+                                                    <div className="newpst-input">
+                                                        <div>
+                                                            <label>Content</label>
+                                                            <Field as={'textarea'} type="text" name={'content'}/>
+                                                        </div>
+                                                        <div className="select-options">
+                                                            <hr/>
+                                                            <Field as={'select'} className="select" name={'status'}>
+                                                                <option value={'public'}>Public</option>
+                                                                <option value={'friendonly'}>Friend only</option>
+                                                                <option value={'onlyme'}>Only me</option>
+                                                            </Field>
+                                                        </div>
+                                                        <div className="attachments">
+                                                            <li>
+                                                                <i className="fa fa-camera"></i>
+                                                                <label className="fileContainer">
+                                                                    <input type="file"/>
+                                                                </label>
+                                                            </li>
+                                                        </div>
+                                                        <button className="post-btn" type="submit" data-ripple="">Edit
+                                                        </button>
                                                     </div>
-                                                    <div className="select-options">
-                                                        <hr/>
-                                                        <Field as={'select'} className="select" name={'status'}>
-                                                            <option value={'public'}>Public</option>
-                                                            <option value={'friendonly'}>Friend only</option>
-                                                            <option value={'onlyme'}>Only me</option>
-                                                        </Field>
-                                                    </div>
-                                                    <div className="attachments">
-                                                        <li>
-                                                            <i className="fa fa-camera"></i>
-                                                            <label className="fileContainer">
-                                                                <input type="file"/>
-                                                            </label>
-                                                        </li>
-                                                    </div>
-                                                    <button className="post-btn" type="submit" data-ripple="">Edit
-                                                    </button>
-                                                </div>
-                                            </Form>
+                                                </Form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                </Formik>
-            </> : <>
+                    </Formik>
+                </> : <>
 
-            </>}
+                </>
+            }
 
         </>
 

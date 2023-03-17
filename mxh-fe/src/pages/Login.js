@@ -23,7 +23,7 @@ const Login = () => {
         if (checkUSer === false) {
             await dispatch(AccountsRegister(userGG))
             await dispatch(AccountsLogin(userGG))
-            swal(`Chào mừng bạn đến với Bug Men.`, {
+            swal(`Welcome to Bug Men.`, {
                 icon: "success",
             })
             navigate('/home')
@@ -31,7 +31,7 @@ const Login = () => {
         }
         if (checkUSer === true) {
             await dispatch(AccountsLogin(userGG))
-            swal(`Chào mừng bạn đến với Bug Men.`, {
+            swal(`Welcome to Bug Men.`, {
                 icon: "success",
             })
             navigate('/home')
@@ -41,24 +41,26 @@ const Login = () => {
 
 
     const handleSubmit = async (values) => {
-        console.log(localStorage.getItem('status') === 'User is not exit')
-        await dispatch(AccountsLogin(values));
-        if (localStorage.getItem('status') === 'User is not exit' || localStorage.getItem('status') === 'Password is wrong' || localStorage.getItem('status') == null || localStorage.getItem('status') === undefined) {
-            alert('Tài khoản hoặc mật khẩu không chính xác.')
-            navigate(('/'))
-        } else {
-            swal(`Chào mừng bạn đến với Bug Men.`, {
-                icon: "success",
-            })
-            navigate('/home')
-        }
+        await dispatch(AccountsLogin(values)).then((value)=>{
+            if (value.payload.data === 'User is not exit' || value.payload.data === 'Password is wrong' ) {
+                swal(`Incorrect account or password`, {
+                    icon: "warning",
+                })
+                navigate(('/'))
+            } else {
+                swal(`Welcome to Bug Men.`, {
+                    icon: "success",
+                })
+                navigate('/home')
+            }
+        });
     };
     const validationSchema = Yup.object().shape({
-        username: Yup.string().required("Vui lòng nhập tên đăng nhập")
+        username: Yup.string().required("Please Enter Username")
             .matches(/^[a-zA-Z0-9]/), password: Yup.string()
-            .required("Vui lòng nhập mật khẩu")
-            .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
-            .max(32, "Mật khẩu chỉ có nhiều nhất 14 ký tự")
+            .required("Please Enter Password")
+            .min(6, "Passwords must be at least 6 characters")
+            .max(32, "Password must be at most 14 characters")
     });
 
     return (<>
@@ -105,16 +107,16 @@ const Login = () => {
                                             </div>
                                         </div>
                                         <div className="barcode">
-                                            <figure><img src="images/resources/Barcode.jpg" alt=""/></figure>
+                                            <figure><img src="/images/resources/Barcode.jpg" alt=""/></figure>
                                             <div className="app-download">
                                                 <span>Download Mobile App and Scan QR Code to login</span>
                                                 <ul className="colla-apps">
                                                     <li><a title="" href="https://play.google.com/store?hl=en"><img
-                                                        src="images/android.png" alt=""/>android</a></li>
+                                                        src="/images/android.png" alt=""/>android</a></li>
                                                     <li><a title="" href="https://www.apple.com/lae/ios/app-store/"><img
-                                                        src="images/apple.png" alt=""/>iPhone</a></li>
+                                                        src="/images/apple.png" alt=""/>iPhone</a></li>
                                                     <li><a title="" href="https://www.microsoft.com/store/apps"><img
-                                                        src="images/windows.png" alt=""/>Windows</a></li>
+                                                        src="/images/windows.png" alt=""/>Windows</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -129,7 +131,9 @@ const Login = () => {
                                         <div className="row">
                                             <Formik className="we-form" initialValues={initialValuesAdd}
                                                     validationSchema={validationSchema}
-                                                    onSubmit={handleSubmit}>
+                                                    onSubmit={(values)=>{
+                                                        handleSubmit(values)
+                                                    }}>
                                                 <Form>
                                                     <Form className="we-form mt-6">
                                                         <Field type="text" placeholder="UserName" name="username"
@@ -178,7 +182,7 @@ const Login = () => {
 
                                                         }}
                                                         onError={() => {
-                                                            console.log('Đăng nhập thất bại.');
+                                                            console.log('Login failed.');
                                                         }}
                                                     />
                                                 </GoogleOAuthProvider>

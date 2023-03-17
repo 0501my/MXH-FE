@@ -13,25 +13,32 @@ const Register = () => {
         username: "", password: "", passwordAgain: "",
     };
     const validationSchema = Yup.object().shape({
-        username: Yup.string().required("Vui lòng nhập tên đăng nhập")
+        username: Yup.string().required("Please enter username.")
             .matches(/^[a-zA-Z0-9]/), password: Yup.string()
-            .required("Vui lòng nhập mật khẩu.")
-            .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
-            .max(32, "Mật khẩu chỉ có nhiều nhất 14 ký tự"), passwordAgain: Yup.string()
-            .required("Vui lòng nhập lại mật khẩu. ")
+            .required("Please enter password.")
+            .min(6, "Passwords must be at least 6 characters")
+            .max(32, "Password must be at most 14 characters"), passwordAgain: Yup.string()
+            .required("Please re-enter your password. ")
     });
     const handleSubmit = async (values) => {
         if (values.password !== values.passwordAgain) {
-            alert('Mật khẩu không đúng.')
+            alert('Incorrect password.')
         } else {
             let data = {
                 username: values.username, password: values.password
             }
-            await dispatch(AccountsRegister(data));
-            swal(`Bạn đã đăng ký thành công.`, {
-                icon: "success",
+
+                dispatch(AccountsRegister(data)).then((value)=>{
+                if(value.payload !== 'Username registered'){
+                    swal(`Registered successfully.`, {
+                        icon: "success",
+                    })
+                    navigate('/')
+                }else {
+                    alert('Username registered')
+                    navigate('')
+                }
             })
-            navigate('/')
         }
 
     };
@@ -44,7 +51,7 @@ const Register = () => {
                         <div className="row">
                             <div className="col-lg-8">
                                 <div className="big-ad">
-                                    <figure><img src="images/logo3.png" alt=""/></figure>
+                                    <figure><img src="/images/logo3.png" alt=""/></figure>
                                     <h1>Welcome to the Bug Men</h1>
                                     <p>
                                         Bug Men is a social network template that can be used to connect people. use
@@ -105,7 +112,8 @@ const Register = () => {
                                             onSubmit={handleSubmit}>
                                         <Form>
                                             <Form className="we-form mt-6">
-                                                <Field type="text" placeholder="UserName" name="username" style={{borderRadius:'5px'}}/>
+                                                <Field type="text" placeholder="UserName" name="username"
+                                                       style={{borderRadius: '5px'}}/>
                                                 <alert>
                                                     <ErrorMessage name={"username"}></ErrorMessage>
                                                 </alert>
@@ -113,7 +121,8 @@ const Register = () => {
                                             </Form>
 
                                             <Form className="we-form mt-6">
-                                                <Field type="password" placeholder="Password" name="password" style={{borderRadius:'5px'}}/>
+                                                <Field type="password" placeholder="Password" name="password"
+                                                       style={{borderRadius: '5px'}}/>
                                                 <alert>
                                                     <ErrorMessage name={"password"}></ErrorMessage>
                                                 </alert>
@@ -122,14 +131,15 @@ const Register = () => {
                                             </Form>
                                             <Form className="we-form mt-6">
                                                 <Field type="password" placeholder="passwordAgain"
-                                                       name="passwordAgain" style={{borderRadius:'5px'}}/>
+                                                       name="passwordAgain" style={{borderRadius: '5px'}}/>
                                                 <alert>
                                                     <ErrorMessage name={"passwordAgain"}></ErrorMessage>
                                                 </alert>
                                             </Form>
                                             <div className="we-form mt-6">
                                                 <button type="submit"
-                                                        className="we-form mt-6 btn-outline-danger " style={{borderRadius:'5px'}}>Register
+                                                        className="we-form mt-6 btn-outline-danger "
+                                                        style={{borderRadius: '5px'}}>Register
                                                 </button>
                                             </div>
 

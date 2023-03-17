@@ -1,15 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {AccountsLogout} from "../services/AccountService";
 import swal from "sweetalert";
+import {useSelector} from "react-redux";
+
 
 const Header = () => {
     const navigate = useNavigate()
     const account = useSelector(state => {
-        return state.account.account
+        return state.account.currentAccount
     })
-    const dispatch = useDispatch()
+
     return (
         <>
             <div className="postoverlay"></div>
@@ -53,10 +53,10 @@ const Header = () => {
                         </form>
                     </div>
                     <div className="page-name">
-                        <span>Newsfeed</span>
+                        <span >Newsfeed</span>
                     </div>
                     <ul className="setting-area">
-                        <li><a title="Home" data-ripple=""><i className="fa fa-home"></i></a>
+                        <li><Link to="/home" title="Home" data-ripple=""><i className="fa fa-home"></i></Link>
                         </li>
                         <li>
                             <a title="Friend Requests">
@@ -256,7 +256,7 @@ const Header = () => {
                     <div  className="user-img">
                         <h5>{account.name}</h5>
 
-                        <Link to={`/home/PersonalPage/MyTimeline/${account.idAccount}`}>
+                        <Link  to={`/home/PersonalPage/MyTimeline/${account.idAccount}`}>
                             <img style={{borderRadius: '50%', width: 45, height:45}} className="ml-3"
                                  src={account.avatar}></img>
                         </Link>
