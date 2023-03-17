@@ -4,15 +4,20 @@ import {deletePost, editPost, findByIdPost, getPosts, addPosts} from "../service
 import {Link, useNavigate} from "react-router-dom";
 import swal from "sweetalert";
 import {Form, Field, Formik} from "formik";
+import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
+import {storage} from "../services/fireBase";
+import login from "./Login";
 
 const ShowHome = () => {
     const navigate = useNavigate();
+    const [images, setImages] = useState([]);
     const posts = useSelector(state => {
         return state.posts.posts
     });
     const currentPost = useSelector(state => {
         return state.currentPost.currentPost
     })
+
 
     const account = useSelector(state => {
         return state.account.currentAccount
@@ -31,19 +36,67 @@ const ShowHome = () => {
             setCheck(false)
         })
     }
+    const handleChange = async (e) => {
+        for (let i = 0; i < e.target.files.length; i++) {
+            const newImage = e.target.files[i];
+            newImage["id"] = Math.random();
+            setImages((prevState) => [...prevState, newImage]);
+        }
 
+    };
+    useEffect(() => {
+        handleUpload()
+    }, [images])
+    const handleUpload = () => {
+        const promises = [];
+        if (images.length > 0) {
+            console.log(22)
+            images.map((image) => {
+                const storageRef = ref(storage, `images/${image.name}`);
+                const uploadTask = uploadBytesResumable(storageRef, image);
+                promises.push(uploadTask);
+                uploadTask.on("state_changed", (snapshot) => {
+                    const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                    setProgress(progress);
+                }, (error) => {
+                    console.log(error);
+                }, async () => {
+                    await getDownloadURL(uploadTask.snapshot.ref).then((downloadURLs) => {
+                        setUrls(prevState => [...prevState, downloadURLs])
+                        console.log("File available at", downloadURLs);
+                    });
+                });
+            });
+        }
+        Promise.all(promises)
+            .then()
+            .catch((err) => console.log(err));
+
+    }
+
+
+    const [urls, setUrls] = useState([]);
+    console.log(urls)
+
+    const [progress, setProgress] = useState(0);
 
     const [check, setCheck] = useState(false)
-    const checkId = async (id) => {
-        dispatch(findByIdPost(id)).then(() => {
+    const checkId = async (id, index) => {
+        let data = [id , index]
+        dispatch(findByIdPost(data)).then(() => {
         })
 
     }
     useEffect(() => {
         dispatch(getPosts())
     }, [])
-    return (
-        <>
+    useEffect((id) => {
+        dispatch(findByIdPost(id)).then((value) => {
+            console.log(value, 1)
+            setUrls([value.payload.image])
+        });
+    }, [])
+    return (<>
             <div className="theme-layout">
                 <div className="responsive-header">
                     <div className="mh-head first Sticky">
@@ -203,24 +256,40 @@ const ShowHome = () => {
                                             <div className="central-meta postbox">
                                                 <span className="create-post">Create post</span>
                                                 <div className="new-postbox">
-                                                    <figure>
-                                                        <img src={account.avatar} style={{width: "40px"}} alt=""/>
-                                                    </figure>
-                                                    <Formik initialValues={{content: "",image : ""}} onSubmit={(values) => {
-                                                        values.account = account.idAccount;
-                                                        values.image = urls[0]
-                                                        dispatch(addPosts(values))
-                                                        document.getElementById('add-form').reset();
-                                                    }}>
+                                                    <Formik initialValues={{content: "", image: ""}}
+                                                            onSubmit={(values) => {
+                                                                values.account = account.idAccount;
+                                                                values.image = urls[urls.length - 1]
+                                                                dispatch(addPosts(values))
+                                                                document.getElementById('add-form').reset();
+                                                                setUrls([])
+                                                            }}>
                                                         <Form id='add-form'>
-                                                            <div className="newpst-input">
-                                                                <Field as={'textarea'} name={'content'} rows="2"
-                                                                       placeholder="Share some what you are thinking?"/>
+                                                            <div className={"row"}>
+                                                                <div className="col-2">
+                                                                    <img src={account && account.avatar} style={{width: "50px", height: "50px", borderRadius: "50%"}}/>
+                                                                </div>
+                                                                <div className="col-9" >
+                                                                    <Field as={'textarea'} name={'content'} rows="2"
+                                                                           placeholder="Share some what you are thinking?" style={{border: "none"}}/>
+                                                                </div>
                                                             </div>
-                                                            <div className="newpst-input">
-                                                                <Field as={'textarea'} name={'content'} rows="2"
-                                                                       placeholder="Share some what you are thinking?"/>
+                                                            <div>
+                                                                {urls && <>
+                                                                    <img src={urls[urls.length - 1]} alt=""
+                                                                         style={{
+                                                                             width: 300,
+                                                                             marginBottom: "10px"
+                                                                         }}/></>}
                                                             </div>
+                                                            <div>
+                                                                <input type="file" id="myFile" name="image"
+                                                                       onChange={handleChange}/>
+                                                                <label htmlFor="myFile" className="file-upload"><i
+                                                                    className="fa fa-camera"
+                                                                    style={{fontSize: "18px"}}/></label>
+                                                            </div>
+
                                                             <div className="attachments">
                                                                 {/*<ul>*/}
                                                                 {/*        <li>*/}
@@ -285,253 +354,257 @@ const ShowHome = () => {
 
 
                                             <div className="loadMore">
-                                                {posts !== undefined && posts.map(it => (
-                                                    <>
-                                                        <div className="central-meta item">
-                                                            <div className="user-post">
-                                                                <div className="friend-info">
-                                                                    <figure>
-                                                                        <img src={it.account.avatar} alt="#"/>
-                                                                    </figure>
-                                                                    <div className="friend-name">
-                                                                        <div className="more">
-                                                                            {account.idAccount == it.account.idAccount &&
-                                                                                <div className="more-post-optns"><i
-                                                                                    className="ti-more-alt"></i>
-                                                                                    <ul>
-                                                                                        <li><i
+                                                {posts !== undefined && posts.map((it, index) => (<>
+                                                    <div className="central-meta item">
+                                                        <div className="user-post">
+                                                            <div className="friend-info">
+                                                                <figure>
+                                                                    <img src={it.account.avatar} alt="#"/>
+                                                                </figure>
+                                                                <div className="friend-name">
+                                                                    <div className="more">
+                                                                        {account.idAccount == it.account.idAccount &&
+                                                                            <div className="more-post-optns"><i
+                                                                                className="ti-more-alt"></i>
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <i
                                                                                             className="fa fa-pencil-square-o"
                                                                                             onClick={() => {
                                                                                                 setCheck(true)
-                                                                                                checkId(it.idPost)
+                                                                                                checkId(it.idPost, index)
                                                                                             }}
-                                                                                        >Edit Post</i>
-                                                                                        </li>
-                                                                                        <li><i className="fa fa-trash-o"
-                                                                                               onClick={() => {
-                                                                                                   swal({
-                                                                                                       title: "Are you sure?",
-                                                                                                       text: "Once deleted, you will not be able to recover this imaginary file!",
-                                                                                                       icon: "warning",
-                                                                                                       buttons: true,
-                                                                                                       dangerMode: true,
-                                                                                                   })
-                                                                                                       .then((willDelete) => {
-                                                                                                           if (willDelete) {
-                                                                                                               handleDelete(it.idPost).then(() => {
-                                                                                                                   swal("Poof! Your imaginary file has been deleted!", {
-                                                                                                                       icon: "success",
-                                                                                                                   })
-                                                                                                               });
-                                                                                                           } else {
-                                                                                                               swal("Your imaginary file is safe!")
-                                                                                                           }
-                                                                                                       });
-                                                                                               }}>&nbsp; Delete Post</i>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            }
+                                                                                        > Edit Post {index}</i>
+                                                                                    </li>
+                                                                                    <li><i className="fa fa-trash-o"
+                                                                                           onClick={() => {
+                                                                                               swal({
+                                                                                                   title: "Are you sure?",
+                                                                                                   text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                                                   icon: "warning",
+                                                                                                   buttons: true,
+                                                                                                   dangerMode: true,
+                                                                                               })
+                                                                                                   .then((willDelete) => {
+                                                                                                       if (willDelete) {
+                                                                                                           handleDelete(it.idPost).then(() => {
+                                                                                                               swal("Poof! Your imaginary file has been deleted!", {
+                                                                                                                   icon: "success",
+                                                                                                               })
+                                                                                                           });
+                                                                                                       } else {
+                                                                                                           swal("Your imaginary file is safe!")
+                                                                                                       }
+                                                                                                   });
+                                                                                           }}>&nbsp; Delete Post</i>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>}
 
-                                                                        </div>
-                                                                        <ins><Link
-                                                                            to={`/Home/PersonalPage/MyTimeLine/${it.account.idAccount}`}
-                                                                            title="">{it.account.name}</Link> Post
-                                                                            Album
-                                                                        </ins>
-                                                                        <span><i
-                                                                            className="fa fa-globe"></i> published: {it.time} </span>
                                                                     </div>
+                                                                    <ins><Link
+                                                                        to={`/Home/PersonalPage/MyTimeLine/${it.account.idAccount}`}
+                                                                        title="">{it.account.name}</Link> Post
+                                                                        Album
+                                                                    </ins>
+                                                                    <span><i
+                                                                        className="fa fa-globe"></i> published: {it.time} </span>
+                                                                </div>
 
 
-                                                                    <div className="post-meta">
-                                                                        <p>
-                                                                            {it.content}
-                                                                        </p>
-                                                                        <figure>
-                                                                            <div className="img-bunch">
-                                                                                <figure>
-                                                                                    <a className="strip"
-                                                                                       href="/images/resources/album1.jpg"
-                                                                                       title=""
-                                                                                       data-strip-group="mygroup"
-                                                                                       data-strip-group-options="loop: false">
-                                                                                        <img
-                                                                                            src={it.image}
-                                                                                            alt="#"/>
-                                                                                    </a>
-                                                                                </figure>
-                                                                            </div>
-                                                                            <ul className="like-dislike">
-                                                                                <li><a className="bg-purple" href="#"
-                                                                                       title="Save to Pin Post"><i
-                                                                                    className="fa fa-thumb-tack"></i></a>
-                                                                                </li>
-                                                                                <li><a className="bg-blue" href="#"
-                                                                                       title="Like Post"><i
-                                                                                    className="ti-thumb-up"></i></a>
-                                                                                </li>
-                                                                                <li><a className="bg-red" href="#"
-                                                                                       title="dislike Post"><i
-                                                                                    className="ti-thumb-down"></i></a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </figure>
-                                                                        <div className="we-video-info">
-                                                                            <ul>
-                                                                                <li>
+                                                                <div className="post-meta">
+                                                                    <p>
+                                                                        {it.content}
+                                                                    </p>
+                                                                    <figure>
+                                                                        <div className="img-bunch">
+                                                                            <figure>
+                                                                                <a className="strip"
+                                                                                   href="/images/resources/album1.jpg"
+                                                                                   title=""
+                                                                                   data-strip-group="mygroup"
+                                                                                   data-strip-group-options="loop: false">
+                                                                                    {
+                                                                                        it.image != 1 ? <>
+                                                                                            <img
+                                                                                                src={it.image}
+                                                                                                alt="#"/>
+                                                                                        </> : <></>
+                                                                                    }
+
+                                                                                </a>
+                                                                            </figure>
+                                                                        </div>
+                                                                        <ul className="like-dislike">
+                                                                            <li><a className="bg-purple" href="#"
+                                                                                   title="Save to Pin Post"><i
+                                                                                className="fa fa-thumb-tack"></i></a>
+                                                                            </li>
+                                                                            <li><a className="bg-blue" href="#"
+                                                                                   title="Like Post"><i
+                                                                                className="ti-thumb-up"></i></a>
+                                                                            </li>
+                                                                            <li><a className="bg-red" href="#"
+                                                                                   title="dislike Post"><i
+                                                                                className="ti-thumb-down"></i></a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </figure>
+                                                                    <div className="we-video-info">
+                                                                        <ul>
+                                                                            <li>
 																<span className="views" title="views">
 																	<i className="fa fa-eye"></i>
 																	<ins>1.2k</ins>
 																</span>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <div className="likes heart"
-                                                                                         title="Like/Dislike">❤ <span>2K</span>
-                                                                                    </div>
-                                                                                </li>
-                                                                                <li>
+                                                                            </li>
+                                                                            <li>
+                                                                                <div className="likes heart"
+                                                                                     title="Like/Dislike">❤ <span>2K</span>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li>
 																<span className="comment" title="Comments">
 																	<i className="fa fa-commenting"></i>
 																	<ins>52</ins>
 																</span>
-                                                                                </li>
+                                                                            </li>
 
-                                                                                <li>
+                                                                            <li>
 																<span>
 																	<a className="share-pst" href="#" title="Share">
 																		<i className="fa fa-share-alt"></i>
 																	</a>
 																	<ins>20</ins>
 																</span>
-                                                                                </li>
-                                                                            </ul>
-                                                                            <div className="users-thumb-list">
-                                                                                <a data-toggle="tooltip" title="Anderw"
-                                                                                   href="#">
-                                                                                    <img alt=""
-                                                                                         src="images/resources/userlist-1.jpg"/>
-                                                                                </a>
-                                                                                <span><strong>You</strong>, <b>Sarah</b> and <a
-                                                                                    href="#" title="">24+ more</a> liked</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-
-                                                                    <div className="coment-area">
-                                                                        <ul className="we-comet">
-                                                                            <li>
-                                                                                <div className="comet-avatar">
-                                                                                    <img
-                                                                                        src="images/resources/nearly3.jpg"
-                                                                                        alt=""/>
-                                                                                </div>
-                                                                                <div className="we-comment">
-                                                                                    <h5><a href="time-line.html"
-                                                                                           title="">Jason
-                                                                                        borne</a></h5>
-                                                                                    <p>we are working for the dance and
-                                                                                        sing
-                                                                                        songs. this video is very
-                                                                                        awesome for
-                                                                                        the youngster. please vote this
-                                                                                        video
-                                                                                        and like our channel</p>
-                                                                                    <div className="inline-itms">
-                                                                                        <span>1 year ago</span>
-                                                                                        <a className="we-reply" href="#"
-                                                                                           title="Reply"><i
-                                                                                            className="fa fa-reply"></i></a>
-                                                                                        <a href="#" title=""><i
-                                                                                            className="fa fa-heart"></i><span>20</span></a>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </li>
-                                                                            <li>
-                                                                                <div className="comet-avatar">
-                                                                                    <img
-                                                                                        src="images/resources/comet-4.jpg"
-                                                                                        alt=""/>
-                                                                                </div>
-                                                                                <div className="we-comment">
-                                                                                    <h5><a href="time-line.html"
-                                                                                           title="">Sophia</a></h5>
-                                                                                    <p>we are working for the dance and
-                                                                                        sing
-                                                                                        songs. this video is very
-                                                                                        awesome for
-                                                                                        the youngster.
-                                                                                        <i className="em em-smiley"></i>
-                                                                                    </p>
-                                                                                    <div className="inline-itms">
-                                                                                        <span>1 year ago</span>
-                                                                                        <a className="we-reply" href="#"
-                                                                                           title="Reply"><i
-                                                                                            className="fa fa-reply"></i></a>
-                                                                                        <a href="#" title=""><i
-                                                                                            className="fa fa-heart"></i><span>20</span></a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
-                                                                            <li>
-                                                                                <a href="#" title=""
-                                                                                   className="showmore underline">more
-                                                                                    comments+</a>
-                                                                            </li>
-                                                                            <li className="post-comment">
-                                                                                <div className="comet-avatar">
-                                                                                    <img
-                                                                                        src="images/resources/nearly1.jpg"
-                                                                                        alt=""/>
-                                                                                </div>
-                                                                                <div className="post-comt-box">
-                                                                                    <form method="post">
-                                                                                <textarea
-                                                                                    placeholder="Post your comment"></textarea>
-                                                                                        <div className="add-smiles">
-                                                                                            <div
-                                                                                                className="uploadimage">
-                                                                                                <i className="fa fa-image"></i>
-                                                                                                <label
-                                                                                                    className="fileContainer">
-                                                                                                    <input type="file"/>
-                                                                                                </label>
-                                                                                            </div>
-                                                                                            <span
-                                                                                                className="em em-expressionless"
-                                                                                                title="add icon"></span>
-                                                                                            <div
-                                                                                                className="smiles-bunch">
-                                                                                                <i className="em em---1"></i>
-                                                                                                <i className="em em-smiley"></i>
-                                                                                                <i className="em em-anguished"></i>
-                                                                                                <i className="em em-laughing"></i>
-                                                                                                <i className="em em-angry"></i>
-                                                                                                <i className="em em-astonished"></i>
-                                                                                                <i className="em em-blush"></i>
-                                                                                                <i className="em em-disappointed"></i>
-                                                                                                <i className="em em-worried"></i>
-                                                                                                <i className="em em-kissing_heart"></i>
-                                                                                                <i className="em em-rage"></i>
-                                                                                                <i className="em em-stuck_out_tongue"></i>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <button type="submit"></button>
-                                                                                    </form>
-                                                                                </div>
                                                                             </li>
                                                                         </ul>
+                                                                        <div className="users-thumb-list">
+                                                                            <a data-toggle="tooltip" title="Anderw"
+                                                                               href="#">
+                                                                                <img alt=""
+                                                                                     src="images/resources/userlist-1.jpg"/>
+                                                                            </a>
+                                                                            <span><strong>You</strong>, <b>Sarah</b> and <a
+                                                                                href="#"
+                                                                                title="">24+ more</a> liked</span>
+                                                                        </div>
                                                                     </div>
+                                                                </div>
 
+
+                                                                <div className="coment-area">
+                                                                    <ul className="we-comet">
+                                                                        <li>
+                                                                            <div className="comet-avatar">
+                                                                                <img
+                                                                                    src="images/resources/nearly3.jpg"
+                                                                                    alt=""/>
+                                                                            </div>
+                                                                            <div className="we-comment">
+                                                                                <h5><a href="time-line.html"
+                                                                                       title="">Jason
+                                                                                    borne</a></h5>
+                                                                                <p>we are working for the dance and
+                                                                                    sing
+                                                                                    songs. this video is very
+                                                                                    awesome for
+                                                                                    the youngster. please vote this
+                                                                                    video
+                                                                                    and like our channel</p>
+                                                                                <div className="inline-itms">
+                                                                                    <span>1 year ago</span>
+                                                                                    <a className="we-reply" href="#"
+                                                                                       title="Reply"><i
+                                                                                        className="fa fa-reply"></i></a>
+                                                                                    <a href="#" title=""><i
+                                                                                        className="fa fa-heart"></i><span>20</span></a>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </li>
+                                                                        <li>
+                                                                            <div className="comet-avatar">
+                                                                                <img
+                                                                                    src="images/resources/comet-4.jpg"
+                                                                                    alt=""/>
+                                                                            </div>
+                                                                            <div className="we-comment">
+                                                                                <h5><a href="time-line.html"
+                                                                                       title="">Sophia</a></h5>
+                                                                                <p>we are working for the dance and
+                                                                                    sing
+                                                                                    songs. this video is very
+                                                                                    awesome for
+                                                                                    the youngster.
+                                                                                    <i className="em em-smiley"></i>
+                                                                                </p>
+                                                                                <div className="inline-itms">
+                                                                                    <span>1 year ago</span>
+                                                                                    <a className="we-reply" href="#"
+                                                                                       title="Reply"><i
+                                                                                        className="fa fa-reply"></i></a>
+                                                                                    <a href="#" title=""><i
+                                                                                        className="fa fa-heart"></i><span>20</span></a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" title=""
+                                                                               className="showmore underline">more
+                                                                                comments+</a>
+                                                                        </li>
+                                                                        <li className="post-comment">
+                                                                            <div className="comet-avatar">
+                                                                                <img
+                                                                                    src="images/resources/nearly1.jpg"
+                                                                                    alt=""/>
+                                                                            </div>
+                                                                            <div className="post-comt-box">
+                                                                                <form method="post">
+                                                                                <textarea
+                                                                                    placeholder="Post your comment"></textarea>
+                                                                                    <div className="add-smiles">
+                                                                                        <div
+                                                                                            className="uploadimage">
+                                                                                            <i className="fa fa-image"></i>
+                                                                                            <label
+                                                                                                className="fileContainer">
+                                                                                                <input type="file"/>
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <span
+                                                                                            className="em em-expressionless"
+                                                                                            title="add icon"></span>
+                                                                                        <div
+                                                                                            className="smiles-bunch">
+                                                                                            <i className="em em---1"></i>
+                                                                                            <i className="em em-smiley"></i>
+                                                                                            <i className="em em-anguished"></i>
+                                                                                            <i className="em em-laughing"></i>
+                                                                                            <i className="em em-angry"></i>
+                                                                                            <i className="em em-astonished"></i>
+                                                                                            <i className="em em-blush"></i>
+                                                                                            <i className="em em-disappointed"></i>
+                                                                                            <i className="em em-worried"></i>
+                                                                                            <i className="em em-kissing_heart"></i>
+                                                                                            <i className="em em-rage"></i>
+                                                                                            <i className="em em-stuck_out_tongue"></i>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <button type="submit"></button>
+                                                                                </form>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
                                                                 </div>
 
                                                             </div>
+
                                                         </div>
-                                                    </>
-                                                ))}
+                                                    </div>
+                                                </>))}
 
 
                                             </div>
@@ -733,65 +806,81 @@ const ShowHome = () => {
                 </section>
             </div>
 
-            {
-                check ? <>
-                    <Formik initialValues={currentPost}
-                            onSubmit={(values) => {
-                                handleEditPost(values)
-                            }
-                            }
-                            enableReinitialize={true}>
+            {check ? <>
+                <Formik initialValues={currentPost}
+                        onSubmit={(values) => {
+                            handleEditPost(values)
+                        }}
+                        enableReinitialize={true}>
 
-                        <div className="popup-wraper active">
-                            <div className="popup">
+                    <div className="popup-wraper active">
+                        <div className="popup">
                                 <span className="popup-closed" onClick={() => {
                                     setCheck(false)
                                 }}><i className="ti-close"></i></span>
-                                <div className="popup-meta">
-                                    <div className="popup-head">
-                                        <h5>Edit Post</h5>
-                                    </div>
-                                    <div className="forum-form">
-                                        <div className="postbox">
-                                            <div className="new-postbox">
-                                                <Form>
-                                                    <div className="newpst-input">
-                                                        <div>
-                                                            <label>Content</label>
-                                                            <Field as={'textarea'} type="text" name={'content'}/>
-                                                        </div>
-                                                        <div className="select-options">
-                                                            <hr/>
-                                                            <Field as={'select'} className="select" name={'status'}>
-                                                                <option value={'public'}>Public</option>
-                                                                <option value={'friendonly'}>Friend only</option>
-                                                                <option value={'onlyme'}>Only me</option>
-                                                            </Field>
-                                                        </div>
-                                                        <div className="attachments">
-                                                            <li>
-                                                                <i className="fa fa-camera"></i>
-                                                                <label className="fileContainer">
-                                                                    <input type="file"/>
-                                                                </label>
-                                                            </li>
-                                                        </div>
-                                                        <button className="post-btn" type="submit" data-ripple="">Edit
-                                                        </button>
+                            <div className="popup-meta">
+                                <div className="popup-head">
+                                    <h5>Edit Post</h5>
+                                </div>
+                                <div className="forum-form">
+                                    <div className="postbox">
+                                        <div className="new-postbox">
+                                            <Form>
+                                                <div className="newpst-input">
+                                                    <div>
+                                                        <label>Content</label>
+                                                        <Field as={'textarea'} type="text" name={'content'}/>
                                                     </div>
-                                                </Form>
-                                            </div>
+
+                                                    {(currentPost && currentPost.image != 1) ?
+                                                        <div className="image-container2">
+                                                            <img src={currentPost.image} style={{width: 300}}/>
+                                                            <div className="close-button" style={{color: '#cc0000'}} onClick={() => {
+                                                                let newPost = {...currentPost};
+                                                                newPost.image  = '1'
+                                                                dispatch(handleEditPost(newPost))
+                                                            }}>&times;</div>
+                                                        </div>
+                                                        : <></>
+                                                    }
+                                                    <div>
+                                                        {urls && <>
+                                                            <img src={urls[urls.length - 1]} alt=""
+                                                                 style={{
+                                                                     width: 300,
+                                                                     marginBottom: "10px"
+                                                                 }}/></>}
+                                                    </div>
+                                                    <div>
+                                                        <input type="file" id="myFile" name="image"
+                                                               onChange={handleChange}/>
+                                                        <label htmlFor="myFile" className="file-upload"><i
+                                                            className="fa fa-camera"
+                                                            style={{fontSize: "18px"}}/></label>
+                                                    </div>
+                                                    <div className="select-options">
+                                                        <hr/>
+                                                        <Field as={'select'} className="select" name={'status'}>
+                                                            <option value={'public'}>Public</option>
+                                                            <option value={'friendonly'}>Friend only</option>
+                                                            <option value={'onlyme'}>Only me</option>
+                                                        </Field>
+                                                    </div>
+                                                    <button className="post-btn" type="submit" data-ripple="">Edit
+                                                    </button>
+                                                </div>
+                                            </Form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                    </Formik>
-                </> : <>
+                </Formik>
+            </> : <>
 
-                </>
-            }
+            </>}
 
         </>
 
