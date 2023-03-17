@@ -20,7 +20,7 @@ const initialState = {
 const accountSlice = createSlice({
     name: 'account', initialState, reducers: {}, extraReducers: builder => {
         builder.addCase(AccountsRegister.fulfilled, (state, {payload}) => {
-            state.account.push(payload);
+            state.account.push(payload.data);
         });
         builder.addCase(findById.fulfilled, (state, action) => {
             state.account = action.payload;

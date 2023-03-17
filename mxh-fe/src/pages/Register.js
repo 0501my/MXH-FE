@@ -26,9 +26,15 @@ const Register = () => {
             let data = {
                 username: values.username, password: values.password
             }
-            await dispatch(AccountsRegister(data)).then(()=>{
-                alert('Registered successfully')
-                navigate('/')
+            await dispatch(AccountsRegister(data)).then((value)=>{
+                if(value.payload !== 'Username registered'){
+                    alert('Registered successfully')
+                    navigate('/')
+                }else {
+                    alert('Username registered')
+                    navigate('')
+                }
+
             })
 
         }
