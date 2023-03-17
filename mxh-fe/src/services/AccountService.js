@@ -5,7 +5,7 @@ export const AccountsRegister = createAsyncThunk(
     'accounts/accountsRegister',
     async (data) => {
         const response = await axios.post('http://localhost:4000/accounts/register', data);
-        return data;
+        return response.data
     }
 )
 export const AccountsLogin = createAsyncThunk(
