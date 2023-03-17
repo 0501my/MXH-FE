@@ -82,7 +82,7 @@ const ShowHome = () => {
 
     const [check, setCheck] = useState(false)
     const checkId = async (id, index) => {
-        let data = [id , index]
+        let data = [id, index]
         dispatch(findByIdPost(data)).then(() => {
         })
 
@@ -267,11 +267,16 @@ const ShowHome = () => {
                                                         <Form id='add-form'>
                                                             <div className={"row"}>
                                                                 <div className="col-2">
-                                                                    <img src={account && account.avatar} style={{width: "50px", height: "50px", borderRadius: "50%"}}/>
+                                                                    <img src={account && account.avatar} style={{
+                                                                        width: "50px",
+                                                                        height: "50px",
+                                                                        borderRadius: "50%"
+                                                                    }}/>
                                                                 </div>
-                                                                <div className="col-9" >
+                                                                <div className="col-9">
                                                                     <Field as={'textarea'} name={'content'} rows="2"
-                                                                           placeholder="Share some what you are thinking?" style={{border: "none"}}/>
+                                                                           placeholder="Share some what you are thinking?"
+                                                                           style={{border: "none"}}/>
                                                                 </div>
                                                             </div>
                                                             <div>
@@ -835,11 +840,12 @@ const ShowHome = () => {
                                                     {(currentPost && currentPost.image != 1) ?
                                                         <div className="image-container2">
                                                             <img src={currentPost.image} style={{width: 300}}/>
-                                                            <div className="close-button" style={{color: '#cc0000'}} onClick={() => {
-                                                                let newPost = {...currentPost};
-                                                                newPost.image  = '1'
-                                                                dispatch(handleEditPost(newPost))
-                                                            }}>&times;</div>
+                                                            <div className="close-button" style={{color: '#cc0000'}}
+                                                                 onClick={() => {
+                                                                     let newPost = {...currentPost};
+                                                                     newPost.image = '1'
+                                                                     dispatch(handleEditPost(newPost))
+                                                                 }}>&times;</div>
                                                         </div>
                                                         : <></>
                                                     }
