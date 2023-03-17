@@ -283,7 +283,7 @@ const ShowHome = () => {
                                                             <div className="user-post">
                                                                 <div className="friend-info">
                                                                     <figure>
-                                                                        <img  src={it.account.avatar} alt="#"/>
+                                                                        <img style={{width:40,height:40}} src={it.account.avatar} alt="#"/>
                                                                     </figure>
                                                                     <div className="friend-name">
                                                                         <div className="more">

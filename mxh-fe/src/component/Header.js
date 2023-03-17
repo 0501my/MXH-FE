@@ -2,6 +2,7 @@ import React from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AccountsLogout} from "../services/AccountService";
+import swal from "sweetalert";
 
 const Header = () => {
     const navigate = useNavigate()
@@ -197,7 +198,7 @@ const Header = () => {
                                     <li>
                                         <a className="show-mesg" href="#" title="">
                                             <figure>
-                                                <img src="images/resources/thumb-4.jpg" alt=""/>
+                                                <img src="/images/resources/thumb-4.jpg" alt=""/>
                                                 <span className="status f-offline"></span>
                                             </figure>
                                             <div className="mesg-meta">
@@ -252,41 +253,42 @@ const Header = () => {
                             </div>
                         </li>
                     </ul>
-                    <div className="user-img">
+                    <div  className="user-img">
                         <h5>{account.name}</h5>
 
                         <Link to={`/home/PersonalPage/MyTimeline/${account.idAccount}`}>
-                            <img style={{borderRadius: '50%', width: "40px"}} className="ml-3"
+                            <img style={{borderRadius: '50%', width: 45, height:45}} className="ml-3"
                                  src={account.avatar}></img>
                         </Link>
                         <span className="status f-online"></span>
-                        <div className="user-setting">
-                            <span className="seting-title">Chat setting <a href="#" title="">see all</a></span>
-                            <ul className="chat-setting">
-                                <li><a href="#" title=""><span className="status f-online"></span>online</a>
-                                </li>
-                                <li><a href="#" title=""><span className="status f-away"></span>away</a></li>
-                                <li><a href="#" title=""><span className="status f-off"></span>offline</a></li>
-                            </ul>
-                            <span className="seting-title">User setting <a href="#" title="">see all</a></span>
-                            <ul className="log-out">
-                                <li><a href="about.html" title=""><i className="ti-user"></i> view profile</a>
-                                </li>
-                                <li><a href="setting.html" title=""><i className="ti-pencil-alt"></i>edit
-                                    profile</a></li>
-                                <li><a href="#" title=""><i className="ti-target"></i>activity log</a></li>
-                                <li><a href="setting.html" title=""><i className="ti-settings"></i>account
-                                    setting</a></li>
-                                <li><a href="logout.html" title=""><i className="ti-power-off"></i>log out</a>
-                                </li>
-                            </ul>
-                        </div>
+
                     </div>
-                    <a is={'button'} onClick={ () => {
-                        localStorage.clear();
-                        navigate('/')
-                    }}><i className="ml-3 ti-power-off " style={{fontSize: 20}}></i>
-                    </a>
+
+                    <div style={{float: "right", marginTop: 23, marginLeft:10}}>
+                        <a style={{ color:"red"}} is={'button'} onClick={ () => {
+                            swal({
+                                title: "Đăng xuất tài khoản.",
+                                text: "Bạn có muốn đăng xuất tài khoản",
+                                icon: "warning",
+                                buttons: true,
+                                dangerMode: true,
+                            })
+                                .then((willOut) => {
+                                    if (willOut) {
+                                        localStorage.clear();
+                                        swal(`Đã đăng xất tài khoản!`, {
+                                            icon: "success",
+                                        })
+                                        navigate('/')
+                                        ;
+                                    } else {
+                                        navigate('/home')
+                                    }
+                                });
+                        }}><i className="ml-3 ti-power-off " style={{fontSize: 20}}></i>
+                        </a>
+                    </div>
+
                 </div>
                 <nav>
                     <ul className="nav-list">

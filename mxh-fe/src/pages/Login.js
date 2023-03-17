@@ -6,6 +6,7 @@ import {AccountsLogin, AccountsLoginGG, AccountsRegister} from "../services/Acco
 import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 import * as Yup from "yup";
+import swal from "sweetalert";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -22,13 +23,19 @@ const Login = () => {
         if (checkUSer === false) {
             await dispatch(AccountsRegister(userGG))
             await dispatch(AccountsLogin(userGG))
+            swal(`Chào mừng bạn đến với Bug Men.`, {
+                icon: "success",
+            })
             navigate('/home')
-            await alert("Login success")
+
         }
         if (checkUSer === true) {
             await dispatch(AccountsLogin(userGG))
+            swal(`Chào mừng bạn đến với Bug Men.`, {
+                icon: "success",
+            })
             navigate('/home')
-            // await alert("Login success")
+
         }
     }
 
@@ -37,10 +44,12 @@ const Login = () => {
         console.log(localStorage.getItem('status') === 'User is not exit')
         await dispatch(AccountsLogin(values));
         if (localStorage.getItem('status') === 'User is not exit' || localStorage.getItem('status') === 'Password is wrong' || localStorage.getItem('status') == null || localStorage.getItem('status') === undefined) {
-            alert('User or password incorrect')
+            alert('Tài khoản hoặc mật khẩu không chính xác.')
             navigate(('/'))
         } else {
-            alert("Đăng nhập thành công")
+            swal(`Chào mừng bạn đến với Bug Men.`, {
+                icon: "success",
+            })
             navigate('/home')
         }
     };
@@ -169,7 +178,7 @@ const Login = () => {
 
                                                         }}
                                                         onError={() => {
-                                                            console.log('Login Failed');
+                                                            console.log('Đăng nhập thất bại.');
                                                         }}
                                                     />
                                                 </GoogleOAuthProvider>

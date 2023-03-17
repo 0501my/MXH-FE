@@ -4,6 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {AccountsRegister} from "../services/AccountService";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
+import swal from "sweetalert";
 
 const Register = () => {
     const dispatch = useDispatch();
@@ -14,20 +15,22 @@ const Register = () => {
     const validationSchema = Yup.object().shape({
         username: Yup.string().required("Vui lòng nhập tên đăng nhập")
             .matches(/^[a-zA-Z0-9]/), password: Yup.string()
-            .required("Vui lòng nhập mật khẩu")
+            .required("Vui lòng nhập mật khẩu.")
             .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
             .max(32, "Mật khẩu chỉ có nhiều nhất 14 ký tự"), passwordAgain: Yup.string()
-            .required("Vui lòng nhập mật khẩu confirm")
+            .required("Vui lòng nhập lại mật khẩu. ")
     });
     const handleSubmit = async (values) => {
         if (values.password !== values.passwordAgain) {
-            alert('Password is incorrect')
+            alert('Mật khẩu không đúng.')
         } else {
             let data = {
                 username: values.username, password: values.password
             }
             await dispatch(AccountsRegister(data));
-            alert('Registered successfully')
+            swal(`Bạn đã đăng ký thành công.`, {
+                icon: "success",
+            })
             navigate('/')
         }
 
@@ -76,16 +79,16 @@ const Register = () => {
                                         </div>
                                     </div>
                                     <div className="barcode">
-                                        <figure><img src="images/resources/Barcode.jpg" alt=""/></figure>
+                                        <figure><img src="/images/resources/Barcode.jpg" alt=""/></figure>
                                         <div className="app-download">
                                             <span>Download Mobile App and Scan QR Code to login</span>
                                             <ul className="colla-apps">
                                                 <li><a title="" href="https://play.google.com/store?hl=en"><img
-                                                    src="images/android.png" alt=""/>android</a></li>
+                                                    src="/images/android.png" alt=""/>android</a></li>
                                                 <li><a title="" href="https://www.apple.com/lae/ios/app-store/"><img
-                                                    src="images/apple.png" alt=""/>iPhone</a></li>
+                                                    src="/images/apple.png" alt=""/>iPhone</a></li>
                                                 <li><a title="" href="https://www.microsoft.com/store/apps"><img
-                                                    src="images/windows.png" alt=""/>Windows</a></li>
+                                                    src="/images/windows.png" alt=""/>Windows</a></li>
                                             </ul>
                                         </div>
                                     </div>
