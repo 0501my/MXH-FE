@@ -20,9 +20,7 @@ const ShowHome = () => {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getPosts())
-    }, [])
+
     const handleDelete = async (id) => {
         dispatch(deletePost(id))
     }
@@ -41,6 +39,9 @@ const ShowHome = () => {
         })
 
     }
+    useEffect(() => {
+        dispatch(getPosts())
+    }, [])
     return (
         <>
             <div className="theme-layout">
@@ -203,7 +204,7 @@ const ShowHome = () => {
                                                 <span className="create-post">Create post</span>
                                                 <div className="new-postbox">
                                                     <figure>
-                                                        <img src={account.avatar} style={{width : "40px"}} alt=""/>
+                                                        <img src={account.avatar} style={{width: "40px"}} alt=""/>
                                                     </figure>
                                                     <Formik initialValues={{content: "",}} onSubmit={(values) => {
                                                         values.account = account.idAccount;
@@ -285,7 +286,7 @@ const ShowHome = () => {
                                                             <div className="user-post">
                                                                 <div className="friend-info">
                                                                     <figure>
-                                                                        <img  src={it.account.avatar} alt="#"/>
+                                                                        <img src={it.account.avatar} alt="#"/>
                                                                     </figure>
                                                                     <div className="friend-name">
                                                                         <div className="more">
