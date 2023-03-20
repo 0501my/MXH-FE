@@ -2,11 +2,14 @@ import React from 'react';
 import swal from "sweetalert";
 import {deletePost} from "../../services/PostService";
 import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 const DeletePost = (props) => {
+    const navigate = useNavigate()
     const dispatch = useDispatch();
     const handleDelete = async () => {
         dispatch(deletePost(props.id))
+        navigate("/home")
     }
     return (
         <>

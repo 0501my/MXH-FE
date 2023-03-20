@@ -27,6 +27,7 @@ export const addPosts = createAsyncThunk(
 export const findByIdPost = createAsyncThunk(
     'posts/findByIdPost',
     async (data) => {
+
         const res = await axios.get(`http://localhost:4000/posts/findById/${data}`);
         return res.data
     }

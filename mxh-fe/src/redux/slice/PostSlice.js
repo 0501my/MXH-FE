@@ -27,6 +27,7 @@ const postSlice = createSlice({
             builder.addCase(findByIdPost.fulfilled, (state, action) => {
                 state.currentPost = action.payload;
             });
+
             builder.addCase(deletePost.fulfilled, (state, action) => {
                 state.posts.map((it, id) => {
                     if (it.idPost === action.payload) {
