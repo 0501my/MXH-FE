@@ -293,7 +293,8 @@ const Header = () => {
                             <a className="nav-link btn icon-md p-0" href="#" id="profileDropdown" role="button"
                                data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown"
                                aria-expanded="false">
-                                <img className="avatar-img rounded-2" src={account.avatar} style={{borderRadius : "30px"}} alt=""/>
+                                <img className="avatar-img rounded-2" src={account.avatar}
+                                     style={{borderRadius: "30px"}} alt=""/>
                             </a>
                             <ul className="dropdown-menu dropdown-animation dropdown-menu-end pt-3 small me-md-n3"
                                 aria-labelledby="profileDropdown">
@@ -301,7 +302,7 @@ const Header = () => {
                                     <div className="d-flex align-items-center position-relative">
                                         <div className="avatar me-3">
                                             <img className="avatar-img rounded-circle"
-                                                 src={account.avatar} style={{borderRadius : "30px"}} alt="avatar"/>
+                                                 src={account.avatar} style={{borderRadius: "30px"}} alt="avatar"/>
 
                                         </div>
                                         <div>

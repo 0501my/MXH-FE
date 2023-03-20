@@ -157,7 +157,8 @@ const CreatePost = (props) => {
                                 <button type="button" className="btn btn-danger-soft me-2"
                                         data-bs-dismiss="modal">Cancel
                                 </button>
-                                <button className="btn btn-success-soft" data-bs-dismiss = "modal" type={'submit'}>Post</button>
+                                <button className="btn btn-success-soft" data-bs-dismiss="modal" type={'submit'}>Post
+                                </button>
                             </div>
                         </div>
                     </div>
