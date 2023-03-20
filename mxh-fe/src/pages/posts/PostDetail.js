@@ -253,7 +253,7 @@ const PostDetail = () => {
                         </div>
                     </div>
                 </div>
-                \
+
 
             </main>
         </>
