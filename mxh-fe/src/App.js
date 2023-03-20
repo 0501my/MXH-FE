@@ -17,10 +17,8 @@ function App() {
         <Route path="/registers" element={<Register/>}/>
         <Route path="/home" element={<Home/>}>
             <Route path={""} element={<ShowHome/>}/>
-            <Route path={"PersonalPage"} element={<PersonalPage/>}>
-            <Route path={"MyAbout/:idAccount"} element={<MyAbout/>}/>
-            <Route path={"MyTimeLine/:idAccount"} element={<MyTimeLine/>}/>
-            </Route>
+            <Route path={"myAbout"} element={<MyAbout/>}/>
+            <Route path={"myTimeLine"} element={<MyTimeLine/>}/>
         </Route>
     </Routes>
   )
