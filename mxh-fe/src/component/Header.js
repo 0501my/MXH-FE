@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import swal from "sweetalert";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {findByContent} from "../services/PostService";
 
 
 const Header = () => {
+    const dispatch= useDispatch()
     const navigate = useNavigate()
     const account = useSelector(state => {
         return state.account.currentAccount
@@ -37,7 +39,10 @@ const Header = () => {
                             <div className="nav-item w-100">
                                 <form className="rounded position-relative">
                                     <input className="form-control ps-5 bg-light" type="search"
-                                           placeholder="Search..." aria-label="Search"/>
+                                           placeholder="Search..." aria-label="Search"  onChange={(e)=>{
+                                        console.log(e.target.value)
+                                        dispatch(findByContent(e.target.value))
+                                    }}/>
                                     <button
                                         className="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y"
                                         type="submit"><i className="bi bi-search fs-5"> </i></button>

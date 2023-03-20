@@ -1,5 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {addPosts, deletePost, editPost, findByIdAccount, findByIdPost, getPosts} from "../../services/PostService";
+import {
+    addPosts,
+    deletePost,
+    editPost,
+    findByContent,
+    findByIdAccount,
+    findByIdPost,
+    getPosts, getStatus
+} from "../../services/PostService";
 
 
 const initialState = {
@@ -14,6 +22,11 @@ const postSlice = createSlice({
             builder.addCase(getPosts.fulfilled, (state, action) => {
                 state.posts = action.payload
             });
+
+            builder.addCase(getStatus.fulfilled, (state, action) => {
+                state.posts = action.payload
+            });
+
             builder.addCase(addPosts.fulfilled, (state, action) => {
                 state.posts.unshift(action.payload)
             });
@@ -36,6 +49,10 @@ const postSlice = createSlice({
             });
             builder.addCase(findByIdAccount.fulfilled, (state, action) => {
                 state.posts = action.payload;
+            });
+
+            builder.addCase(findByContent.fulfilled, (state, action) => {
+                state.posts = action.payload
             });
         }
     }

@@ -90,11 +90,7 @@ const ShowHome = () => {
     useEffect(() => {
         dispatch(getPosts())
     }, [])
-    useEffect((id) => {
-        dispatch(findByIdPost(id)).then((value) => {
-            setUrls([value.payload.image])
-        });
-    }, [])
+
     return (<>
 
             <main>
