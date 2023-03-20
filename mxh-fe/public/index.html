@@ -10,128 +10,67 @@
             content="Web site created using create-react-app"
     />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png"/>
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json"/>
-    <link rel="icon" href="images/fav.png" type="image/png" sizes="16x16">
-    <link rel="stylesheet" href="/css/main.min.css">
-    <link rel="stylesheet" href="/css/weather-icons.min.css">
-    <link rel="stylesheet" href="/css/toast-notification.css">
-    <link rel="stylesheet" href="/css/page-tour.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/color.css">
-    <link rel="stylesheet" href="/css/responsive.css">
-
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
     <title>Bug Men</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap">
+
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/font-awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/OverlayScrollbars-master/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/tiny-slider/dist/tiny-slider.css">
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/choices.js/public/assets/styles/choices.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/glightbox-master/dist/css/glightbox.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/dropzone/dist/dropzone.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/flatpickr/dist/flatpickr.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/plyr/plyr.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <!-- Theme CSS -->
+    <link id="style-switch" rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GMKQ4P9YMZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-GMKQ4P9YMZ');
+    </script>
 </head>
 <body>
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="root"></div>
-<!--
-  This HTML file is a template.
-  If you open it directly in the browser, you will see an empty pages.
+<!-- Bootstrap JS -->
+<script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-  You can add webfonts, meta tags, or analytics to this file.
-  The build step will place the bundled scripts into the <body> tag.
+<!-- Vendors -->
+<script src="/assets/vendor/tiny-slider/dist/tiny-slider.js"></script>
+<script src="/assets/vendor/OverlayScrollbars-master/js/OverlayScrollbars.min.js"></script>
+<script src="/assets/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
+<script src="/assets/vendor/glightbox-master/dist/js/glightbox.min.js"></script>
+<script src="/assets/vendor/flatpickr/dist/flatpickr.min.js"></script>
+<script src="/assets/vendor/plyr/plyr.js"></script>
+<script src="/assets/vendor/dropzone/dist/min/dropzone.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
 
-<<<<<<< HEAD
-  To begin the development, run `npm start` or `yarn start`.
-  To create a production bundle, use `npm run build` or `yarn build`.
--->
-<script src="js/main.min.js"></script>
-<script src="js/jquery-stories.js"></script>
-<script src="js/toast-notificatons.js"></script>
-<script src="../../../cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
-<!-- For timeline slide show -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script>
-<!-- for location picker map -->
-<!--<script src="js/locationpicker.jquery.js"></script>&lt;!&ndash; for loaction picker map &ndash;&gt;-->
-<script src="js/map-init.js"></script><!-- map initilasition -->
-<!--<script src="js/page-tourintro.js"></script>-->
-<script src="js/page-tour-init.js"></script>
-<script src="js/script.js"></script>
-<!--<script>-->
-<!--    jQuery(document).ready(function ($) {-->
-
-    <script src="js/main.min.js"></script>
-    <script src="js/jquery-stories.js"></script>
-    <script src="js/toast-notificatons.js"></script>
-    <script src="../../../cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script><!-- For timeline slide show -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script><!-- for location picker map -->
-<!--    <script src="js/locationpicker.jquery.js"></script>&lt;!&ndash; for loaction picker map &ndash;&gt;-->
-    <script src="js/map-init.js"></script><!-- map initilasition -->
-<!--    <script src="js/page-tourintro.js"></script>-->
-    <script src="js/page-tour-init.js"></script>
-    <script src="js/script.js"></script>
-<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.min.js"></script>
-<script>
-    jQuery(document).ready(function($) {
-
-        $('#us3').locationpicker({
-            location: {
-                latitude: -8.681013,
-                longitude: 115.23506410000005
-            },
-            radius: 0,
-            inputBinding: {
-                latitudeInput: $('#us3-lat'),
-                longitudeInput: $('#us3-lon'),
-                radiusInput: $('#us3-radius'),
-                locationNameInput: $('#us3-address')
-            },
-            enableAutocomplete: true,
-            onchanged: function (currentLocation, radius, isMarkerDropped) {
-                // Uncomment line below to show alert on each Location Changed event
-                //alert("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
-            }
-        });
-
-        if ($.isFunction($.fn.toast)) {
-            $.toast({
-                heading: 'Welcome To Pitnik',
-                text: '',
-                showHideTransition: 'slide',
-                icon: 'success',
-                loaderBg: '#fa6342',
-                position: 'bottom-right',
-                hideAfter: 3000,
-            });
-
-            $.toast({
-                heading: 'Information',
-                text: 'Now you can full demo of pitnik and hope you like',
-                showHideTransition: 'slide',
-                icon: 'info',
-                hideAfter: 5000,
-                loaderBg: '#fa6342',
-                position: 'bottom-right',
-            });
-            $.toast({
-                heading: 'Support & Help',
-                text: 'Report any <a href="#">issues</a> by email',
-                showHideTransition: 'fade',
-                icon: 'error',
-                hideAfter: 7000,
-                loaderBg: '#fa6342',
-                position: 'bottom-right',
-            });
-        }
-
-    });
-</script>
-
-
+<!-- Template Functions -->
+<script src="assets/js/functions.js"></script>
 </body>
 </html>

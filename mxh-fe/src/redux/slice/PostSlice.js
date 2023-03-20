@@ -4,7 +4,7 @@ import {addPosts, deletePost, editPost, findByIdAccount, findByIdPost, getPosts}
 
 const initialState = {
     posts: [],
-    currentPost : {}
+    currentPost: {}
 }
 const postSlice = createSlice({
         name: 'posts',
@@ -17,20 +17,20 @@ const postSlice = createSlice({
             builder.addCase(addPosts.fulfilled, (state, action) => {
                 state.posts.unshift(action.payload)
             });
-            builder.addCase(editPost.fulfilled,(state , action)=>{
-                state.posts.map((it,id)=>{
-                    if(it.idPost === action.payload.idPost){
+            builder.addCase(editPost.fulfilled, (state, action) => {
+                state.posts.map((it, id) => {
+                    if (it.idPost === action.payload.idPost) {
                         state.posts[id] = action.payload
                     }
                 })
             })
-            builder.addCase(findByIdPost.fulfilled,(state, action)=>{
+            builder.addCase(findByIdPost.fulfilled, (state, action) => {
                 state.currentPost = action.payload;
             });
             builder.addCase(deletePost.fulfilled, (state, action) => {
-                state.posts.map((it,id)=>{
-                    if(it.idPost === action.payload){
-                        state.posts.splice(id,1)
+                state.posts.map((it, id) => {
+                    if (it.idPost === action.payload) {
+                        state.posts.splice(id, 1)
                     }
                 })
             });

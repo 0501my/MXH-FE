@@ -53,145 +53,110 @@ const Login = () => {
     });
 
     return (<>
-            <div className="www-layout">
-                <section>
-                    <div className="gap no-gap signin whitish medium-opacity">
-                        <div className="bg-image" style={{backgroundImage: 'url(images/resources/theme-bg.jpg'}}></div>
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-lg-8">
-                                    <div className="big-ad">
-                                        <figure><img style={{width: 150}} src="images/logo3.png" alt=""/></figure>
-                                        <h1>Welcome to the Bug Men</h1>
-                                        <p>
-                                            Bug Men is a social network template that can be used to connect people. use
-                                            this template for multipurpose social activities like job, dating, posting,
-                                            bloging and much more. Now join & Make Cool Friends around the world !!!
-                                        </p>
+            <Formik className="mt-sm-4" initialValues={initialValuesAdd}
+                    validationSchema={validationSchema}
+                    onSubmit={(values) => {
+                        console.log(values)
+                        handleSubmit(values)
+                    }}>
+                <Form>
+                    <div className="container">
+                        <div className="row justify-content-center align-items-center vh-100 py-5">
 
-                                        <div className="fun-fact">
-                                            <div className="row">
-                                                <div className="col-lg-3 col-md-3 col-sm-4">
-                                                    <div className="fun-box">
-                                                        <i className="ti-check-box"></i>
-                                                        <h6>Registered People</h6>
-                                                        <span>1,01,242</span>
-                                                    </div>
+                            <div className="col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
 
-                                                </div>
-                                                <div className="col-lg-3 col-md-3 col-sm-4">
-                                                    <div className="fun-box">
-                                                        <i className="ti-layout-media-overlay-alt-2"></i>
-                                                        <h6>Posts Published</h6>
-                                                        <span>21,03,245</span>
-                                                    </div>
-                                                </div>
-                                                <div className="col-lg-3 col-md-3 col-sm-4">
-                                                    <div className="fun-box">
-                                                        <i className="ti-user"></i>
-                                                        <h6>Online Users</h6>
-                                                        <span>40,145</span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                <div className="card card-body text-center p-4 p-sm-5">
+
+                                    <h1 className="mb-2">Sign in</h1>
+                                    <p className="mb-0">Don't have an account?<Link to={"/registers"}> Click here to
+                                        sign
+                                        up</Link>
+                                    </p>
+
+                                    <div className="mb-3 mt-3 input-group-lg">
+
+                                        <Field className="form-control" type="text" placeholder="UserName"
+                                               name="username"/>
+                                        <alert>
+                                            <ErrorMessage name={"username"}/>
+                                        </alert>
+                                    </div>
+                                    <div className="mb-3 position-relative">
+
+                                        <div className="input-group input-group-lg">
+
+                                            <Field className="form-control fakepassword" type="password"
+                                                   id="psw-input"
+                                                   placeholder="Password" name="password"/>
+
+                                            <span className="input-group-text p-0">
+                                            <i className="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
+                                            </span>
                                         </div>
-                                        <div className="barcode">
-                                            <figure><img src="images/resources/Barcode.jpg" alt=""/></figure>
-                                            <div className="app-download">
-                                                <span>Download Mobile App and Scan QR Code to login</span>
-                                                <ul className="colla-apps">
-                                                    <li><a title="" href="https://play.google.com/store?hl=en"><img
-                                                        src="images/android.png" alt=""/>android</a></li>
-                                                    <li><a title="" href="https://www.apple.com/lae/ios/app-store/"><img
-                                                        src="images/apple.png" alt=""/>iPhone</a></li>
-                                                    <li><a title="" href="https://www.microsoft.com/store/apps"><img
-                                                        src="images/windows.png" alt=""/>Windows</a></li>
-                                                </ul>
+                                        <div id="pswmeter" className="mt-2"></div>
+                                        <alert>
+                                            <ErrorMessage name={"password"}/>
+                                        </alert>
+                                        <div className="d-flex mt-1">
+                                            <div id="pswmeter-message" className="rounded"></div>
+                                            <div className="ms-auto">
+                                                <i className="bi bi-info-circle ps-1" data-bs-container="body"
+                                                   data-bs-toggle="popover" data-bs-placement="top"
+                                                   data-bs-content="Include at least one uppercase, one lowercase, one special character, one number and 8 characters long."
+                                                   data-bs-original-title="" title=""></i>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="col-lg-4">
-                                    <div className="we-login-register">
-                                        <div className="form-title">
-                                            <i className="fa fa-key"></i>login
-                                            <span>sign in now and meet the awesome Friends around the world.</span>
+                                    <div className="mb-3 d-sm-flex justify-content-between">
+                                        <div>
+                                            <input type="checkbox" className="form-check-input"
+                                                   id="rememberCheck"/>
+                                            <label className="form-check-label" htmlFor="rememberCheck">Remember
+                                                me?</label>
                                         </div>
-                                        <div className="row">
-                                            <Formik className="we-form" initialValues={initialValuesAdd}
-                                                    validationSchema={validationSchema}
-                                                    onSubmit={(values)=>{
-                                                        handleSubmit(values)
-                                                    }}>
-                                                <Form>
-                                                    <Form className="we-form mt-6">
-                                                        <Field type="text" placeholder="UserName" name="username"
-                                                               style={{borderRadius: '5px'}}/>
-                                                        <alert>
-                                                            <ErrorMessage name={"username"}/>
-                                                        </alert>
-                                                    </Form>
-
-                                                    <Form className="we-form mt-6">
-                                                        <Field type="password" placeholder="Password" name="password"
-                                                               style={{borderRadius: '5px'}}/>
-                                                        <alert>
-                                                            <ErrorMessage name={"password"}/>
-                                                        </alert>
-
-
-                                                    </Form>
-                                                    <div className="we-form mt-6">
-                                                        <input type="checkbox"/><label>remember me</label>
-                                                        <button type="submit"
-                                                                className="we-form mt-6 btn-danger"
-                                                                style={{borderRadius: '5px'}}>Login
-                                                        </button>
-                                                    </div>
-                                                </Form>
-                                            </Formik>
-                                        </div>
-                                        <div className="row">
-                                            <div className={'col-12 d-flex justify-content-center'}>
-                                                <GoogleOAuthProvider
-                                                    clientId="1004137847361-3p3lh814vts1f6ts9e2al867rjrjp9gc.apps.googleusercontent.com">
-                                                    <GoogleLogin
-                                                        onSuccess={async credentialResponse => {
-                                                            const decoded = jwt_decode(credentialResponse.credential);
-
-                                                            let user = {
-                                                                username: decoded.email,
-                                                                password: decoded.sub,
-                                                                name: decoded.name,
-                                                                avatar: decoded.picture
-                                                            };
-                                                            await setUserGG(user)
-                                                            await dispatch(AccountsLoginGG(user))
-                                                            check().then()
-
-                                                        }}
-                                                        onError={() => {
-                                                            console.log('Login Failed');
-                                                        }}
-                                                    />
-                                                </GoogleOAuthProvider>
-                                            </div>
-
-                                        </div>
-
-                                        <span className="col-12">don't have an account?
-                                            <Link className="we-account "
-                                                  title="" to={"/registers"}>
-                                                <h6 className="we-account">register now</h6></Link></span>
+                                        <a href="forgot-password.html">Forgot password?</a>
                                     </div>
+
+                                    <div className="d-grid">
+                                        <button type="submit" className="btn btn-lg btn-primary">Login</button>
+                                    </div>
+                                    <div className="row mt-3">
+                                        <div className={'col-12 d-flex justify-content-center'}>
+                                            <GoogleOAuthProvider
+                                                clientId="1004137847361-3p3lh814vts1f6ts9e2al867rjrjp9gc.apps.googleusercontent.com">
+                                                <GoogleLogin
+                                                    onSuccess={async credentialResponse => {
+                                                        const decoded = jwt_decode(credentialResponse.credential);
+
+                                                        let user = {
+                                                            username: decoded.email,
+                                                            password: decoded.sub,
+                                                            name: decoded.name,
+                                                            avatar: decoded.picture
+                                                        };
+                                                        await setUserGG(user)
+                                                        await dispatch(AccountsLoginGG(user))
+                                                        check().then()
+
+                                                    }}
+                                                    onError={() => {
+                                                        console.log('Login Failed');
+                                                    }}
+                                                />
+                                            </GoogleOAuthProvider>
+                                        </div>
+
+                                    </div>
+                                    <p className="mb-0 mt-3">©2022 <a target="_blank"
+                                                                      href="https://www.webestica.com/">Webestica.</a> All
+                                        rights reserved</p>
 
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
-
-            </div>
+                </Form>
+            </Formik>
         </>
 
     )

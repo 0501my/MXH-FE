@@ -14,8 +14,8 @@ const initialState = {
     account: [],
     accountShow: localStorage.getItem('accountShow'),
     checkUser: null,
-    otherAccount:{},
-    currentAccount:JSON.parse(localStorage.getItem('account')),
+    otherAccount: {},
+    currentAccount: JSON.parse(localStorage.getItem('account')),
 }
 const accountSlice = createSlice({
     name: 'account', initialState, reducers: {}, extraReducers: builder => {
@@ -27,7 +27,7 @@ const accountSlice = createSlice({
         });
         builder.addCase(AccountsEdit.fulfilled, (state, action) => {
             state.currentAccount = action.payload;
-            localStorage.setItem('account',JSON.stringify(action.payload));
+            localStorage.setItem('account', JSON.stringify(action.payload));
         });
         builder.addCase(changePassword.fulfilled, (state, action) => {
             state.currentAccount = action.payload
@@ -35,7 +35,7 @@ const accountSlice = createSlice({
         builder.addCase(AccountsLogin.fulfilled, (state, {payload}) => {
             state.account = payload.data;
             state.currentAccount = payload.data;
-            localStorage.setItem('account',JSON.stringify(payload.data));
+            localStorage.setItem('account', JSON.stringify(payload.data));
             if (state.account !== 'User is not exit' && state.account !== 'Password is wrong') {
                 localStorage.setItem("isAccount", payload.data.idAccount)
                 localStorage.setItem("access_token", payload.data.token)

@@ -7,6 +7,8 @@ import {Form, Field, Formik} from "formik";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../services/fireBase";
 import login from "./Login";
+import ShowPost from "./posts/ShowPost";
+import CreatePost from "./posts/CreatePost";
 
 const ShowHome = () => {
     const navigate = useNavigate();
@@ -50,7 +52,6 @@ const ShowHome = () => {
     const handleUpload = () => {
         const promises = [];
         if (images.length > 0) {
-            console.log(22)
             images.map((image) => {
                 const storageRef = ref(storage, `images/${image.name}`);
                 const uploadTask = uploadBytesResumable(storageRef, image);
@@ -76,7 +77,6 @@ const ShowHome = () => {
 
 
     const [urls, setUrls] = useState([]);
-    console.log(urls)
 
     const [progress, setProgress] = useState(0);
 
@@ -92,11 +92,289 @@ const ShowHome = () => {
     }, [])
     useEffect((id) => {
         dispatch(findByIdPost(id)).then((value) => {
-            console.log(value, 1)
             setUrls([value.payload.image])
         });
     }, [])
     return (<>
+
+            <main>
+                <div className="container">
+                    <div className="row g-4">
+                        <div className="col-lg-3">
+                            <div className="d-flex align-items-center d-lg-none">
+                                <button className="border-0 bg-transparent" type="button" data-bs-toggle="offcanvas"
+                                        data-bs-target="#offcanvasSideNavbar" aria-controls="offcanvasSideNavbar">
+                                    <i className="btn btn-primary fw-bold fa-solid fa-sliders-h"></i>
+                                    <span className="h6 mb-0 fw-bold d-lg-none ms-2">My profile</span>
+                                </button>
+                            </div>
+                            <nav className="navbar navbar-expand-lg mx-0">
+                                <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasSideNavbar">
+                                    <div className="offcanvas-header">
+                                        <button type="button" className="btn-close text-reset ms-auto"
+                                                data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    </div>
+                                    <div className="offcanvas-body d-block px-2 px-lg-0">
+                                        <div className="card overflow-hidden">
+                                            <div className="card-body pt-0 mt-5">
+                                                <div className="text-center">
+                                                    <div className="avatar avatar-lg mt-n5 mb-3">
+                                                        <a href="#!"><img
+                                                            className="avatar-img rounded border border-white border-3"
+                                                            src={account.avatar} alt=""/></a>
+                                                    </div>
+                                                    <h5 className="mb-0"><Link
+                                                        to={`/Home/PersonalPage/MyTimeLine/${account.idAccount}`}>{account.name}</Link>
+                                                    </h5>
+                                                    <small>Web Developer at Webestica</small>
+                                                    <p className="mt-3">I'd love to change the world, but they won’t
+                                                        give me
+                                                        the source code.</p>
+                                                    <div className="hstack gap-2 gap-xl-3 justify-content-center">
+                                                        <div>
+                                                            <h6 className="mb-0">256</h6>
+                                                            <small>Post</small>
+                                                        </div>
+                                                        <div className="vr"></div>
+                                                        <div>
+                                                            <h6 className="mb-0">2.5K</h6>
+                                                            <small>Followers</small>
+                                                        </div>
+                                                        <div className="vr"></div>
+                                                        <div>
+                                                            <h6 className="mb-0">365</h6>
+                                                            <small>Following</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <hr/>
+                                                <ul className="nav nav-link-secondary flex-column fw-bold gap-2">
+                                                    <li className="nav-item">
+                                                        <a className="nav-link" href="my-profile.html"> <img
+                                                            className="me-2 h-20px fa-fw"
+                                                            src="assets/images/icon/home-outline-filled.svg"
+                                                            alt=""/><span>Feed </span></a>
+                                                    </li>
+                                                    <li className="nav-item">
+                                                        <a className="nav-link" href="my-profile-connections.html"> <img
+                                                            className="me-2 h-20px fa-fw"
+                                                            src="assets/images/icon/person-outline-filled.svg"
+                                                            alt=""/><span>Connections </span></a>
+                                                    </li>
+                                                    <li className="nav-item">
+                                                        <a className="nav-link" href="blog.html"> <img
+                                                            className="me-2 h-20px fa-fw"
+                                                            src="assets/images/icon/earth-outline-filled.svg"
+                                                            alt=""/><span>Latest News </span></a>
+                                                    </li>
+                                                    <li className="nav-item">
+                                                        <a className="nav-link" href="events.html"> <img
+                                                            className="me-2 h-20px fa-fw"
+                                                            src="assets/images/icon/calendar-outline-filled.svg"
+                                                            alt=""/><span>Events </span></a>
+                                                    </li>
+                                                    <li className="nav-item">
+                                                        <a className="nav-link" href="groups.html"> <img
+                                                            className="me-2 h-20px fa-fw"
+                                                            src="assets/images/icon/chat-outline-filled.svg"
+                                                            alt=""/><span>Groups </span></a>
+                                                    </li>
+                                                    <li className="nav-item">
+                                                        <a className="nav-link" href="notifications.html"> <img
+                                                            className="me-2 h-20px fa-fw"
+                                                            src="assets/images/icon/notification-outlined-filled.svg"
+                                                            alt=""/><span>Notifications </span></a>
+                                                    </li>
+                                                    <li className="nav-item">
+                                                        <a className="nav-link" href="settings.html"> <img
+                                                            className="me-2 h-20px fa-fw"
+                                                            src="assets/images/icon/cog-outline-filled.svg"
+                                                            alt=""/><span>Settings </span></a>
+                                                    </li>
+                                                </ul>
+
+                                            </div>
+                                            <div className="card-footer text-center py-2">
+                                                <a className="btn btn-link btn-sm" href="my-profile.html">View
+                                                    Profile </a>
+                                            </div>
+                                        </div>
+                                        <ul className="nav small mt-4 justify-content-center lh-1">
+                                            <li className="nav-item">
+                                                <a className="nav-link" href="my-profile-about.html">About</a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link" href="settings.html">Settings</a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link" target="_blank"
+                                                   href="https://support.webestica.com/login">Support </a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link" target="_blank" href="docs/index.html">Docs </a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link" href="help.html">Help</a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link" href="privacy-and-terms.html">Privacy &
+                                                    terms</a>
+                                            </li>
+                                        </ul>
+                                        <p className="small text-center mt-1">©2022 <a className="text-body"
+                                                                                       target="_blank"
+                                                                                       href="https://www.webestica.com/"> Webestica </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+                        <div className="col-md-8 col-lg-6 vstack gap-4">
+                            <CreatePost/>
+                            <ShowPost/>
+                            <a href="#!" role="button" className="btn btn-loader btn-primary-soft"
+                               data-bs-toggle="button"
+                               aria-pressed="true">
+                                <span className="load-text"> Load more </span>
+                                <div className="load-icon">
+                                    <div className="spinner-grow spinner-grow-sm" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div className="col-lg-3">
+                            <div className="row g-4">
+
+                                <div className="col-sm-6 col-lg-12">
+                                    <div className="card">
+                                        <div className="card-header pb-0 border-0">
+                                            <h5 className="card-title mb-0">Who to follow</h5>
+                                        </div>
+                                        <div className="card-body">
+                                            <div className="hstack gap-2 mb-3">
+                                                <div className="avatar">
+                                                    <a href="#!"><img className="avatar-img rounded-circle"
+                                                                      src="assets/images/avatar/04.jpg" alt=""/></a>
+                                                </div>
+                                                <div className="overflow-hidden">
+                                                    <a className="h6 mb-0" href="#!">Judy Nguyen </a>
+                                                    <p className="mb-0 small text-truncate">News anchor</p>
+                                                </div>
+                                                <a className="btn btn-primary-soft rounded-circle icon-md ms-auto"
+                                                   href="#"><i
+                                                    className="fa-solid fa-plus"> </i></a>
+                                            </div>
+                                            <div className="hstack gap-2 mb-3">
+                                                <div className="avatar avatar-story">
+                                                    <a href="#!"> <img className="avatar-img rounded-circle"
+                                                                       src="assets/images/avatar/05.jpg" alt=""/> </a>
+                                                </div>
+                                                <div className="overflow-hidden">
+                                                    <a className="h6 mb-0" href="#!">Amanda Reed </a>
+                                                    <p className="mb-0 small text-truncate">Web Developer</p>
+                                                </div>
+                                                <a className="btn btn-primary-soft rounded-circle icon-md ms-auto"
+                                                   href="#"><i
+                                                    className="fa-solid fa-plus"> </i></a>
+                                            </div>
+                                            <div className="hstack gap-2 mb-3">
+                                                <div className="avatar">
+                                                    <a href="#"> <img className="avatar-img rounded-circle"
+                                                                      src="assets/images/avatar/11.jpg" alt=""/> </a>
+                                                </div>
+                                                <div className="overflow-hidden">
+                                                    <a className="h6 mb-0" href="#!">Billy Vasquez </a>
+                                                    <p className="mb-0 small text-truncate">News anchor</p>
+                                                </div>
+                                                <a className="btn btn-primary rounded-circle icon-md ms-auto"
+                                                   href="#"><i
+                                                    className="bi bi-person-check-fill"> </i></a>
+                                            </div>
+                                            <div className="hstack gap-2 mb-3">
+                                                <div className="avatar">
+                                                    <a href="#"> <img className="avatar-img rounded-circle"
+                                                                      src="assets/images/avatar/01.jpg" alt=""/> </a>
+                                                </div>
+                                                <div className="overflow-hidden">
+                                                    <a className="h6 mb-0" href="#!">Lori Ferguson </a>
+                                                    <p className="mb-0 small text-truncate">Web Developer at
+                                                        Webestica</p>
+                                                </div>
+                                                <a className="btn btn-primary-soft rounded-circle icon-md ms-auto"
+                                                   href="#"><i
+                                                    className="fa-solid fa-plus"> </i></a>
+                                            </div>
+                                            <div className="hstack gap-2 mb-3">
+                                                <div className="avatar">
+                                                    <a href="#"> <img className="avatar-img rounded-circle"
+                                                                      src="assets/images/avatar/placeholder.jpg"
+                                                                      alt=""/> </a>
+                                                </div>
+                                                <div className="overflow-hidden">
+                                                    <a className="h6 mb-0" href="#!">Carolyn Ortiz </a>
+                                                    <p className="mb-0 small text-truncate">News anchor</p>
+                                                </div>
+                                                <a className="btn btn-primary-soft rounded-circle icon-md ms-auto"
+                                                   href="#"><i
+                                                    className="fa-solid fa-plus"> </i></a>
+                                            </div>
+                                            <div className="d-grid mt-3">
+                                                <a className="btn btn-sm btn-primary-soft" href="#!">View more</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-sm-6 col-lg-12">
+                                    <div className="card">
+                                        <div className="card-header pb-0 border-0">
+                                            <h5 className="card-title mb-0">Today’s news</h5>
+                                        </div>
+                                        <div className="card-body">
+                                            <div className="mb-3">
+                                                <h6 className="mb-0"><a href="blog-details.html">Ten questions you
+                                                    should
+                                                    answer truthfully</a></h6>
+                                                <small>2hr</small>
+                                            </div>
+                                            <div className="mb-3">
+                                                <h6 className="mb-0"><a href="blog-details.html">Five unbelievable facts
+                                                    about money</a></h6>
+                                                <small>3hr</small>
+                                            </div>
+                                            <div className="mb-3">
+                                                <h6 className="mb-0"><a href="blog-details.html">Best Pinterest Boards
+                                                    for
+                                                    learning about business</a></h6>
+                                                <small>4hr</small>
+                                            </div>
+                                            <div className="mb-3">
+                                                <h6 className="mb-0"><a href="blog-details.html">Skills that you can
+                                                    learn
+                                                    from business</a></h6>
+                                                <small>6hr</small>
+                                            </div>
+                                            <a href="#!" role="button"
+                                               className="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center"
+                                               data-bs-toggle="button" aria-pressed="true">
+                                                <div className="spinner-dots me-2">
+                                                    <span className="spinner-dot"></span>
+                                                    <span className="spinner-dot"></span>
+                                                    <span className="spinner-dot"></span>
+                                                </div>
+                                                View all latest news
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            {/*kkk*/}
             <div className="theme-layout">
                 <div className="responsive-header">
                     <div className="mh-head first Sticky">
@@ -108,7 +386,6 @@ const ShowHome = () => {
 			</span>
                     </div>
                 </div>
-
                 <section>
                     <div className="gap2 gray-bg py-5 mt-4">
                         <div className="container">
@@ -283,8 +560,7 @@ const ShowHome = () => {
                                                                 {urls && <>
                                                                     <img src={urls[urls.length - 1]} alt=""
                                                                          style={{
-                                                                             width: 300,
-                                                                             marginBottom: "10px"
+                                                                             width: 300, marginBottom: "10px"
                                                                          }}/></>}
                                                             </div>
                                                             <div>
@@ -296,66 +572,16 @@ const ShowHome = () => {
                                                             </div>
 
                                                             <div className="attachments">
-                                                                {/*<ul>*/}
-                                                                {/*        <li>*/}
-                                                                {/*<span className="add-loc">*/}
-                                                                {/*	<i className="fa fa-map-marker"></i>*/}
-                                                                {/*</span>*/}
-                                                                {/*        </li>*/}
-                                                                {/*        <li>*/}
-                                                                {/*            <i className="fa fa-music"></i>*/}
-                                                                {/*            <label className="fileContainer">*/}
-                                                                {/*                <input type="file"/>*/}
-                                                                {/*            </label>*/}
-                                                                {/*        </li>*/}
-                                                                {/*        <li>*/}
-                                                                {/*            <i className="fa fa-image"></i>*/}
-                                                                {/*            <label className="fileContainer">*/}
-                                                                {/*                <input type="file"/>*/}
-                                                                {/*            </label>*/}
-                                                                {/*        </li>*/}
-                                                                {/*        <li>*/}
-                                                                {/*            <i className="fa fa-video-camera"></i>*/}
-                                                                {/*            <label className="fileContainer">*/}
-                                                                {/*                <input type="file"/>*/}
-                                                                {/*            </label>*/}
-                                                                {/*        </li>*/}
-                                                                {/*        <li>*/}
-                                                                {/*            <i className="fa fa-camera"></i>*/}
-                                                                {/*            <label className="fileContainer">*/}
-                                                                {/*                <input type="file"/>*/}
-                                                                {/*            </label>*/}
-                                                                {/*        </li>*/}
-                                                                {/*        <li className="preview-btn">*/}
-                                                                {/*            <button className="post-btn-preview" type="submit"*/}
-                                                                {/*                    data-ripple="">Preview*/}
-                                                                {/*            </button>*/}
-                                                                {/*        </li>*/}
-                                                                {/*    </ul>*/}
+
                                                                 <button className="post-btn" type="submit"
                                                                         data-ripple="">Post
                                                                 </button>
                                                             </div>
-                                                            {/*<div className="add-location-post">*/}
-                                                            {/*    <span>Drag map point to selected area</span>*/}
-                                                            {/*    <div className="row">*/}
-                                                            {/*        <div className="col-lg-6">*/}
-                                                            {/*            <label className="control-label">Lat :</label>*/}
-                                                            {/*            <input type="text" className="" id="us3-lat"/>*/}
-                                                            {/*        </div>*/}
-                                                            {/*        <div className="col-lg-6">*/}
-                                                            {/*            <label>Long :</label>*/}
-                                                            {/*            <input type="text" className="" id="us3-lon"/>*/}
-                                                            {/*        </div>*/}
-                                                            {/*    </div>*/}
-                                                            {/*    /!*map*!/*/}
-                                                            {/*    <div id="us3"></div>*/}
-                                                            {/*</div>*/}
+
                                                         </Form>
                                                     </Formik>
                                                 </div>
                                             </div>
-                                            {/*add post new box*/}
 
 
                                             <div className="loadMore">
@@ -429,13 +655,11 @@ const ShowHome = () => {
                                                                                    title=""
                                                                                    data-strip-group="mygroup"
                                                                                    data-strip-group-options="loop: false">
-                                                                                    {
-                                                                                        it.image != 1 ? <>
-                                                                                            <img
-                                                                                                src={it.image}
-                                                                                                alt="#"/>
-                                                                                        </> : <></>
-                                                                                    }
+                                                                                    {it.image != 1 ? <>
+                                                                                        <img
+                                                                                            src={it.image}
+                                                                                            alt="#"/>
+                                                                                    </> : <></>}
 
                                                                                 </a>
                                                                             </figure>
@@ -810,7 +1034,6 @@ const ShowHome = () => {
                     </div>
                 </section>
             </div>
-
             {check ? <>
                 <Formik initialValues={currentPost}
                         onSubmit={(values) => {
@@ -846,15 +1069,12 @@ const ShowHome = () => {
                                                                      newPost.image = '1'
                                                                      dispatch(handleEditPost(newPost))
                                                                  }}>&times;</div>
-                                                        </div>
-                                                        : <></>
-                                                    }
+                                                        </div> : <></>}
                                                     <div>
                                                         {urls && <>
                                                             <img src={urls[urls.length - 1]} alt=""
                                                                  style={{
-                                                                     width: 300,
-                                                                     marginBottom: "10px"
+                                                                     width: 300, marginBottom: "10px"
                                                                  }}/></>}
                                                     </div>
                                                     <div>
@@ -884,10 +1104,7 @@ const ShowHome = () => {
                     </div>
 
                 </Formik>
-            </> : <>
-
-            </>}
-
+            </> : <></>}
         </>
 
     )

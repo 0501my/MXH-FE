@@ -22,7 +22,7 @@ const MyAbout = () => {
 
     useEffect(() => {
         dispatch(searchOtherAccount(idAccount));
-        if(idAccount == account.idAccount) {
+        if (idAccount == account.idAccount) {
             setEditInfo(true)
         }
     }, [])
@@ -53,28 +53,28 @@ const MyAbout = () => {
                         </div>
                     </div>
                 </aside>
-        </div>
-        <div className="col-lg-8 col-md-8">
-            {
-                check ? <>
-                    <Formik
-                    initialValues={otherAccount}
-                    onSubmit={(values)=>{
-                    values.idAccount = idAccount;
-                    values.avatar = otherAccount.avatar;
-                    dispatch(AccountsEdit(values)).then(()=>{
-                        dispatch(searchOtherAccount(idAccount))
-                        alert('Cập Nhật Thành Công')
-                        setCheck (false)
-                    })
-                    }}
-                    enableReinitialize={true}
-                    >
-                        <Form>
-                        <div className="central-meta" >
+            </div>
+            <div className="col-lg-8 col-md-8">
+                {
+                    check ? <>
+                        <Formik
+                            initialValues={otherAccount}
+                            onSubmit={(values) => {
+                                values.idAccount = idAccount;
+                                values.avatar = otherAccount.avatar;
+                                dispatch(AccountsEdit(values)).then(() => {
+                                    dispatch(searchOtherAccount(idAccount))
+                                    alert('Cập Nhật Thành Công')
+                                    setCheck(false)
+                                })
+                            }}
+                            enableReinitialize={true}
+                        >
+                            <Form>
+                                <div className="central-meta">
 
                             <span className="create-post">Update Profile<a href="#"
-                                                                                           title="">See All</a></span>
+                                                                           title="">See All</a></span>
                                     <div className="row">
                                         <div className="col-lg-6">
                                             <div className="gen-metabox">

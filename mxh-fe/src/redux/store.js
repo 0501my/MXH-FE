@@ -8,8 +8,8 @@ import currentPostReducer from "./slice/PostSlice";
 const Store = configureStore({
     reducer: {
         account: accountSlice,
-        posts : postReducer,
-        currentPost : currentPostReducer
+        posts: postReducer,
+        currentPost: currentPostReducer
     },
 
     middleware: getDefaultMiddleware =>
