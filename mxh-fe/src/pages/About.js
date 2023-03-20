@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useParams} from "react-router-dom";
 import {searchOtherAccount} from "../services/AccountService";
+import {checkFriend} from "../services/FriendService";
 
 
 const About = () => {
@@ -9,12 +10,23 @@ const About = () => {
     const {idAccount} = useParams();
 
     const account = useSelector(state => {
+        return state.account.currentAccount
+    })
+
+    const otherAccount = useSelector(state => {
         return state.account.otherAccount
     });
+
+    const friend = useSelector(state => {
+        return state.friends.friend
+    })
+
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        dispatch(searchOtherAccount(idAccount))
+        dispatch(searchOtherAccount(idAccount));
+        let data = {thisId:account.idAccount,thatId:idAccount}
+        dispatch(checkFriend(data))
     },[])
 
 
@@ -44,12 +56,12 @@ const About = () => {
 
                                             <div className="avatar avatar-xxl mt-n5 mb-3">
                                                 <img className="avatar-img rounded-circle border border-white border-3"
-                                                     src={account.avatar} alt=""/>
+                                                     src={otherAccount.avatar} alt=""/>
                                             </div>
                                         </div>
                                         <div className="ms-sm-4 mt-sm-3">
 
-                                            <h1 className="mb-0 h5">{account.name} <i
+                                            <h1 className="mb-0 h5">{otherAccount.name} <i
                                                 className="bi bi-patch-check-fill text-success small"></i></h1>
                                             <p>250 connections</p>
                                         </div>
@@ -70,8 +82,11 @@ const About = () => {
                                         </div>
                                     </div>
                                     <ul className="list-inline mb-0 text-center text-sm-start mt-3 mt-sm-0">
-                                        <li className="list-inline-item"><i className="bi bi-geo-alt fa-fw me-2"></i>{account.address}
-                                        </li>
+                                        <li className="list-inline-item"><i className="bi bi-geo-alt fa-fw me-2"></i>{otherAccount.address}</li>
+                                        {friend === "Add Friend" && <span className="badge bg-primary">Add Friend</span>}
+                                        {friend.status === "Friends" && <span className="badge bg-primary">Friends</span>}
+                                        {friend.status === "Cancel Request" && <span className="badge bg-primary">Cancel Request</span>}
+                                        {friend.status === "Confirm" && <span className="badge bg-primary">Confirm</span>}
                                     </ul>
                                 </div>
 
@@ -94,7 +109,7 @@ const About = () => {
                                 <div className="card-body">
                                     <div className="rounded border px-3 py-2 mb-3">
                                         <div className="d-flex align-items-center justify-content-between">
-                                            <h6>{account.name}</h6>
+                                            <h6>{otherAccount.name}</h6>
                                         </div>
                                         <p>Thích màu hồng.</p>
                                     </div>
@@ -104,7 +119,7 @@ const About = () => {
                                             <div className="d-flex align-items-center rounded border px-3 py-2">
 
                                                 <p className="mb-0">
-                                                    <i className="bi bi-calendar-date fa-fw me-2"></i> Born: <strong> {account.birthday} </strong>
+                                                    <i className="bi bi-calendar-date fa-fw me-2"></i> Born: <strong> {otherAccount.birthday} </strong>
                                                 </p>
                                                 <div className="dropdown ms-auto">
 
@@ -130,7 +145,7 @@ const About = () => {
                                             <div className="d-flex align-items-center rounded border px-3 py-2">
 
                                                 <p className="mb-0">
-                                                    <i className="bi bi-heart fa-fw me-2"></i> German: <strong> {account.german} </strong>
+                                                    <i className="bi bi-heart fa-fw me-2"></i> German: <strong> {otherAccount.german} </strong>
                                                 </p>
                                                 <div className="dropdown ms-auto">
 
@@ -184,7 +199,7 @@ const About = () => {
 
                                                 <p className="mb-0">
                                                     <i className="bi bi-geo-alt fa-fw me-2"></i> Lives
-                                                    in: <strong> {account.address} </strong>
+                                                    in: <strong> {otherAccount.address} </strong>
                                                 </p>
                                                 <div className="dropdown ms-auto">
 
@@ -220,7 +235,7 @@ const About = () => {
                                 <div className="col-sm-6 col-lg-12">
                                     <div className="card">
                                         <div className="card-header border-0 pb-0">
-                                            <h5 className="card-title">{account.name}</h5>
+                                            <h5 className="card-title">{otherAccount.name}</h5>
 
                                         </div>
 
@@ -229,11 +244,11 @@ const About = () => {
                                                 mình đang có, chúng ta mới không phải nuối tiếc trong cuộc sống. – Đừng
                                                 lựa chọn an nhàn khi còn trẻ</p>
                                             <ul className="list-unstyled mt-3 mb-0">
-                                                <li className="mb-2"><i className="bi bi-calendar-date fa-fw pe-1"></i> Born: <strong> {account.birthday} </strong>
+                                                <li className="mb-2"><i className="bi bi-calendar-date fa-fw pe-1"></i> Born: <strong> {otherAccount.birthday} </strong>
                                                 </li>
-                                                <li className="mb-2"><i className="bi bi-heart fa-fw pe-1"></i> German: <strong> {account.german} </strong>
+                                                <li className="mb-2"><i className="bi bi-heart fa-fw pe-1"></i> German: <strong> {otherAccount.german} </strong>
                                                 </li>
-                                                <li><i className="bi bi-geo-alt fa-fw me-2"></i> Address: <strong> {account.address} </strong>
+                                                <li><i className="bi bi-geo-alt fa-fw me-2"></i> Address: <strong> {otherAccount.address} </strong>
                                                 </li>
                                             </ul>
                                         </div>

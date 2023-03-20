@@ -3,7 +3,7 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {findByIdAccount} from "../services/PostService";
 import {searchOtherAccount} from "../services/AccountService";
-
+import {addFriend, checkFriend, confirmFriend, deleteFriend} from "../services/FriendService";
 
 const TimeLine = () => {
 
@@ -14,22 +14,42 @@ const TimeLine = () => {
     });
 
     const account = useSelector(state => {
+        return state.account.currentAccount
+    })
+
+    const otherAccount = useSelector(state => {
         return state.account.otherAccount
+    })
+
+    const friend = useSelector(state => {
+        return state.friends.friend
     })
 
     const dispatch = useDispatch();
 
+    const handleAddFriend = async ()=>{
+        let data = {idSender:account.idAccount,idReceiver:idAccount};
+        dispatch(addFriend(data));
+    }
+
+    const handleDeleteFriend = async (id)=>{
+        dispatch(deleteFriend(id));
+    }
+
+    const handleConfirmFriend = async (id)=>{
+        dispatch(confirmFriend(id));
+    }
+
     useEffect(() => {
         dispatch(findByIdAccount(idAccount));
-        dispatch(searchOtherAccount(idAccount))
+        dispatch(searchOtherAccount(idAccount));
+        let data = {thisId:account.idAccount,thatId:idAccount}
+        dispatch(checkFriend(data))
     }, [])
 
     return (
         <>
-
             <main>
-
-
                 <div class="container">
                     <div class="row g-4">
 
@@ -51,12 +71,12 @@ const TimeLine = () => {
 
                                             <div class="avatar avatar-xxl mt-n5 mb-3">
                                                 <img class="avatar-img rounded-circle border border-white border-3"
-                                                     src={account.avatar} alt=""/>
+                                                     src={otherAccount.avatar} alt=""/>
                                             </div>
                                         </div>
                                         <div class="ms-sm-4 mt-sm-3">
 
-                                            <h1 class="mb-0 h5">{account.name} <i
+                                            <h1 class="mb-0 h5">{otherAccount.name} <i
                                                 class="bi bi-patch-check-fill text-success small"></i></h1>
                                             <p>250 connections</p>
                                         </div>
@@ -66,8 +86,19 @@ const TimeLine = () => {
                                     <ul class="list-inline mb-0 text-center text-sm-start mt-3 mt-sm-0">
 
                                         <li class="list-inline-item"><i
-                                            class="bi bi-geo-alt me-1"></i> {account.address}</li>
-
+                                            class="bi bi-geo-alt me-1"></i> {otherAccount.address}</li>
+                                        {friend === "Add Friend" && <span as={"button"} className="badge bg-primary" onClick={()=>{handleAddFriend()}}>Add Friend</span>}
+                                        {friend.status === "Friends" &&
+                                            <>
+                                                <span as={"button"} className="badge bg-primary">Friends</span>
+                                                <span as={"button"} className="badge bg-primary bg-opacity-10 text-secondary" onClick={()=>{handleDeleteFriend(friend.friend.id)}}> Delete </span>
+                                            </>}
+                                        {friend.status === "Cancel Request" && <span as={"button"} className="badge bg-primary" onClick={()=>{handleDeleteFriend(friend.friend.id)}}>Cancel Request</span>}
+                                        {friend.status === "Confirm" &&
+                                            <>
+                                                <span as={"button"} className="badge bg-primary" onClick={()=>{handleConfirmFriend(friend.friend.id)}}>Confirm</span>
+                                                <span as={"button"} className="badge bg-primary bg-opacity-10 text-secondary" onClick={()=>{handleDeleteFriend(friend.friend.id)}}> Delete </span>
+                                            </>}
                                     </ul>
                                 </div>
 
@@ -144,7 +175,7 @@ const TimeLine = () => {
 
                                             <div class="avatar avatar-xs me-2">
                                                 <a href="#!"> <img class="avatar-img rounded-circle"
-                                                                   src={account.avatar} alt=""/> </a>
+                                                                   src={otherAccount.avatar} alt=""/> </a>
                                             </div>
 
                                             <form class="position-relative w-100">
@@ -174,7 +205,7 @@ const TimeLine = () => {
                                 <div class="col-md-6 col-lg-12">
                                     <div class="card">
                                         <div class="card-header border-0 pb-0">
-                                            <h5 class="card-title">{account.name}</h5>
+                                            <h5 class="card-title">{otherAccount.name}</h5>
 
                                         </div>
 
@@ -185,13 +216,13 @@ const TimeLine = () => {
 
                                             <ul class="list-unstyled mt-3 mb-0">
                                                 <li class="mb-2"><i
-                                                    class="bi bi-calendar-date fa-fw pe-1"></i> Born: <strong> {account.birthday} </strong>
+                                                    class="bi bi-calendar-date fa-fw pe-1"></i> Born: <strong> {otherAccount.birthday} </strong>
                                                 </li>
                                                 <li class="mb-2"><i
-                                                    class="bi bi-heart fa-fw pe-1"></i> German: <strong> {account.german} </strong>
+                                                    class="bi bi-heart fa-fw pe-1"></i> German: <strong> {otherAccount.german} </strong>
                                                 </li>
                                                 <li><i
-                                                    className="bi bi-geo-alt me-1"></i> Address: <strong> {account.address} </strong>
+                                                    className="bi bi-geo-alt me-1"></i> Address: <strong> {otherAccount.address} </strong>
                                                 </li>
                                             </ul>
                                         </div>
