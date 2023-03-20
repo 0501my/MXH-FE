@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {Field, Form, Formik} from "formik";
-
 import {useDispatch, useSelector} from "react-redux";
 import {AccountsEdit, searchOtherAccount} from "../services/AccountService";
-
 import {Link, useParams} from "react-router-dom";
 import swal from "sweetalert";
 
 
-const MyAbout = () => {
+const About = () => {
     const {idAccount} = useParams()
     const [check, setCheck] = useState(false);
     const [editInfo, setEditInfo] = useState(false);
@@ -38,8 +36,8 @@ const MyAbout = () => {
                     <div className="container">
                         <a className="navbar-brand" href="index-2.html">
                             <img className="light-mode-item navbar-brand-item" src="assets/images/logo.svg" alt="logo"/>
-                                <img className="dark-mode-item navbar-brand-item" src="assets/images/logo.svg"
-                                     alt="logo"/>
+                            <img className="dark-mode-item navbar-brand-item" src="assets/images/logo.svg"
+                                 alt="logo"/>
                         </a>
 
                         <button className="navbar-toggler ms-auto icon-md btn btn-light p-0" type="button"
@@ -61,9 +59,9 @@ const MyAbout = () => {
                                     <form className="rounded position-relative">
                                         <input className="form-control ps-5 bg-light" type="search"
                                                placeholder="Search..." aria-label="Search"/>
-                                            <button
-                                                className="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y"
-                                                type="submit"><i className="bi bi-search fs-5"> </i></button>
+                                        <button
+                                            className="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y"
+                                            type="submit"><i className="bi bi-search fs-5"> </i></button>
                                     </form>
                                 </div>
                             </div>
@@ -443,9 +441,9 @@ const MyAbout = () => {
 
                                     <ul className="nav nav-bottom-line align-items-center justify-content-center justify-content-md-start mb-0 border-0">
                                         <li className="nav-item"><Link className="nav-link"
-                                                                    to={"/home/myTimeLine"}> Posts </Link></li>
+                                                                       to={"/home/myTimeLine"}> Posts </Link></li>
                                         <li className="nav-item"><Link className="nav-link active"
-                                                                    to={""}> About </Link></li>
+                                                                       to={""}> About </Link></li>
                                     </ul>
                                 </div>
                             </div>
@@ -827,4 +825,4 @@ const MyAbout = () => {
     )
 }
 
-export default MyAbout;
+export default About;
