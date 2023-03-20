@@ -6,6 +6,7 @@ import {AccountsLogin, AccountsLoginGG, AccountsRegister} from "../services/Acco
 import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 import * as Yup from "yup";
+import swal from "sweetalert";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -22,34 +23,44 @@ const Login = () => {
         if (checkUSer === false) {
             await dispatch(AccountsRegister(userGG))
             await dispatch(AccountsLogin(userGG))
+            swal(`Welcome to Bug Men.`, {
+                icon: "success",
+            })
             navigate('/home')
-            await alert("Login success")
+
         }
         if (checkUSer === true) {
             await dispatch(AccountsLogin(userGG))
+            swal(`Welcome to Bug Men.`, {
+                icon: "success",
+            })
             navigate('/home')
-            // await alert("Login success")
+
         }
     }
 
 
     const handleSubmit = async (values) => {
-        console.log(localStorage.getItem('status') === 'User is not exit')
-        await dispatch(AccountsLogin(values));
-        if (localStorage.getItem('status') === 'User is not exit' || localStorage.getItem('status') === 'Password is wrong' || localStorage.getItem('status') == null || localStorage.getItem('status') === undefined) {
-            alert('User or password incorrect')
-            navigate(('/'))
-        } else {
-            alert("Đăng nhập thành công")
-            navigate('/home')
-        }
+        await dispatch(AccountsLogin(values)).then((value)=>{
+            if (value.payload.data === 'User is not exit' || value.payload.data === 'Password is wrong' ) {
+                swal(`Incorrect account or password`, {
+                    icon: "warning",
+                })
+                navigate(('/'))
+            } else {
+                swal(`Welcome to Bug Men.`, {
+                    icon: "success",
+                })
+                navigate('/home')
+            }
+        });
     };
     const validationSchema = Yup.object().shape({
-        username: Yup.string().required("Vui lòng nhập tên đăng nhập")
+        username: Yup.string().required("Please Enter Username")
             .matches(/^[a-zA-Z0-9]/), password: Yup.string()
-            .required("Vui lòng nhập mật khẩu")
-            .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
-            .max(32, "Mật khẩu chỉ có nhiều nhất 14 ký tự")
+            .required("Please Enter Password")
+            .min(6, "Passwords must be at least 6 characters")
+            .max(32, "Password must be at most 14 characters")
     });
 
     return (<>

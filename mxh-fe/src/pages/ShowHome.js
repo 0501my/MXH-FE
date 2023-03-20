@@ -893,32 +893,32 @@ const ShowHome = () => {
                                                                     <div className="users-thumb-list">
                                                                         <a href="#" title="Anderw"
                                                                            data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-1.jpg"
+                                                                            <img src="/images/resources/userlist-1.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="frank" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-2.jpg"
+                                                                            <img src="/images/resources/userlist-2.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Sara" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-3.jpg"
+                                                                            <img src="/images/resources/userlist-3.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Amy" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-4.jpg"
+                                                                            <img src="/images/resources/userlist-4.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Ema" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-5.jpg"
+                                                                            <img src="/images/resources/userlist-5.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Sophie"
                                                                            data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-6.jpg"
+                                                                            <img src="/images/resources/userlist-6.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Maria" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-7.jpg"
+                                                                            <img src="/images/resources/userlist-7.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                     </div>
@@ -930,32 +930,32 @@ const ShowHome = () => {
                                                                     <div className="users-thumb-list">
                                                                         <a href="#" title="Anderw"
                                                                            data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-1.jpg"
+                                                                            <img src="/images/resources/userlist-1.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="frank" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-2.jpg"
+                                                                            <img src="/images/resources/userlist-2.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Sara" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-3.jpg"
+                                                                            <img src="/images/resources/userlist-3.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Amy" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-4.jpg"
+                                                                            <img src="/images/resources/userlist-4.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Ema" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-5.jpg"
+                                                                            <img src="/images/resources/userlist-5.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Sophie"
                                                                            data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-6.jpg"
+                                                                            <img src="/images/resources/userlist-6.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                         <a href="#" title="Maria" data-toggle="tooltip">
-                                                                            <img src="images/resources/userlist-7.jpg"
+                                                                            <img src="/images/resources/userlist-7.jpg"
                                                                                  alt=""/>
                                                                         </a>
                                                                     </div>
@@ -1040,7 +1040,6 @@ const ShowHome = () => {
                             handleEditPost(values)
                         }}
                         enableReinitialize={true}>
-
                     <div className="popup-wraper active">
                         <div className="popup">
                                 <span className="popup-closed" onClick={() => {
@@ -1102,6 +1101,7 @@ const ShowHome = () => {
                             </div>
                         </div>
                     </div>
+
 
                 </Formik>
             </> : <></>}

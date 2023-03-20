@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
+import swal from "sweetalert";
 import {useSelector} from "react-redux";
+
 
 const Header = () => {
     const navigate = useNavigate()
@@ -39,6 +41,7 @@ const Header = () => {
                                     <button
                                         className="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y"
                                         type="submit"><i className="bi bi-search fs-5"> </i></button>
+
                                 </form>
                             </div>
                         </div>
@@ -168,6 +171,7 @@ const Header = () => {
                             </li>
                         </ul>
                     </div>
+
 
                     <ul className="nav flex-nowrap align-items-center ms-sm-3 list-unstyled">
                         <li className="nav-item ms-2">

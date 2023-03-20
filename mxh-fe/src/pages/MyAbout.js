@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AccountsEdit, searchOtherAccount} from "../services/AccountService";
 
 import {useParams} from "react-router-dom";
+import swal from "sweetalert";
 
 
 const MyAbout = () => {
@@ -42,67 +43,80 @@ const MyAbout = () => {
                         }
                         <div className="personal-head">
                                                     <span className="f-title"><i
-                                                        className="ml-3 fa fa-user"></i> Name: {otherAccount.name}</span>
+                                                        className="ml-3 fa fa-user"></i> Name: </span>
+                            <p>{otherAccount.name}</p>
 
                             <span className="f-title"><i
-                                className="ml-3 fa fa-birthday-cake"></i> Birthday:{otherAccount.birthday}</span>
+                                className="ml-3 fa fa-birthday-cake"></i> Birthday:</span>
+                            <p>{otherAccount.birthday}</p>
                             <span className="f-title"><i
-                                className="ml-3 fa fa-male"></i> Gender: {otherAccount.german}</span>
+                                className="ml-3 fa fa-male"></i> Gender: </span>
+                            <p>{otherAccount.german}</p>
                             <span className=" f-title"><i
-                                className="ml-3 fa fa-globe"></i> Country:{otherAccount.address}</span>
+                                className="ml-3 fa fa-globe"></i> Country:</span>
+                            <p>{otherAccount.address}</p>
                         </div>
                     </div>
                 </aside>
-            </div>
-            <div className="col-lg-8 col-md-8">
-                {
-                    check ? <>
-                        <Formik
-                            initialValues={otherAccount}
-                            onSubmit={(values) => {
-                                values.idAccount = idAccount;
-                                values.avatar = otherAccount.avatar;
-                                dispatch(AccountsEdit(values)).then(() => {
-                                    dispatch(searchOtherAccount(idAccount))
-                                    alert('Cập Nhật Thành Công')
-                                    setCheck(false)
-                                })
-                            }}
-                            enableReinitialize={true}
-                        >
-                            <Form>
-                                <div className="central-meta">
+        </div>
+        <div className="col-lg-8 col-md-8">
+            {
+                check ? <>
+                    <Formik
+                    initialValues={otherAccount}
+                    onSubmit={(values)=>{
+                    values.idAccount = idAccount;
+                    values.avatar = otherAccount.avatar;
+                    dispatch(AccountsEdit(values)).then(()=>{
+                        dispatch(searchOtherAccount(idAccount))
+                        swal(`Update information`, {
+                            icon: "success",
 
-                            <span className="create-post">Update Profile<a href="#"
-                                                                           title="">See All</a></span>
+                        })
+                        setCheck (false)
+                    })
+                    }}
+                    enableReinitialize={true}
+                    >
+                        <Form>
+                        <div className="central-meta" >
+
+                            <span className="create-post">Update Profile</span>
                                     <div className="row">
                                         <div className="col-lg-6">
                                             <div className="gen-metabox">
                              <span className="f-title"><i
                                  className="fa fa-user"></i> Name:</span>
-                                                <Field type="text" name="name"/>
+                                                <Field className="form-control" type="text" required name="name"/>
+
                                             </div>
                                             <div className="gen-metabox">
                                                 <span className="f-title"><i className="fa fa-birthday-cake"></i> Birthday:</span>
-                                                <Field type="text" name="birthday"/>
+                                                <Field type="text" className="form-control" name="birthday"/>
                                             </div>
                                         </div>
                                         <div className="col-lg-6">
                                             <div className="gen-metabox">
                             <span className="f-title"><i
                                 className="fa fa-male"></i> Gender:</span>
-                                                <Field type="text" name="german"/>
+                                                <Field type="text" className="form-control" name="german"/>
                                             </div>
                                             <div className="gen-metabox">
                              <span className="f-title"><i
                                  className="fa fa-globe"></i> Country:</span>
-                                                <Field type="text" name="address"/>
+                                                <Field type="text" className="form-control" name="address"/>
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit">
-                                        Update
-                                    </button>
+                                    <div className="row" >
+                                        <div style={{margin:"auto"}}>
+                                            <button type="submit"  >
+                                                Update
+                                            </button>
+                                        </div>
+
+                                    </div>
+
                                 </div>
                             </Form>
 
