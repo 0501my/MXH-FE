@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Link, Outlet, useParams} from "react-router-dom";
+import {Link, Outlet, useNavigate, useParams} from "react-router-dom";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {changePassword, searchOtherAccount} from "../services/AccountService";
 import {useDispatch, useSelector} from "react-redux";
 import * as Yup from "yup";
+import swal from "sweetalert";
 
 const PersonalPage = () => {
-
+    const navigate = useNavigate()
     const {idAccount} = useParams();
     const [check, setCheck] = useState(false);
     const [timeLine, setTimeLine] = useState('active');
@@ -30,11 +31,11 @@ const PersonalPage = () => {
 
     const validationSchema = Yup.object().shape({
         newPassword: Yup.string()
-            .required("Vui lòng nhập mật khẩu")
-            .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
-            .max(32, "Mật khẩu chỉ có nhiều nhất 14 ký tự"),
+            .required( <p style={{color:"red", marginTop:-15}}>Please enter password.</p>)
+            .min(6,  <p style={{color:"red", marginTop:-15 }}>Passwords must be at least 6 characters</p>)
+            .max(32, <p style={{color:"red", marginTop:-15 }}>Password must be at most 14 characters</p>),
         repeatPassword: Yup.string()
-            .required("Vui lòng nhập mật khẩu confirm")
+            .required(<p style={{color:"red", marginTop:-15 }}>Please re-enter your password.</p>)
     });
 
     return (
@@ -94,9 +95,8 @@ const PersonalPage = () => {
                                         <div className="row">
                                             <div className="col-lg-2 col-md-3">
                                                 <div className="profile-author">
-                                                    <div className="profile-author-thumb">
-                                                        <img alt="author" src={otherAccount.avatar}/>
-
+                                                    <div className="mb-3 profile-author-thumb">
+                                                        <img style={{height:150}} alt="author" src={otherAccount.avatar}/>
                                                         <div className="edit-dp">
                                                             <label className="fileContainer">
                                                                 <i className="fa fa-camera"></i>
@@ -184,12 +184,19 @@ const PersonalPage = () => {
                         onSubmit={(values) => {
                             values.id = account.idAccount;
                             if(values.repeatPassword === values.newPassword){
-                                dispatch(changePassword(values)).then(()=>{
-                                    alert('Change password success!!')
-                                    setCheck(false)
+                                dispatch(changePassword(values)).then((value)=>{
+                                    if (value.payload === undefined){
+                                        alert(` OldPassword Fail`)
+                                    }else {
+                                        swal(`Change password success!!`, {
+                                            icon: "success",
+                                        })
+                                        setCheck(false)
+                                    }
                                 })
                             }else {
-                                alert(' can not')
+                                alert(` Can not change password`)
+
                             }
 
 
@@ -198,13 +205,13 @@ const PersonalPage = () => {
                         enableReinitialize={true}>
 
                     <div className="popup-wraper active">
-                        <div className="popup" style={{width:400,height:400, textAlignLast:"center"}}>
+                        <div className="popup" style={{width:500,height:500, textAlignLast:"center"}}>
                                 <span className="popup-closed" onClick={() => {
                                     setCheck(false)
                                 }}><i className="ti-close"></i></span>
                             <div className="popup-meta">
                                 <div className="popup-head">
-                                    <h5>Change Password</h5>
+                                    <h1>Change Password</h1>
                                 </div>
                                 <div className="forum-form">
                                     <div className="postbox">
@@ -212,28 +219,32 @@ const PersonalPage = () => {
                                             <Form>
                                                 <div className="newpst-input">
                                                     <div>
-                                                        <label>oldPassword</label>
-                                                        <Field   type="password"  name={'oldPassword'}/>
+                                                        <div>
+                                                            <label>oldPassword</label>
+                                                            <Field   type="password"  className="form-control" name={'oldPassword'}/>
+                                                        </div>
+                                                        <div style={{marginTop:-10}}>
+                                                            <label>newPassword</label>
+                                                            <Field   type="password" className="form-control" name={'newPassword'}/>
+                                                            <br/>
+                                                            <alert>
+                                                                <ErrorMessage name={"newPassword"}></ErrorMessage>
+                                                            </alert>
+                                                        </div>
+                                                        <div style={{marginTop:-25}}>
+                                                            <label>repeatPassword</label>
+                                                            <Field  type="password" className="form-control" name={'repeatPassword'}/>
+                                                            <br/>
+                                                            <alert>
+                                                                <ErrorMessage name={"repeatPassword"}></ErrorMessage>
+                                                            </alert>
+                                                        </div>
+                                                    </div>
+                                                    <div >
+                                                        <button className="post-btn" type="submit" data-ripple="">Edit
+                                                        </button>
+                                                    </div>
 
-                                                    </div>
-                                                    <div>
-                                                        <label>newPassword</label>
-                                                        <Field  type="password" name={'newPassword'}/>
-                                                        <br/>
-                                                        <alert>
-                                                            <ErrorMessage name={"newPassword"}></ErrorMessage>
-                                                        </alert>
-                                                    </div>
-                                                    <div>
-                                                        <label>repeatPassword</label>
-                                                        <Field  type="password" name={'repeatPassword'}/>
-                                                        <br/>
-                                                        <alert>
-                                                            <ErrorMessage name={"repeatPassword"}></ErrorMessage>
-                                                        </alert>
-                                                    </div>
-                                                    <button className="post-btn" type="submit" data-ripple="">Edit
-                                                    </button>
                                                 </div>
                                             </Form>
                                         </div>

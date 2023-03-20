@@ -4,6 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {AccountsRegister} from "../services/AccountService";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
+import swal from "sweetalert";
 
 const Register = () => {
     const dispatch = useDispatch();
@@ -12,32 +13,32 @@ const Register = () => {
         username: "", password: "", passwordAgain: "",
     };
     const validationSchema = Yup.object().shape({
-        username: Yup.string().required("Vui lòng nhập tên đăng nhập")
+        username: Yup.string().required("Please enter username.")
             .matches(/^[a-zA-Z0-9]/), password: Yup.string()
-            .required("Vui lòng nhập mật khẩu")
-            .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
-            .max(32, "Mật khẩu chỉ có nhiều nhất 14 ký tự"), passwordAgain: Yup.string()
-            .required("Vui lòng nhập mật khẩu confirm")
+            .required("Please enter password.")
+            .min(6, "Passwords must be at least 6 characters")
+            .max(32, "Password must be at most 14 characters"), passwordAgain: Yup.string()
+            .required("Please re-enter your password. ")
     });
     const handleSubmit = async (values) => {
         if (values.password !== values.passwordAgain) {
-            alert('Password is incorrect')
+            alert('Incorrect password.')
         } else {
             let data = {
                 username: values.username, password: values.password
             }
-            await dispatch(AccountsRegister(data)).then((value)=>{
+
+                dispatch(AccountsRegister(data)).then((value)=>{
                 if(value.payload !== 'Username registered'){
-                    alert('Registered successfully')
+                    swal(`Registered successfully.`, {
+                        icon: "success",
+                    })
                     navigate('/')
                 }else {
                     alert('Username registered')
                     navigate('')
                 }
-
-
             })
-
         }
 
     };
@@ -50,7 +51,7 @@ const Register = () => {
                         <div className="row">
                             <div className="col-lg-8">
                                 <div className="big-ad">
-                                    <figure><img src="images/logo3.png" alt=""/></figure>
+                                    <figure><img src="/images/logo3.png" alt=""/></figure>
                                     <h1>Welcome to the Bug Men</h1>
                                     <p>
                                         Bug Men is a social network template that can be used to connect people. use
@@ -85,16 +86,16 @@ const Register = () => {
                                         </div>
                                     </div>
                                     <div className="barcode">
-                                        <figure><img src="images/resources/Barcode.jpg" alt=""/></figure>
+                                        <figure><img src="/images/resources/Barcode.jpg" alt=""/></figure>
                                         <div className="app-download">
                                             <span>Download Mobile App and Scan QR Code to login</span>
                                             <ul className="colla-apps">
                                                 <li><a title="" href="https://play.google.com/store?hl=en"><img
-                                                    src="images/android.png" alt=""/>android</a></li>
+                                                    src="/images/android.png" alt=""/>android</a></li>
                                                 <li><a title="" href="https://www.apple.com/lae/ios/app-store/"><img
-                                                    src="images/apple.png" alt=""/>iPhone</a></li>
+                                                    src="/images/apple.png" alt=""/>iPhone</a></li>
                                                 <li><a title="" href="https://www.microsoft.com/store/apps"><img
-                                                    src="images/windows.png" alt=""/>Windows</a></li>
+                                                    src="/images/windows.png" alt=""/>Windows</a></li>
                                             </ul>
                                         </div>
                                     </div>
