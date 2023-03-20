@@ -29,9 +29,7 @@ const accountSlice = createSlice({
             state.currentAccount = action.payload;
             localStorage.setItem('account', JSON.stringify(action.payload));
         });
-        builder.addCase(changePassword.fulfilled, (state, action) => {
-            state.currentAccount = action.payload
-        });
+
         builder.addCase(AccountsLogin.fulfilled, (state, {payload}) => {
             state.account = payload.data;
             state.currentAccount = payload.data;

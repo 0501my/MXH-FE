@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Link, Outlet, useParams} from "react-router-dom";
+import {Link, Outlet, useNavigate, useParams} from "react-router-dom";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {changePassword, searchOtherAccount} from "../services/AccountService";
 import {useDispatch, useSelector} from "react-redux";
 import * as Yup from "yup";
+import swal from "sweetalert";
 
 const PersonalPage = () => {
-
+    const navigate = useNavigate()
     const {idAccount} = useParams();
     const [check, setCheck] = useState(false);
     const [timeLine, setTimeLine] = useState('active');
@@ -29,15 +30,14 @@ const PersonalPage = () => {
 
     const validationSchema = Yup.object().shape({
         newPassword: Yup.string()
-            .required("Vui lòng nhập mật khẩu")
-            .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
-            .max(32, "Mật khẩu chỉ có nhiều nhất 14 ký tự"),
+            .required(<p style={{color: "red", marginTop: -15}}>Please enter password.</p>)
+            .min(6, <p style={{color: "red", marginTop: -15}}>Passwords must be at least 6 characters</p>)
+            .max(32, <p style={{color: "red", marginTop: -15}}>Password must be at most 14 characters</p>),
         repeatPassword: Yup.string()
-            .required("Vui lòng nhập mật khẩu confirm")
+            .required(<p style={{color: "red", marginTop: -15}}>Please re-enter your password.</p>)
     });
 
-    return (
-        <>
+    return (<>
             <section style={{marginTop: 50}}>
                 <div className="gap2 gray-bg">
                     <div className="container">
@@ -70,7 +70,6 @@ const PersonalPage = () => {
                                                                 Photo</a></li>
                                                             <li><a href="setting.html" title="">Update Header
                                                                 Photo</a></li>
-
                                                             <li><a href="support-and-help.html" title="">Find
                                                                 Support</a></li>
                                                             <li><a className="bad-report" href="#" title="">Report
@@ -138,23 +137,20 @@ const PersonalPage = () => {
                                                             <a className="" href="timeline-videos.html">Videos</a>
                                                         </li>
                                                         <li>
-                                                            {account.idAccount == idAccount &&
-                                                                <div className="more">
-                                                                    <i className="fa fa-ellipsis-h"></i>
-                                                                    <ul className="more-dropdown">
-                                                                        <li>
-                                                                            <a as={'i'} onClick={() => {
-                                                                                setCheck(true)
-                                                                            }
-                                                                            }>Account Settings</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="statistics.html">Profile
-                                                                                Analytics</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            }
+                                                            {account.idAccount == idAccount && <div className="more">
+                                                                <i className="fa fa-ellipsis-h"></i>
+                                                                <ul className="more-dropdown">
+                                                                    <li>
+                                                                        <a as={'i'} onClick={() => {
+                                                                            setCheck(true)
+                                                                        }}>Account Settings</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="statistics.html">Profile
+                                                                            Analytics</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>}
 
                                                         </li>
                                                     </ul>
@@ -182,77 +178,71 @@ const PersonalPage = () => {
                     </div>
                 </div>
             </section>
-            {
-                check ? <>
-                    <Formik initialValues={{}}
-                            validationSchema={validationSchema}
-                            onSubmit={(values) => {
-                                values.id = account.idAccount;
-                                if (values.repeatPassword === values.newPassword) {
-                                    dispatch(changePassword(values)).then(() => {
-                                        alert('Change password success!!')
-                                        setCheck(false)
-                                    })
-                                } else {
-                                    alert(' can not')
-                                }
-
-
+            {check ? <>
+                <Formik initialValues={{}}
+                        validationSchema={validationSchema}
+                        onSubmit={(values) => {
+                            values.id = account.idAccount;
+                            if (values.repeatPassword === values.newPassword) {
+                                dispatch(changePassword(values)).then(() => {
+                                    alert('Change password success!!')
+                                    setCheck(false)
+                                })
+                            } else {
+                                alert(' can not')
                             }
-                            }
-                            enableReinitialize={true}>
-
-                        <div className="popup-wraper active">
-                            <div className="popup" style={{width: 400, height: 400, textAlignLast: "center"}}>
+                        }}
+                        enableReinitialize={true}>
+                    <div className="popup-wraper active">
+                        <div className="popup" style={{width: 400, height: 400, textAlignLast: "center"}}>
                                 <span className="popup-closed" onClick={() => {
                                     setCheck(false)
                                 }}><i className="ti-close"></i></span>
-                                <div className="popup-meta">
-                                    <div className="popup-head">
-                                        <h5>Change Password</h5>
-                                    </div>
-                                    <div className="forum-form">
-                                        <div className="postbox">
-                                            <div className="new-postbox">
-                                                <Form>
-                                                    <div className="newpst-input">
-                                                        <div>
-                                                            <label>oldPassword</label>
-                                                            <Field type="password" name={'oldPassword'}/>
+                            <div className="popup-meta">
+                                <div className="popup-head">
+                                    <h5>Change Password</h5>
+                                </div>
+                                <div className="forum-form">
+                                    <div className="postbox">
+                                        <div className="new-postbox">
+                                            <Form>
+                                                <div className="newpst-input">
+                                                    <div>
+                                                        <label>oldPassword</label>
+                                                        <Field type="password" name={'oldPassword'}/>
 
-                                                        </div>
-                                                        <div>
-                                                            <label>newPassword</label>
-                                                            <Field type="password" name={'newPassword'}/>
-                                                            <br/>
-                                                            <alert>
-                                                                <ErrorMessage name={"newPassword"}></ErrorMessage>
-                                                            </alert>
-                                                        </div>
-                                                        <div>
-                                                            <label>repeatPassword</label>
-                                                            <Field type="password" name={'repeatPassword'}/>
-                                                            <br/>
-                                                            <alert>
-                                                                <ErrorMessage name={"repeatPassword"}></ErrorMessage>
-                                                            </alert>
-                                                        </div>
-                                                        <button className="post-btn" type="submit" data-ripple="">Edit
-                                                        </button>
                                                     </div>
-                                                </Form>
-                                            </div>
+                                                    <div>
+                                                        <label>newPassword</label>
+                                                        <Field type="password" name={'newPassword'}/>
+                                                        <br/>
+                                                        <alert>
+                                                            <ErrorMessage name={"newPassword"}></ErrorMessage>
+                                                        </alert>
+                                                    </div>
+                                                    <div>
+                                                        <label>repeatPassword</label>
+                                                        <Field type="password" name={'repeatPassword'}/>
+                                                        <br/>
+                                                        <alert>
+                                                            <ErrorMessage name={"repeatPassword"}></ErrorMessage>
+                                                        </alert>
+                                                    </div>
+                                                    <button className="post-btn" type="submit" data-ripple="">Edit
+                                                    </button>
+                                                </div>
+                                            </Form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                    </Formik>
-                </> : <>
+                </Formik>
+            </> : <>
 
-                </>
-            }
+            </>}
 
         </>
 

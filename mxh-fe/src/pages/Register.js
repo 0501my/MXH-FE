@@ -4,8 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {AccountsLoginGG, AccountsRegister} from "../services/AccountService";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
-import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
-import jwt_decode from "jwt-decode";
+import swal from "sweetalert";
 
 const Register = () => {
     const dispatch = useDispatch();
@@ -14,32 +13,32 @@ const Register = () => {
         username: "", password: "", passwordAgain: "",
     };
     const validationSchema = Yup.object().shape({
-        username: Yup.string().required("Vui lòng nhập tên đăng nhập")
+        username: Yup.string().required("Please enter username.")
             .matches(/^[a-zA-Z0-9]/), password: Yup.string()
-            .required("Vui lòng nhập mật khẩu")
-            .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
-            .max(32, "Mật khẩu chỉ có nhiều nhất 14 ký tự"), passwordAgain: Yup.string()
-            .required("Vui lòng nhập mật khẩu confirm")
+            .required("Please enter password.")
+            .min(6, "Passwords must be at least 6 characters")
+            .max(32, "Password must be at most 14 characters"), passwordAgain: Yup.string()
+            .required("Please re-enter your password. ")
     });
     const handleSubmit = async (values) => {
         if (values.password !== values.passwordAgain) {
-            alert('Password is incorrect')
+            alert('Incorrect password.')
         } else {
             let data = {
                 username: values.username, password: values.password
             }
-            await dispatch(AccountsRegister(data)).then((value) => {
-                if (value.payload !== 'Username registered') {
-                    alert('Registered successfully')
+
+                dispatch(AccountsRegister(data)).then((value)=>{
+                if(value.payload !== 'Username registered'){
+                    swal(`Registered successfully.`, {
+                        icon: "success",
+                    })
                     navigate('/')
                 } else {
                     alert('Username registered')
                     navigate('')
                 }
-
-
             })
-
         }
 
     };
@@ -50,6 +49,7 @@ const Register = () => {
             <Form>
                 <div className="container">
                     <div className="row justify-content-center align-items-center vh-100 py-5">
+
 
                         <div className="col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
 
