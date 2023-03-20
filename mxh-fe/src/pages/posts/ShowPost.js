@@ -11,12 +11,12 @@ const ShowPost = () => {
     const posts = useSelector(state => {
         return state.posts.posts
     });
-    console.log(posts)
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getPosts())
     }, [])
-    return (<>
+    return (
+        <>
         {posts !== undefined && posts.map((it, index) => (<>
             <div className="card">
                 <div className="card-header border-0 pb-0">

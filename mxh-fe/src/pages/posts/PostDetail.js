@@ -11,15 +11,6 @@ import DeleteComment from "../comments/DeleteComment";
 const PostDetail = () => {
     let {idPost} = useParams();
     const dispatch = useDispatch()
-    const account = useSelector(state => {
-        return state.account.currentAccount
-    })
-    const posts = useSelector(state => {
-        console.log(state.posts.posts)
-        return state.posts.posts
-    });
-    console.log(posts)
-    console.log(account)
     const currentPost = useSelector(state => {
         return state.currentPost.currentPost
     })
@@ -60,28 +51,27 @@ const PostDetail = () => {
                                             </div>
                                         </div>
                                         {currentPost.account.idAccount == localStorage.getItem("isAccount") ? <>
-                                        <div className="dropdown">
-                                            <a href="#"
-                                               className="text-secondary btn btn-secondary-soft-hover py-1 px-2"
-                                               id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i className="bi bi-three-dots"></i>
-                                            </a>
-                                            <ul className="dropdown-menu dropdown-menu-end"
-                                                aria-labelledby="cardFeedAction">
-                                                <li className="nav-item">
-                                                    <a className="nav-link bg-light py-1 px-2 mb-0" href="#!"
-                                                       data-bs-toggle="modal"
-                                                       data-bs-target="#feedActionVideo"> <i
-                                                        className="bi bi-pencil-fill"></i> Edit </a>
-                                                </li>
-                                                <li>
-                                                    <DeletePost id={idPost}/>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </> : <> </>}
+                                            <div className="dropdown">
+                                                <a href="#"
+                                                   className="text-secondary btn btn-secondary-soft-hover py-1 px-2"
+                                                   id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i className="bi bi-three-dots"></i>
+                                                </a>
+                                                <ul className="dropdown-menu dropdown-menu-end"
+                                                    aria-labelledby="cardFeedAction">
+                                                    <li className="nav-item">
+                                                        <a className="nav-link bg-light py-1 px-4 mb-0" href="#!"
+                                                           data-bs-toggle="modal"
+                                                           data-bs-target="#feedActionVideo"> <i
+                                                            className="bi bi-pencil-fill"></i> Edit </a>
+                                                    </li>
+                                                    <li>
+                                                        <DeletePost id={idPost}/>
+                                                    </li>
 
-
+                                                </ul>
+                                            </div>
+                                        </> : <> </>}
                                     </div>
                                     <h1 className="h4">{currentPost.content}</h1>
                                     <div>
@@ -156,6 +146,8 @@ const PostDetail = () => {
                         </div>
                     </div>
                 </div>
+
+
             </main>
         </>
 

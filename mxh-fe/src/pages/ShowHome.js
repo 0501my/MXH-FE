@@ -296,8 +296,6 @@ const ShowHome = () => {
                     </div>
                 </div>
             </main>
-
-            {/*kkk*/}
         </>
 
     )

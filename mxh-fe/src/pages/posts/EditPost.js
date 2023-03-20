@@ -2,27 +2,28 @@ import React, {useEffect, useState} from 'react';
 import {addPosts, editPost, findByIdPost} from "../../services/PostService";
 import {useDispatch, useSelector} from "react-redux";
 import {Field, Form, Formik} from "formik";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../../services/fireBase";
 
 const EditPost = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const [images, setImages] = useState([]);
-    const [progress, setProgress] = useState(0);
-    const [urls, setUrls] = useState([]);
     const handleEditPost = (values) => {
         let data = {...values}
         dispatch(editPost(data)).then(() => {
             navigate('/home')
         })
     }
+    const [images, setImages] = useState([]);
+    const [progress, setProgress] = useState(0);
+    const [urls, setUrls] = useState([]);
+    const account = useSelector(state => {
+        return state.account.currentAccount
+    })
     const currentPost = useSelector(state => {
         return state.currentPost.currentPost
     })
-    console.log(currentPost)
     const handleChange = async (e) => {
         for (let i = 0; i < e.target.files.length; i++) {
             const newImage = e.target.files[i];
@@ -40,7 +41,6 @@ const EditPost = (props) => {
     const handleUpload = () => {
         const promises = [];
         if (images.length > 0) {
-            console.log(22)
             images.map((image) => {
                 const storageRef = ref(storage, `images/${image.name}`);
                 const uploadTask = uploadBytesResumable(storageRef, image);
@@ -66,12 +66,12 @@ const EditPost = (props) => {
 
     return (
         <>
-
-
             <div className="modal fade" id="feedActionVideo" tabIndex="-1" aria-labelledby="feedActionVideoLabel"
                  aria-hidden="true">
                 <Formik initialValues={currentPost}
                         onSubmit={(values) => {
+                            values.image = urls[urls.length - 1]
+                            console.log(values,1111)
                             handleEditPost(values)
                         }}
                         enableReinitialize={true}>
@@ -90,34 +90,25 @@ const EditPost = (props) => {
 
                                         <div className="avatar avatar-xs me-2">
                                             <img className="avatar-img rounded-circle"
-                                                 src={"1"}
+                                                 src={account.avatar}
                                                  alt=""/>
                                         </div>
 
                                         <Field className="form-control pe-4 fs-3 lh-1 border-0" rows="2" as={'textarea'}
                                                name={'content'}
                                                placeholder="Share your thoughts..."></Field>
-
                                     </div>
                                     {(currentPost && currentPost.image != 1) ?
                                         <div className="image-container2">
-                                            <img src={currentPost.image} style={{width: 300}}/>
-                                            <div className="close-button" style={{color: '#cc0000'}}
+                                            <img src={currentPost.image} style={{width: 200}}/>
+                                            <div className="close-button" data-bs-dismiss="modal"
+                                                 style={{color: '#cc0000'}}
                                                  onClick={() => {
                                                      let newPost = {...currentPost};
-                                                     newPost.image = '1'
+                                                     newPost.image = "1"
                                                      dispatch(handleEditPost(newPost))
                                                  }}>&times;</div>
                                         </div> : <></>}
-                                    <div>
-                                        {urls && <>
-                                            <img src={urls[urls.length - 1]} alt=""
-                                                 style={{
-                                                     width: 300, marginBottom: "10px"
-                                                 }}/></>}
-                                    </div>
-
-
                                     <div>
                                         <label className="form-label">Upload attachment</label>
                                         <div className="dropzone dropzone-default card shadow-none"
@@ -158,14 +149,16 @@ const EditPost = (props) => {
                                     <button type="button" className="btn btn-danger-soft me-2"
                                             data-bs-dismiss="modal">Cancel
                                     </button>
-                                    <button className="btn btn-success-soft" type={'submit'}>Post</button>
+                                    <button className="btn btn-success-soft" data-bs-dismiss="modal"
+                                            type={'submit'}>Edit
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </Form>
                 </Formik>
             </div>
-                 </>
+        </>
 
     )
 }
