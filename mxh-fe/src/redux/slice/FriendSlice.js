@@ -1,9 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {addFriend, checkFriend, confirmFriend, deleteFriend} from "../../services/FriendService";
+import {addFriend, checkFriend, confirmFriend, deleteFriend, getFriends} from "../../services/FriendService";
 
 
 const initialState = {
-    friend: {}
+    friend: {},
+    friends: []
 }
 const friendSlice = createSlice({
         name: 'friends',
@@ -21,6 +22,9 @@ const friendSlice = createSlice({
             });
             builder.addCase(confirmFriend.fulfilled, (state, action) => {
                 state.friend = action.payload
+            });
+            builder.addCase(getFriends.fulfilled, (state, action) => {
+                state.friends = action.payload
             });
 
         }

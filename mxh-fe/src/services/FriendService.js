@@ -29,3 +29,10 @@ export const confirmFriend = createAsyncThunk(
         return response.data;
     }
 )
+export const getFriends = createAsyncThunk(
+    'friends/getFriends',
+    async (data) => {
+        const response = await axios.get(`http://localhost:4000/friends/getFriends/${data}`);
+        return response.data;
+    }
+)

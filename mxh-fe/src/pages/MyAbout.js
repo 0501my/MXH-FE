@@ -1,6 +1,8 @@
-import React from "react";
-import {useSelector} from "react-redux";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
+import {findByIdAccount} from "../services/PostService";
+import {deleteFriend, getFriends} from "../services/FriendService";
 
 
 const MyAbout = () => {
@@ -8,6 +10,17 @@ const MyAbout = () => {
     const account = useSelector(state => {
         return state.account.currentAccount
     })
+
+    const friends = useSelector(state => {
+        return state.friends.friends
+    })
+
+    const dispatch = useDispatch();
+
+
+    useEffect(() => {
+        dispatch(getFriends(account.idAccount))
+    }, [])
 
     return (
         <>
@@ -224,7 +237,7 @@ const MyAbout = () => {
                                                 </li>
                                                 <li className="mb-2"><i className="bi bi-heart fa-fw pe-1"></i> German: <strong> {account.german} </strong>
                                                 </li>
-                                                <li><i className="bi bi-geo-alt fa-fw me-2"></i> Address: <strong> {account.address} </strong>
+                                                <li><i className="bi bi-geo-alt fa-fw me-2"></i>Address: <strong> {account.address} </strong>
                                                 </li>
                                             </ul>
                                         </div>
@@ -236,128 +249,35 @@ const MyAbout = () => {
 
                                         <div
                                             className="card-header d-sm-flex justify-content-between align-items-center border-0">
-                                            <h5 className="card-title">Friends <span
-                                                className="badge bg-danger bg-opacity-10 text-danger">230</span></h5>
-                                            <a className="btn btn-primary-soft btn-sm" href="#!"> See all friends</a>
+                                            <h5 className="card-title">Friends</h5>
                                         </div>
 
                                         <div className="card-body position-relative pt-0">
                                             <div className="row g-3">
 
-                                                <div className="col-6">
+                                                {friends !== undefined && friends.map(it=>(
+                                                    <div className="col-6">
 
-                                                    <div className="card shadow-none text-center h-100">
+                                                        <div className="card shadow-none text-center h-100">
 
-                                                        <div className="card-body p-2 pb-0">
-                                                            <div className="avatar avatar-story avatar-xl">
-                                                                <a href="#!"><img className="avatar-img rounded-circle"
-                                                                                  src="assets/images/avatar/02.jpg"
-                                                                                  alt=""/></a>
+                                                            <div className="card-body p-2 pb-0">
+                                                                <div className="avatar avatar-story avatar-xl">
+                                                                    <a href="#!"><img
+                                                                        className="avatar-img rounded-circle"
+                                                                        src={it.avatar}
+                                                                        alt=""/></a>
+                                                                </div>
+                                                                <h6 className="card-title mb-1 mt-3"><Link
+                                                                    to={`/home/timeLine/${it.idAccount}`}> {it.name}</Link></h6>
+
                                                             </div>
-                                                            <h6 className="card-title mb-1 mt-3"><a href="#!"> Amanda
-                                                                Reed </a></h6>
-                                                            <p className="mb-0 small lh-sm">16 mutual connections</p>
+
                                                         </div>
-                                                        <div className="card-footer p-2 border-0">
-                                                            <button className="btn btn-sm btn-primary"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                    title="Send message"><i
-                                                                className="bi bi-chat-left-text"></i></button>
-                                                            <button className="btn btn-sm btn-danger"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                    title="Remove friend"><i
-                                                                className="bi bi-person-x"></i></button>
-                                                        </div>
+
                                                     </div>
 
-                                                </div>
 
-                                                <div className="col-6">
-
-                                                    <div className="card shadow-none text-center h-100">
-
-                                                        <div className="card-body p-2 pb-0">
-                                                            <div className="avatar avatar-xl">
-                                                                <a href="#!"><img className="avatar-img rounded-circle"
-                                                                                  src="assets/images/avatar/03.jpg"
-                                                                                  alt=""/></a>
-                                                            </div>
-                                                            <h6 className="card-title mb-1 mt-3"><a href="#!"> Samuel
-                                                                Bishop </a></h6>
-                                                            <p className="mb-0 small lh-sm">22 mutual connections</p>
-                                                        </div>
-
-                                                        <div className="card-footer p-2 border-0">
-                                                            <button className="btn btn-sm btn-primary"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                    title="Send message"><i
-                                                                className="bi bi-chat-left-text"></i></button>
-                                                            <button className="btn btn-sm btn-danger"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                    title="Remove friend"><i
-                                                                className="bi bi-person-x"></i></button>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                                <div className="col-6">
-
-                                                    <div className="card shadow-none text-center h-100">
-
-                                                        <div className="card-body p-2 pb-0">
-                                                            <div className="avatar avatar-xl">
-                                                                <a href="#!"><img className="avatar-img rounded-circle"
-                                                                                  src="assets/images/avatar/04.jpg"
-                                                                                  alt=""/></a>
-                                                            </div>
-                                                            <h6 className="card-title mb-1 mt-3"><a href="#"> Bryan
-                                                                Knight </a></h6>
-                                                            <p className="mb-0 small lh-sm">1 mutual connection</p>
-                                                        </div>
-
-                                                        <div className="card-footer p-2 border-0">
-                                                            <button className="btn btn-sm btn-primary"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                    title="Send message"><i
-                                                                className="bi bi-chat-left-text"></i></button>
-                                                            <button className="btn btn-sm btn-danger"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                    title="Remove friend"><i
-                                                                className="bi bi-person-x"></i></button>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                                <div className="col-6">
-
-                                                    <div className="card shadow-none text-center h-100">
-
-                                                        <div className="card-body p-2 pb-0">
-                                                            <div className="avatar avatar-xl">
-                                                                <a href="#!"><img className="avatar-img rounded-circle"
-                                                                                  src="assets/images/avatar/05.jpg"
-                                                                                  alt=""/></a>
-                                                            </div>
-                                                            <h6 className="card-title mb-1 mt-3"><a href="#!"> Amanda
-                                                                Reed </a></h6>
-                                                            <p className="mb-0 small lh-sm">15 mutual connections</p>
-                                                        </div>
-
-                                                        <div className="card-footer p-2 border-0">
-                                                            <button className="btn btn-sm btn-primary"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                    title="Send message"><i
-                                                                className="bi bi-chat-left-text"></i></button>
-                                                            <button className="btn btn-sm btn-danger"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                    title="Remove friend"><i
-                                                                className="bi bi-person-x"></i></button>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
+                                                ))}
 
                                             </div>
                                         </div>
