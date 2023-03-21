@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {AccountsEdit, changePassword, searchOtherAccount} from "../services/AccountService";
 
@@ -194,17 +194,24 @@ const Settings = () => {
                                                         <label className="form-label">New password</label>
                                                         <div className="input-group">
                                                             <Field className="form-control fakepassword" type="password"
-                                                                   id="psw-input" name={'newPassword'}/>
-
+                                                                    name={'newPassword'}/>
                                                         </div>
-
+                                                        <br/>
+                                                        <alert >
+                                                            <ErrorMessage name={"newPassword"}></ErrorMessage>
+                                                        </alert>
                                                         <div id="pswmeter" className="mt-2"></div>
                                                         <div id="pswmeter-message" className="rounded mt-1"></div>
                                                     </div>
                                                     <div className="col-12">
-                                                        <label className="form-label">Repeat password</label>
+                                                        <label className="form-label">Repeat Password</label>
                                                         <Field type="password" className="form-control" name={'repeatPassword'}/>
+                                                        <br/>
+                                                        <alert>
+                                                            <ErrorMessage name={"repeatPassword"}></ErrorMessage>
+                                                        </alert>
                                                     </div>
+
                                                     <div className="col-12 text-end">
                                                         <button type="submit" className="btn btn-primary mb-0">Update
                                                             password
