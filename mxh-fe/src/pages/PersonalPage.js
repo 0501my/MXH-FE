@@ -4,10 +4,8 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import {changePassword, searchOtherAccount} from "../services/AccountService";
 import {useDispatch, useSelector} from "react-redux";
 import * as Yup from "yup";
-import swal from "sweetalert";
 
 const PersonalPage = () => {
-    const navigate = useNavigate()
     const {idAccount} = useParams();
     const [check, setCheck] = useState(false);
     const [timeLine, setTimeLine] = useState('active');

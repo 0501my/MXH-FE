@@ -53,7 +53,111 @@ const CreatePost = (props) => {
     const [urls, setUrls] = useState([]);
 
     const [progress, setProgress] = useState(0);
-    return (<>
+
+    return (
+        <>
+            <div className="modal fade" id="feedActionVideo" tabIndex="-1" aria-labelledby="feedActionVideoLabel"
+                 aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="feedActionVideoLabel">Edit Post</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+
+                        <div className="modal-body">
+                            <div className="d-flex mb-3">
+                                <div className="avatar avatar-xs me-2">
+                                    <img className="avatar-img rounded-circle" src="/assets/images/avatar/03.jpg" alt=""/>
+                                </div>
+                                <form className="w-100">
+                                    <textarea className="form-control pe-4 fs-3 lh-1 border-0" rows="2"
+                                              placeholder="Share your thoughts..."></textarea>
+                                </form>
+                            </div>
+                            <div>
+                                <label className="form-label">Upload attachment</label>
+                                <div className="dropzone dropzone-default card shadow-none"
+                                     data-dropzone='{"maxFiles":2}'>
+                                    <div className="dz-message">
+                                        <i className="bi bi-camera-reels display-3"></i>
+                                        <p>Drag here or click to upload video.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-danger-soft me-2"><i
+                                className="bi bi-camera-video-fill pe-1"></i> Live video
+                            </button>
+                            <button type="button" className="btn btn-success-soft">Post</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="modal fade" id="modalCreateFeed" tabIndex="-1" aria-labelledby="modalLabelCreateFeed"
+                 aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="modalLabelCreateFeed">Create post</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="d-flex mb-3">
+                                <div className="avatar avatar-xs me-2">
+                                    <img className="avatar-img rounded-circle" src="assets/images/avatar/03.jpg" alt=""/>
+                                </div>
+                                <form className="w-100">
+                                    <textarea className="form-control pe-4 fs-3 lh-1 border-0" rows="2"
+                                              placeholder="Share your thoughts..."></textarea>
+                                </form>
+                            </div>
+
+
+                            <div>
+                                <label className="form-label">Upload attachment</label>
+                                <div className="dropzone dropzone-default card shadow-none"
+                                     data-dropzone='{"maxFiles":2}'>
+                                    <div className="dz-message">
+                                        <i className="bi bi-images display-3"></i>
+                                        <p>Drag here or click to upload photo.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div>
+
+                        </div>
+
+                        <div className="modal-footer row justify-content-between">
+                            <div className="col-lg-3">
+                                <select className="form-select js-choice" data-position="top"
+                                        data-search-enabled="false">
+                                    <option value="PB">Public</option>
+                                    <option value="PV">Friends</option>
+                                    <option value="PV">Only me</option>
+                                    <option value="PV">Custom</option>
+                                </select>
+                            </div>
+                            <div className="col-lg-8 text-sm-end">
+                                <button type="button" className="btn btn-danger-soft me-2"><i
+                                    className="bi bi-camera-video-fill pe-1"></i> Live video
+                                </button>
+                                <button type="button" className="btn btn-success-soft">Post</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
         <div className="card card-body">
             <div className="d-flex mb-3">
                 <div className="avatar avatar-xs me-2">
@@ -82,6 +186,7 @@ const CreatePost = (props) => {
                 </li>
             </ul>
         </div>
+
 
         <div className="modal fade" id="feedActionPhoto" tabIndex="-1" aria-labelledby="feedActionPhotoLabel"
              aria-hidden="true">

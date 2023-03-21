@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
-import {AccountsLoginGG, AccountsRegister} from "../services/AccountService";
+import {AccountsRegister} from "../services/AccountService";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import swal from "sweetalert";

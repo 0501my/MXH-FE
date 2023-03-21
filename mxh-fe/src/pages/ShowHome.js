@@ -1,46 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {deletePost, editPost, findByIdPost, getPosts, addPosts} from "../services/PostService";
+import {editPost, findByIdPost, getPosts, addPosts} from "../services/PostService";
 import {Link, useNavigate} from "react-router-dom";
-import swal from "sweetalert";
-import {Form, Field, Formik} from "formik";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../services/fireBase";
-import login from "./Login";
 import ShowPost from "./posts/ShowPost";
 import CreatePost from "./posts/CreatePost";
 
 const ShowHome = () => {
     const navigate = useNavigate();
     const [images, setImages] = useState([]);
-    const posts = useSelector(state => {
-        return state.posts.posts
-    });
-
-
 
     const account = useSelector(state => {
         return state.account.currentAccount
     })
 
     const dispatch = useDispatch();
+    const currentPost = useSelector(state => {
+        return state.currentPost.currentPost
+    })
+    console.log(currentPost)
 
-
-    const handleEditPost = (values) => {
-        let data = {...values}
-        dispatch(editPost(data)).then(() => {
-            navigate('/home')
-            setCheck(false)
-        })
-    }
-    const handleChange = async (e) => {
-        for (let i = 0; i < e.target.files.length; i++) {
-            const newImage = e.target.files[i];
-            newImage["id"] = Math.random();
-            setImages((prevState) => [...prevState, newImage]);
-        }
-
-    };
     useEffect(() => {
         handleUpload()
     }, [images])
@@ -76,18 +56,14 @@ const ShowHome = () => {
     const [progress, setProgress] = useState(0);
 
     const [check, setCheck] = useState(false)
-    const checkId = async (id, index) => {
-        let data = [id, index]
-        dispatch(findByIdPost(data)).then(() => {
-        })
 
-    }
     useEffect(() => {
         dispatch(getPosts())
     }, [])
     useEffect((id) => {
         dispatch(findByIdPost(id))
     }, [])
+
     return (<>
 
             <main>

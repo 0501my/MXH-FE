@@ -1,13 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link, useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+
+import {findByContent} from "../services/PostService";
+import {getNotifications} from "../services/NotificationService";
 
 
 const Header = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
     const account = useSelector(state => {
         return state.account.currentAccount
     })
+    const notifications =useSelector(state => {
+        return  state.notifications.notifications
+    })
+
+
+    useEffect(()=>{
+        dispatch(getNotifications(account.idAccount))
+    },[])
+
 
     return (
         <>
@@ -16,8 +30,8 @@ const Header = () => {
                 <nav className="navbar navbar-expand-lg">
                     <div className="container">
                         <Link className="navbar-brand" to="/home">
-                            <img className="light-mode-item navbar-brand-item" src="assets/images/logo.svg" alt="logo"/>
-                            <img className="dark-mode-item navbar-brand-item" src="assets/images/logo.svg" alt="logo"/>
+                            <img className="light-mode-item navbar-brand-item" src="/logo3.png" alt="logo"/>
+                            <img className="dark-mode-item navbar-brand-item" src="/logo3.png" alt="logo"/>
                         </Link>
                         <button className="navbar-toggler ms-auto icon-md btn btn-light p-0" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -29,12 +43,15 @@ const Header = () => {
                                 <div className="nav-item w-100">
                                     <form className="rounded position-relative">
                                         <input className="form-control ps-5 bg-light" type="search"
-                                               placeholder="Search..." aria-label="Search"/>
+                                               placeholder="Search..." aria-label="Search" onChange={(e)=>{
+                                            dispatch(findByContent(e.target.value))
+                                        }}/>
                                         <button
                                             className="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y"
                                             type="submit"><i className="bi bi-search fs-5"> </i></button>
                                     </form>
                                 </div>
+
                             </div>
                             <ul className="navbar-nav navbar-nav-scroll ms-auto">
                                 <li className="nav-item dropdown">
@@ -189,82 +206,26 @@ const Header = () => {
                                         </div>
                                         <div className="card-body p-0">
                                             <ul className="list-group list-group-flush list-unstyled p-2">
-                                                <li>
-                                                    <div
-                                                        className="list-group-item list-group-item-action rounded badge-unread d-flex border-0 mb-1 p-3">
-                                                        <div className="avatar text-center d-none d-sm-inline-block">
-                                                            <img className="avatar-img rounded-circle"
-                                                                 src="assets/images/avatar/01.jpg" alt=""/>
-                                                        </div>
-                                                        <div className="ms-sm-3">
-                                                            <div className=" d-flex">
-                                                                <p className="small mb-2"><b>Judy Nguyen</b> sent you a
-                                                                    friend request.</p>
-                                                                <p className="small ms-3 text-nowrap">Just now</p>
+                                                {notifications !== undefined && notifications.map(it=>(
+                                                    <li>
+                                                        <div
+                                                            className="list-group-item list-group-item-action rounded badge-unread d-flex border-0 mb-1 p-3 position-relative">
+                                                            <div className="avatar text-center d-none d-sm-inline-block">
+                                                                <Link to={`/home/timeLine/${it.idAccount}`}><img className="avatar-img rounded-circle"
+                                                                           src={it.avatar} alt=""/></Link>
                                                             </div>
-                                                            <div className="d-flex">
-                                                                <button
-                                                                    className="btn btn-sm py-1 btn-primary me-2">Accept
-                                                                </button>
-                                                                <button
-                                                                    className="btn btn-sm py-1 btn-danger-soft">Delete
-                                                                </button>
+                                                            <div className="ms-sm-3 d-flex">
+                                                                <div>
+                                                                    {it.status === "Friend Request" &&
+                                                                        <p className="small mb-2">{it.name} sent a friend request</p>
+                                                                    }
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div
-                                                        className="list-group-item list-group-item-action rounded badge-unread d-flex border-0 mb-1 p-3 position-relative">
-                                                        <div className="avatar text-center d-none d-sm-inline-block">
-                                                            <img className="avatar-img rounded-circle"
-                                                                 src="assets/images/avatar/02.jpg" alt=""/>
-                                                        </div>
-                                                        <div className="ms-sm-3 d-flex">
-                                                            <div>
-                                                                <p className="small mb-2">Wish <b>Amanda Reed</b> a
-                                                                    happy birthday (Nov 12)</p>
-                                                                <button
-                                                                    className="btn btn-sm btn-outline-light py-1 me-2">Say
-                                                                    happy birthday 🎂
-                                                                </button>
-                                                            </div>
-                                                            <p className="small ms-3">2min</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <a href="#"
-                                                       className="list-group-item list-group-item-action rounded d-flex border-0 mb-1 p-3">
-                                                        <div className="avatar text-center d-none d-sm-inline-block">
-                                                            <div className="avatar-img rounded-circle bg-success"><span
-                                                                className="text-white position-absolute top-50 start-50 translate-middle fw-bold">WB</span>
-                                                            </div>
-                                                        </div>
-                                                        <div className="ms-sm-3">
-                                                            <div className="d-flex">
-                                                                <p className="small mb-2">Webestica has 15 like and 1
-                                                                    new activity</p>
-                                                                <p className="small ms-3">1hr</p>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"
-                                                       className="list-group-item list-group-item-action rounded d-flex border-0 p-3 mb-1">
-                                                        <div className="avatar text-center d-none d-sm-inline-block">
-                                                            <img className="avatar-img rounded-circle"
-                                                                 src="assets/images/logo/12.svg" alt=""/>
-                                                        </div>
-                                                        <div className="ms-sm-3 d-flex">
-                                                            <p className="small mb-2"><b>Bootstrap in the news:</b> The
-                                                                search giant’s parent company, Alphabet, just joined an
-                                                                exclusive club of tech stocks.</p>
-                                                            <p className="small ms-3">4hr</p>
-                                                        </div>
-                                                    </a>
-                                                </li>
+                                                    </li>
+                                                ))}
+
+
                                             </ul>
                                         </div>
                                         <div className="card-footer text-center">
@@ -293,9 +254,8 @@ const Header = () => {
                                                 <p className="small m-0">Web Developer</p>
                                             </div>
                                         </div>
-                                        <Link className="dropdown-item btn btn-primary-soft btn-sm my-2 text-center"
-                                              to={`/home/myTimeline`}>View
-                                            profile</Link>
+                                        <Link className="dropdown-item btn btn-primary-soft btn-sm my-2 text-center "
+                                              to={`/home/myTimeline`}>View profile</Link>
                                     </li>
                                     <li><a className="dropdown-item" href="settings.html"><i
                                         className="bi bi-gear fa-fw me-2"></i>Settings & Privacy</a></li>

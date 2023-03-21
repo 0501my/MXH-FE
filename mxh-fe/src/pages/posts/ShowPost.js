@@ -1,65 +1,78 @@
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
-import {findByIdPost, getPosts} from "../../services/PostService";
+import {getPosts} from "../../services/PostService";
 import DeletePost from "./DeletePost";
 import {Link} from "react-router-dom";
 import EditPost from "./EditPost";
-import CreatePost from "./CreatePost";
-import {current} from "@reduxjs/toolkit";
 
 const ShowPost = () => {
     const posts = useSelector(state => {
         return state.posts.posts
     });
+    console.log(posts)
+    const currentPost = useSelector(state => {
+        return state.currentPost.currentPost
+    })
+    console.log(currentPost)
+    const account = useSelector(state => {
+        return state.account.currentAccount
+    })
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getPosts())
     }, [])
     return (
         <>
-        {posts !== undefined && posts.map((it, index) => (<>
-            <div className="card">
-                <div className="card-header border-0 pb-0">
-                    <div className="d-flex align-items-center justify-content-between">
-                        <div className="d-flex align-items-center">
-                            <div className="avatar avatar-story me-2">
-                                <img className="avatar-img rounded-circle" src={it.account.avatar}
-                                     alt=""/>
-                            </div>
-                            <div>
-                                <div className="nav nav-divider">
-                                    <h6 className="nav-item card-title mb-0"><Link
-                                        to={`/Home/PersonalPage/MyTimeLine/${it.account.idAccount}`}> {it.account.name} </Link>
-                                    </h6>
-                                    <span className="nav-item small"> 2hr</span>
+            {posts !== undefined && posts.map((it, index) => (<>
+                <div className="card">
+                    <div className="card-header border-0 pb-0">
+                        <div className="d-flex align-items-center justify-content-between">
+                            <div className="d-flex align-items-center">
+                                <div className="avatar avatar-story me-2">
+                                    <img className="avatar-img rounded-circle" src={it.account.avatar}
+                                         alt=""/>
+                                </div>
+                                <div>
+                                    <div className="nav nav-divider">
+                                        <h6 className="nav-item card-title mb-0">
+                                            {it.account.idAccount !== account.idAccount ?
+                                                <Link
+                                                    to={`/Home/timeLine/${it.account.idAccount}`}> {it.account.name} </Link> :
+                                                <Link to={`/Home/myTimeLine`}> {it.account.name} </Link>
+                                            }
+                                        </h6>
+                                        <span className="nav-item small"> {it.time}</span>
+                                    </div>
+                                    <div>
+                                        <span className="nav-item small">{it.status}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        {it.account.idAccount == localStorage.getItem('isAccount') ? <>
-                            <div className="dropdown">
-                                <a
-                                   className="text-secondary btn btn-secondary-soft-hover py-1 px-2"
-                                   id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i className="bi bi-three-dots"></i>
-                                </a>
-                                <ul className="dropdown-menu dropdown-menu-end"
-                                    aria-labelledby="cardFeedAction">
-                                    <EditPost id={it.idPost} ></EditPost>
-                                    <li>
-                                        <hr className="dropdown-divider"/>
-                                    </li>
-                                    <DeletePost id={it.idPost}></DeletePost>
-                                </ul>
+                            {it.account.idAccount == localStorage.getItem('isAccount') ? <>
+                                <div className="dropdown">
+                                    <a
+                                        className="text-secondary btn btn-secondary-soft-hover py-1 px-2"
+                                        id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i className="bi bi-three-dots"></i>
+                                    </a>
+                                    <ul className="dropdown-menu dropdown-menu-end"
+                                        aria-labelledby="cardFeedAction">
+                                        <EditPost id={it.idPost}></EditPost>
+                                        <li>
+                                            <hr className="dropdown-divider"/>
+                                        </li>
+                                        <DeletePost id={it.idPost}></DeletePost>
+                                    </ul>
 
-                            </div>
-                        </> : <></>}
+                                </div>
+                            </> : <></>}
+                        </div>
                     </div>
-                </div>
-                <div className="card-body">
-                    <Link to={`/${it.idPost}`}> <p>{it.content}</p> </Link>
-                    {it.image != 1 ? <>
-                       <Link to={`/${it.idPost}`}> <img src={it.image}  alt="#"/> </Link>
-            </> : <></>}
+                    <div className="card-body">
+                        <Link to={`/${it.idPost}`}><p>{it.content}</p></Link>
+                        {it.image != 1 ? <>
+                            <Link to={`/${it.idPost}`}> <img src={it.image} alt="#"/> </Link>
+                        </> : <></>}
 
                     <ul className="nav nav-stack py-3 small">
                         <li className="nav-item">
