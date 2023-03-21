@@ -30,8 +30,8 @@ const Header = () => {
                 <nav className="navbar navbar-expand-lg">
                     <div className="container">
                         <Link className="navbar-brand" to="/home">
-                            <img className="light-mode-item navbar-brand-item" src="assets/images/logo.svg" alt="logo"/>
-                            <img className="dark-mode-item navbar-brand-item" src="assets/images/logo.svg" alt="logo"/>
+                            <img className="light-mode-item navbar-brand-item" src="/assets/images/logo.svg" alt="logo"/>
+                            <img className="dark-mode-item navbar-brand-item" src="/assets/images/logo.svg" alt="logo"/>
                         </Link>
                         <button className="navbar-toggler ms-auto icon-md btn btn-light p-0" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#navbarCollapse"

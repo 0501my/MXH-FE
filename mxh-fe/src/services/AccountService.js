@@ -30,8 +30,8 @@ export const AccountsLogout = createAsyncThunk(
 export const AccountsEdit = createAsyncThunk(
     'accounts/accountsEdit',
     async (data) => {
-       await axios.put(`http://localhost:4000/accounts/${data.idAccount}`, data);
-        return data
+        const  res = await axios.put(`http://localhost:4000/accounts/${data.idAccount}`, data);
+        return res.data;
     }
 )
 export const changePassword = createAsyncThunk(

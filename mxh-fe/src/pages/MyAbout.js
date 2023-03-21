@@ -1,11 +1,11 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {findByIdAccount} from "../services/PostService";
 import {deleteFriend, getFriends} from "../services/FriendService";
 
 
 const MyAbout = () => {
+
 
     const account = useSelector(state => {
         return state.account.currentAccount
@@ -24,8 +24,8 @@ const MyAbout = () => {
 
     return (
         <>
-            <main>
 
+                <main>
 
                 <div className="container">
                     <div className="row g-4">
@@ -36,10 +36,10 @@ const MyAbout = () => {
                             <div className="card">
                                 <div className="h-200px rounded-top"
                                      style={{
-                                         backgroundimage: "url(assets/images/bg/05.jpg)",
-                                         backgroundposition: "center",
-                                         backgroundsize: "cover",
-                                         backgroundrepeat: "no-repeat"
+                                         backgroundImage: "url(/assets/images/building-6822998.jpg)",
+                                         backgroundPosition: "center",
+                                         backgroundSize: "cover",
+                                         backgroundRepeat: "no-repeat"
                                      }}></div>
 
                                 <div className="card-body py-0">
@@ -67,8 +67,8 @@ const MyAbout = () => {
                                                 </button>
                                                 <ul className="dropdown-menu dropdown-menu-end"
                                                     aria-labelledby="profileAction2">
-                                                    <li><a className="dropdown-item" href="#"> <i
-                                                        className="bi bi-lock fa-fw pe-2"></i>Change profile</a></li>
+                                                    <li><Link className="dropdown-item" to={`/settings`}> <i
+                                                        className="bi bi-lock fa-fw pe-2"></i>Change profile</Link></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -296,6 +296,7 @@ const MyAbout = () => {
 
 
             </main>
+
         </>
     )
 }
