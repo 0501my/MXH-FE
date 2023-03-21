@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import { findByIdPost} from "../../services/PostService";
+import {findByIdPost} from "../../services/PostService";
 import {useDispatch, useSelector} from "react-redux";
 import EditPost from "./EditPost";
 import Header from "../../component/Header";
 import DeletePost from "./DeletePost";
 import {addComment, editComment, findByIdComment, findByIdPostComment} from "../../services/CommentService";
 import DeleteComment from "../comments/DeleteComment";
-import {Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
+import * as Yup from "yup";
 
 const PostDetail = () => {
     let {idPost} = useParams();
@@ -28,6 +29,7 @@ const PostDetail = () => {
             navigate('')
         })
     }
+
     const currentComment = useSelector(state => {
         return state.currentComment.currentComment
     })
@@ -37,16 +39,22 @@ const PostDetail = () => {
             // Xử lý submit form ở đây
         }
     }
-    const findByC =async (values) => {
-        await dispatch(findByIdComment(values))
+    const findByC = async (values) => {
+        await dispatch(findByIdComment(values)).then(() => {
+        });
     }
     const handleEditComment = async (values) => {
         let data = {...values}
         await dispatch(editComment(data)).then(() => {
-            console.log(data,33)
-            navigate(`/${idPost}`)
+            console.log(data, 33)
+            navigate('')
         })
     }
+    const validationSchema = Yup.object().shape({
+        content: Yup.string()
+            .required("Vui lòng nhập comment")
+
+    });
 
     const [urls, setUrls] = useState([]);
     useEffect(() => {
@@ -90,10 +98,10 @@ const PostDetail = () => {
                                                 <ul className="dropdown-menu dropdown-menu-end"
                                                     aria-labelledby="cardFeedAction">
                                                     <li className="nav-item">
-                                                        <a className="nav-link bg-light py-1 px-4 mb-0"
+                                                        <a className="nav-link  py-1 px-4 mb-0"
                                                            data-bs-toggle="modal"
                                                            data-bs-target="#feedActionVideo"> <i
-                                                            className="bi bi-pencil-fill" ></i> Edit </a>
+                                                            className="bi bi-pencil-fill pe-1"></i> Edit </a>
                                                     </li>
                                                     <li>
                                                         <DeletePost id={idPost}/>
@@ -109,39 +117,41 @@ const PostDetail = () => {
                                              alt=""/>
                                     </div>
                                     <ul className="nav nav-stack flex-wrap small mb-3">
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#!"> <i
-                                            className="bi bi-hand-thumbs-up-fill pe-1"></i>(56)</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#!"> <i
-                                            className="bi bi-chat-fill pe-1"></i>(12)</a>
-                                    </li>
+                                        <li className="nav-item">
+                                            <a className="nav-link" href="#!"> <i
+                                                className="bi bi-hand-thumbs-up-fill pe-1"></i>(56)</a>
+                                        </li>
+                                        <li className="nav-item">
+                                            <a className="nav-link" href="#!"> <i
+                                                className="bi bi-chat-fill pe-1"></i>(12)</a>
+                                        </li>
 
-                                </ul>
+                                    </ul>
 
                                     <div className="d-flex mb-3">
                                         <div className="avatar avatar-xs me-2">
                                             <a href="#!"> <img className="avatar-img rounded-circle"
-                                                              src={account.avatar} alt=""/> </a>
+                                                               src={account.avatar} alt=""/> </a>
                                         </div>
-                                        <Formik initialValues={{content : ""}}
-                                                onSubmit={(values)=>{
+                                        <Formik initialValues={{content: ""}}
+                                                onSubmit={(values) => {
                                                     values.account = account.idAccount
                                                     handleAddComment(values)
                                                     document.getElementById('add-form1').reset();
                                                     setUrls([])
 
                                                 }
-                                                }>
-                                        <Form className="w-100" id='add-form1'>
-                                        <Field data-autoresize className="form-control pe-4 bg-light" rows="1" type={'text'} name={'content'}
-                                                  placeholder="Add a comment..." onKeyDown={handleKeyDown}  ></Field>
-                                        </Form>
+                                                } validationSchema={validationSchema}>
+                                            <Form className="w-100" id='add-form1'>
+                                                <Field data-autoresize className="form-control pe-4 bg-light" rows="1"
+                                                       type={'text'} name={'content'}
+                                                       placeholder="Add a comment..." onKeyDown={handleKeyDown}></Field>
+                                                <ErrorMessage name={'content'}/>
+                                            </Form>
                                         </Formik>
-                                        </div>
+                                    </div>
 
-                                    { comments !== undefined && comments.map((it, index) => (
+                                    {comments !== undefined && comments.map((it, index) => (
                                         <>
                                             <ul className="comment-wrap list-unstyled">
                                                 <li className="comment-item">
@@ -154,43 +164,45 @@ const PostDetail = () => {
                                                         <div className="ms-2">
                                                             <div className="bg-light rounded-start-top-0 p-3 rounded">
                                                                 <div className="d-flex justify-content-between">
-                                                                    <h6 className="mb-1"><a href="#!"> {it.account.name} </a>
+                                                                    <h6 className="mb-1"><a
+                                                                        href="#!"> {it.account.name} </a>
                                                                     </h6>
                                                                 </div>
                                                                 <p className="small mb-0">{it.content}  </p>
                                                             </div>
-                                                            <a className="nav-link" > {it.time}</a>
-                                                        </div><ul className="nav nav-divider py-2 small">
-                                                        <li className="nav-item">
+                                                            <a className="nav-link"> {it.time}</a>
+                                                        </div>
+                                                        <ul className="nav nav-divider py-2 small">
+                                                            <li className="nav-item">
 
                                                                 <div className="dropdown">
-                                                                <a href="#"
-                                                                   className="text-secondary btn btn-secondary-soft-hover py-1 px-2"
-                                                                   id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                    <i className="bi bi-three-dots"></i>
-                                                                </a>
-                                                                <ul className="dropdown-menu dropdown-menu-end"
-                                                                    aria-labelledby="cardFeedAction">
-                                                                   <li className="nav-item">
-                                                                           <a onClick={()=>{
-                                                                               findByC(it.idComment)
-                                                                           }}
-                                                                            className="nav-link bg-light py-1 px-2 mb-0"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#modalCreateEvents" ><i
+                                                                    <a href="#"
+                                                                       className="text-secondary btn btn-secondary-soft-hover py-1 px-2"
+                                                                       id="cardFeedAction" data-bs-toggle="dropdown"
+                                                                       aria-expanded="false">
+                                                                        <i className="bi bi-three-dots"></i>
+                                                                    </a>
+                                                                    <ul className="dropdown-menu dropdown-menu-end"
+                                                                        aria-labelledby="cardFeedAction">
+                                                                        <li className="nav-item">
+                                                                            <a onClick={() => {
+                                                                                findByC(it.idComment)
+                                                                            }}
+                                                                               className="nav-link  py-1 px-4 mb-0"
+                                                                               data-bs-toggle="modal"
+                                                                               data-bs-target="#modalCreateEvents"><i
+                                                                                className="bi bi-pencil-fill text-primary ">
+                                                                            </i> Edit
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <DeleteComment id={it.idComment}/>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
 
-                                                                           className="bi bi-calendar2-event-fill text-danger pe-2">
-                                                                               </i>Edit
-                                                                       </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <DeleteComment id={it.idComment}/>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-
-                                                        </li>
-                                                    </ul>
+                                                            </li>
+                                                        </ul>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -213,23 +225,28 @@ const PostDetail = () => {
                                         aria-label="Close"></button>
                             </div>
                             <Formik initialValues={currentComment}
-                                    onSubmit={(values)=>{
+                                    onSubmit={(values) => {
                                         handleEditComment(values).then()
                                     }}
-                                    enableReinitialize={true}>
-                            <div className="modal-body">
-                                <Form className="row g-4">
-                                    <div className="col-12">
-                                        <label className="form-label">Content</label>
-                                        <Field type="text" className="form-control" name={'content'}/>
-                                    </div>
-                                    <div className="modal-footer">
-                                    <button type="button" className="btn btn-danger-soft me-2" data-bs-dismiss="modal"> Cancel
-                                    </button>
-                                    <button type="submit" className="btn btn-success-soft" data-bs-dismiss="modal">Edit</button>
+                                    enableReinitialize={true}
+                                    validationSchema={validationSchema}>
+                                <div className="modal-body">
+                                    <Form className="row g-4">
+                                        <div className="col-12">
+                                            <label className="form-label">Content</label>
+                                            <Field type="text" className="form-control" name={'content'}/>
+                                            <ErrorMessage name={'content'}/>
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button type="button" className="btn btn-danger-soft me-2"
+                                                    data-bs-dismiss="modal"> Cancel
+                                            </button>
+                                            <button type="submit" className="btn btn-success-soft"
+                                                    data-bs-dismiss="modal">Edit
+                                            </button>
+                                        </div>
+                                    </Form>
                                 </div>
-                                </Form>
-                            </div>
                             </Formik>
 
                         </div>
