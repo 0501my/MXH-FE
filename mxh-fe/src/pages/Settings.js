@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {Field, Form, Formik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {AccountsEdit, searchOtherAccount} from "../services/AccountService";
+import {AccountsEdit, changePassword, searchOtherAccount} from "../services/AccountService";
 
 import swal from "sweetalert";
 import {useParams} from "react-router-dom";
+import * as Yup from "yup";
 
 
 const Settings = () => {
@@ -27,6 +28,15 @@ const Settings = () => {
         }
 
     }, [])
+
+    const validationSchema = Yup.object().shape({
+        newPassword: Yup.string()
+            .required( <p style={{color:"red", marginTop:-15}}>Please enter password.</p>)
+            .min(6,  <p style={{color:"red", marginTop:-15 }}>Passwords must be at least 6 characters</p>)
+            .max(32, <p style={{color:"red", marginTop:-15 }}>Password must be at most 14 characters</p>),
+        repeatPassword: Yup.string()
+            .required(<p style={{color:"red", marginTop:-15 }}>Please re-enter your password.</p>)
+    });
 
 
 
@@ -137,10 +147,7 @@ const Settings = () => {
                                                             <label className="form-label">Birthday </label>
                                                             <Field type="text" className="form-control flatpickr" name="birthday"/>
                                                         </div>
-                                                        <div className="col-lg-6">
-                                                            <label className="form-label">Birthday </label>
-                                                            <Field type="text" className="form-control flatpickr" name="avatar"/>
-                                                        </div>
+
                                                         <div className="col-12 text-end">
                                                             <button type="submit" className="btn btn-sm btn-primary mb-0">Save
                                                             </button>
@@ -151,41 +158,62 @@ const Settings = () => {
                                         </Formik>
                                     </div>
                                     <div className="card">
-                                        <div className="card-header border-0 pb-0">
-                                            <h5 className="card-title">Change your password</h5>
-                                            <p className="mb-0">See resolved goodness felicity shy civility domestic had
-                                                but.</p>
-                                        </div>
-                                        <div className="card-body">
-                                            <form className="row g-3">
-                                                <div className="col-12">
-                                                    <label className="form-label">Current password</label>
-                                                    <input type="text" className="form-control" placeholder=""/>
-                                                </div>
-                                                <div className="col-12">
-                                                    <label className="form-label">New password</label>
-                                                    <div className="input-group">
-                                                        <input className="form-control fakepassword" type="password"
-                                                               id="psw-input" placeholder="Enter new password"/>
-                                                        <span className="input-group-text p-0">
-                          <i className="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
-                        </span>
-                                                    </div>
+                                        <Formik initialValues={{}}
+                                        validationSchema={validationSchema}
+                                        onSubmit={(values)=>{
+                                            values.id = account.idAccount;
+                                            if(values.repeatPassword === values.newPassword){
+                                                dispatch(changePassword(values)).then((values)=>{
+                                                    if (values.payload === undefined){
+                                                        alert(`OldPassword Fail`)
+                                                    }else {
+                                                        swal(`Change password success`,{
+                                                            icon: "success",
+                                                        })
+                                                    }
+                                                })
+                                            }else {
+                                                alert(`Can not change password`)
+                                            }
+                                        }}
+                                        enableReinitialize={true}>
+                                            <Form>
+                                            <div className="card-header border-0 pb-0">
+                                                <h5 className="card-title">Change your password</h5>
+                                                <p className="mb-0">See resolved goodness felicity shy civility domestic had
+                                                    but.</p>
+                                            </div>
 
-                                                    <div id="pswmeter" className="mt-2"></div>
-                                                    <div id="pswmeter-message" className="rounded mt-1"></div>
+                                                <div className="card-body">
+                                                <div className="row g-3">
+                                                    <div className="col-12">
+                                                        <label className="form-label">OldPassword</label>
+                                                        <Field type="password" className="form-control" name={'oldPassword'}/>
+                                                    </div>
+                                                    <div className="col-12">
+                                                        <label className="form-label">New password</label>
+                                                        <div className="input-group">
+                                                            <Field className="form-control fakepassword" type="password"
+                                                                   id="psw-input" name={'newPassword'}/>
+
+                                                        </div>
+
+                                                        <div id="pswmeter" className="mt-2"></div>
+                                                        <div id="pswmeter-message" className="rounded mt-1"></div>
+                                                    </div>
+                                                    <div className="col-12">
+                                                        <label className="form-label">Repeat password</label>
+                                                        <Field type="password" className="form-control" name={'repeatPassword'}/>
+                                                    </div>
+                                                    <div className="col-12 text-end">
+                                                        <button type="submit" className="btn btn-primary mb-0">Update
+                                                            password
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                                <div className="col-12">
-                                                    <label className="form-label">Confirm password</label>
-                                                    <input type="text" className="form-control" placeholder=""/>
-                                                </div>
-                                                <div className="col-12 text-end">
-                                                    <button type="submit" className="btn btn-primary mb-0">Update
-                                                        password
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
+                                            </div>
+                                            </Form>
+                                        </Formik>
                                     </div>
                                 </div>
 
