@@ -1,16 +1,21 @@
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
-import {findByIdPost, getPosts} from "../../services/PostService";
+import {getPosts} from "../../services/PostService";
 import DeletePost from "./DeletePost";
 import {Link} from "react-router-dom";
 import EditPost from "./EditPost";
-import CreatePost from "./CreatePost";
-import {current} from "@reduxjs/toolkit";
 
 const ShowPost = () => {
     const posts = useSelector(state => {
         return state.posts.posts
     });
+    const currentPost = useSelector(state => {
+        return state.currentPost.currentPost
+    })
+    console.log(currentPost)
+    const account = useSelector(state => {
+        return state.account.currentAccount
+    })
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getPosts())
@@ -28,10 +33,16 @@ const ShowPost = () => {
                             </div>
                             <div>
                                 <div className="nav nav-divider">
-                                    <h6 className="nav-item card-title mb-0"><Link
-                                        to={`/Home/PersonalPage/MyTimeLine/${it.account.idAccount}`}> {it.account.name} </Link>
+                                    <h6 className="nav-item card-title mb-0">
+                                        {it.account.idAccount !== account.idAccount?
+                                            <Link to={`/Home/timeLine/${it.account.idAccount}`}> {it.account.name} </Link>:
+                                            <Link to={`/Home/myTimeLine`}> {it.account.name} </Link>
+                                        }
                                     </h6>
-                                    <span className="nav-item small"> 2hr</span>
+                                    <span className="nav-item small"> {it.time}</span>
+                                </div>
+                                <div>
+                                    <span className="nav-item small">{it.status}</span>
                                 </div>
                             </div>
                         </div>

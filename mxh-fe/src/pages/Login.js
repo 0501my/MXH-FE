@@ -67,7 +67,6 @@ const Login = () => {
             <Formik className="mt-sm-4" initialValues={initialValuesAdd}
                     validationSchema={validationSchema}
                     onSubmit={(values) => {
-                        console.log(values)
                         handleSubmit(values).then()
                     }}>
                 <Form>

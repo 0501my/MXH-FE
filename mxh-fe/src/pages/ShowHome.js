@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {deletePost, editPost, findByIdPost, getPosts, addPosts} from "../services/PostService";
+import {editPost, findByIdPost, getPosts, addPosts} from "../services/PostService";
 import {Link, useNavigate} from "react-router-dom";
-import swal from "sweetalert";
-import {Form, Field, Formik} from "formik";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../services/fireBase";
-import login from "./Login";
 import ShowPost from "./posts/ShowPost";
 import CreatePost from "./posts/CreatePost";
 
