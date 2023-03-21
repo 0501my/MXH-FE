@@ -97,14 +97,14 @@ const EditPost = (props) => {
                                                placeholder="Share your thoughts..."></Field>
                                     </div>
                                     {(currentPost && currentPost.image != 1) ? <div className="image-container2">
+                                        <img src={currentPost.image} style={{width: 400,height : 350}}/>
                                         <div className="close-button" data-bs-dismiss="modal"
-                                             style={{color: '#cc0000', fontSize: "30px"}}
+                                             style={{color: '#cc0000', fontSize: "30px", position: "absolute", right: 86, top: 85, borderRadius: 1}}
                                              onClick={() => {
                                                  let newPost = {...currentPost};
                                                  newPost.image = "1"
                                                  dispatch(handleEditPost(newPost))
                                              }}>&times;</div>
-                                        <img src={currentPost.image} style={{width: 400,height : 350}}/>
                                     </div> : <></>}
                                     <div>
                                         <label className="form-label">Upload attachment</label>
