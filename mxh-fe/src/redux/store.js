@@ -4,6 +4,7 @@ import accountSlice from "./slice/AccountSlice";
 import postReducer from "./slice/PostSlice";
 import currentPostReducer from "./slice/PostSlice";
 import friendReducer from "./slice/FriendSlice";
+import notificationReducer from "./slice/NotificationSlice";
 
 
 const Store = configureStore({
@@ -11,7 +12,8 @@ const Store = configureStore({
         account: accountSlice,
         posts: postReducer,
         currentPost: currentPostReducer,
-        friends: friendReducer
+        friends: friendReducer,
+        notifications: notificationReducer
     },
 
     middleware: getDefaultMiddleware =>

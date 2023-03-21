@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {findByIdAccount} from "../services/PostService";
 import {searchOtherAccount} from "../services/AccountService";
 import {addFriend, checkFriend, confirmFriend, deleteFriend, getFriends} from "../services/FriendService";
+import {addNotification} from "../services/NotificationService";
 
 const TimeLine = () => {
 
@@ -34,6 +35,8 @@ const TimeLine = () => {
     const handleAddFriend = async ()=>{
         let data = {idSender:account.idAccount,idReceiver:idAccount};
         dispatch(addFriend(data));
+        let values = {idSender:account.idAccount,idReceiver:idAccount,status:"Friend Request"};
+        dispatch(addNotification(values));
     }
 
     const handleDeleteFriend = async (id)=>{
