@@ -63,6 +63,7 @@ const ShowHome = () => {
     useEffect((id) => {
         dispatch(findByIdPost(id))
     }, [])
+
     return (<>
 
             <main>

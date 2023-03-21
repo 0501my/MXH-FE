@@ -16,6 +16,14 @@ export const getPosts = createAsyncThunk(
     }
 )
 
+export const getStatus = createAsyncThunk(
+    'posts/getStatus',
+    async () => {
+        const response = await axios.get('http://localhost:4000/posts/status');
+        return response.data;
+    }
+)
+
 export const addPosts = createAsyncThunk(
     'posts/addPosts',
     async (data) => {
@@ -43,5 +51,13 @@ export const findByIdAccount = createAsyncThunk(
     async (data) => {
         const res = await axios.get(`http://localhost:4000/posts/${data}`);
         return res.data
+    }
+)
+
+export const findByContent = createAsyncThunk(
+    'posts/findByContent',
+    async (data)=>{
+        const res = await axios.get(`http://localhost:4000/posts/search/findByContent?search=${data}`);
+        return res.data;
     }
 )

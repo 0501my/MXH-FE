@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+
+import {findByContent} from "../services/PostService";
 import {getNotifications} from "../services/NotificationService";
 
 
@@ -8,11 +10,9 @@ const Header = () => {
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
-
     const account = useSelector(state => {
         return state.account.currentAccount
     })
-
     const notifications =useSelector(state => {
         return  state.notifications.notifications
     })
@@ -21,6 +21,7 @@ const Header = () => {
     useEffect(()=>{
         dispatch(getNotifications(account.idAccount))
     },[])
+
 
     return (
         <>
@@ -42,12 +43,15 @@ const Header = () => {
                                 <div className="nav-item w-100">
                                     <form className="rounded position-relative">
                                         <input className="form-control ps-5 bg-light" type="search"
-                                               placeholder="Search..." aria-label="Search"/>
+                                               placeholder="Search..." aria-label="Search" onChange={(e)=>{
+                                            dispatch(findByContent(e.target.value))
+                                        }}/>
                                         <button
                                             className="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y"
                                             type="submit"><i className="bi bi-search fs-5"> </i></button>
                                     </form>
                                 </div>
+
                             </div>
                             <ul className="navbar-nav navbar-nav-scroll ms-auto">
                                 <li className="nav-item dropdown">
