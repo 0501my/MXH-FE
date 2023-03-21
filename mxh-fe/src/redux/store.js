@@ -1,12 +1,9 @@
 import {configureStore} from "@reduxjs/toolkit";
-
 import accountSlice from "./slice/AccountSlice";
 import postReducer from "./slice/PostSlice";
 import currentPostReducer from "./slice/PostSlice";
 import friendReducer from "./slice/FriendSlice";
 import notificationReducer from "./slice/NotificationSlice";
-
-
 const Store = configureStore({
     reducer: {
         account: accountSlice,

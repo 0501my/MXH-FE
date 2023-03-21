@@ -250,9 +250,8 @@ const Header = () => {
                                                 <p className="small m-0">Web Developer</p>
                                             </div>
                                         </div>
-                                        <Link className="dropdown-item btn btn-primary-soft btn-sm my-2 text-center"
-                                              to={`/home/myTimeline`}>View
-                                            profile</Link>
+                                        <Link className="dropdown-item btn btn-primary-soft btn-sm my-2 text-center "
+                                              to={`/home/myTimeline`}>View profile</Link>
                                     </li>
                                     <li><a className="dropdown-item" href="settings.html"><i
                                         className="bi bi-gear fa-fw me-2"></i>Settings & Privacy</a></li>
