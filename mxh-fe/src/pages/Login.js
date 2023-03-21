@@ -14,11 +14,11 @@ const Login = () => {
     const initialValuesAdd = {
         username: "", password: "",
     };
-    let [userGG, setUserGG] = useState({})
+
     const checkUSer = useSelector(state => {
         return state.account.checkUser;
     })
-
+    let [userGG, setUserGG] = useState({})
     async function check() {
         if (checkUSer === false) {
             await dispatch(AccountsRegister(userGG))
@@ -96,7 +96,7 @@ const Login = () => {
 
                                         <div className="input-group input-group-lg">
 
-                                            <Field className="form-control fakepassword" type="password"
+                                            <Field className="form-control password" type="password"
                                                    id="psw-input"
                                                    placeholder="Password" name="password"/>
 
@@ -104,12 +104,12 @@ const Login = () => {
                                             <i className="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
                                             </span>
                                         </div>
-                                        <div id="pswmeter" className="mt-2"></div>
+                                        <div id="psw meter" className="mt-2"></div>
                                         <alert>
                                             <ErrorMessage name={"password"}/>
                                         </alert>
                                         <div className="d-flex mt-1">
-                                            <div id="pswmeter-message" className="rounded"></div>
+                                            <div id="psw meter-message" className="rounded"></div>
                                             <div className="ms-auto">
                                                 <i className="bi bi-info-circle ps-1" data-bs-container="body"
                                                    data-bs-toggle="popover" data-bs-placement="top"
@@ -146,6 +146,7 @@ const Login = () => {
                                                         };
                                                         await setUserGG(user)
                                                         await dispatch(AccountsLogin(user))
+                                                        await dispatch(AccountsLoginGG(user))
                                                         check().then()
 
                                                     }}
