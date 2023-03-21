@@ -5,6 +5,7 @@ import DeletePost from "./DeletePost";
 import {Link} from "react-router-dom";
 import EditPost from "./EditPost";
 import CreatePost from "./CreatePost";
+import {current} from "@reduxjs/toolkit";
 
 const ShowPost = () => {
     const posts = useSelector(state => {
@@ -14,12 +15,8 @@ const ShowPost = () => {
     useEffect(() => {
         dispatch(getPosts())
     }, [])
-    const checkId = async (id) => {
-        dispatch(findByIdPost(id)).then(() => {
-        })
-
-    }
-    return (<>
+    return (
+        <>
         {posts !== undefined && posts.map((it, index) => (<>
             <div className="card">
                 <div className="card-header border-0 pb-0">
@@ -40,7 +37,7 @@ const ShowPost = () => {
                         </div>
                         {it.account.idAccount == localStorage.getItem('isAccount') ? <>
                             <div className="dropdown">
-                                <a href="#"
+                                <a
                                    className="text-secondary btn btn-secondary-soft-hover py-1 px-2"
                                    id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i className="bi bi-three-dots"></i>
@@ -59,12 +56,11 @@ const ShowPost = () => {
                     </div>
                 </div>
                 <div className="card-body">
-                    <p>{it.content}</p>
+                    <Link to={`/${it.idPost}`}> <p>{it.content}</p> </Link>
                     {it.image != 1 ? <>
-                        <img
-                            src={it.image}
-                            alt="#"/>
-                    </> : <></>}
+                       <Link to={`/${it.idPost}`}> <img src={it.image}  alt="#"/> </Link>
+            </> : <></>}
+
                     <ul className="nav nav-stack py-3 small">
                         <li className="nav-item">
                             <a className="nav-link active" href="#!"> <i

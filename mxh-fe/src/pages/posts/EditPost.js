@@ -2,28 +2,28 @@ import React, {useEffect, useState} from 'react';
 import {addPosts, editPost, findByIdPost} from "../../services/PostService";
 import {useDispatch, useSelector} from "react-redux";
 import {Field, Form, Formik} from "formik";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../../services/fireBase";
 
 const EditPost = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const currentPost = useSelector(state => {
-        return state.currentPost.currentPost
-    })
-    const account = useSelector(state => {
-        return state.account.currentAccount
-    })
-    const [images, setImages] = useState([]);
-    const [progress, setProgress] = useState(0);
-    const [urls, setUrls] = useState([]);
     const handleEditPost = (values) => {
         let data = {...values}
         dispatch(editPost(data)).then(() => {
             navigate('/home')
         })
     }
+    const [images, setImages] = useState([]);
+    const [progress, setProgress] = useState(0);
+    const [urls, setUrls] = useState([]);
+    const account = useSelector(state => {
+        return state.account.currentAccount
+    })
+    const currentPost = useSelector(state => {
+        return state.currentPost.currentPost
+    })
     const handleChange = async (e) => {
         for (let i = 0; i < e.target.files.length; i++) {
             const newImage = e.target.files[i];
@@ -34,14 +34,13 @@ const EditPost = (props) => {
     };
     useEffect(() => {
         dispatch(findByIdPost(props.id))
-    },[])
+    }, [])
     useEffect(() => {
         handleUpload()
     }, [images])
     const handleUpload = () => {
         const promises = [];
         if (images.length > 0) {
-            console.log(22)
             images.map((image) => {
                 const storageRef = ref(storage, `images/${image.name}`);
                 const uploadTask = uploadBytesResumable(storageRef, image);
@@ -67,35 +66,97 @@ const EditPost = (props) => {
 
     return (
         <>
-            <li>
-                        <a data-bs-toggle="modal" data-bs-target="#feedActionPhoto">
-                            <i className="bi bi-bookmark fa-fw pe-2"></i>Edit Post
-                        </a>
-                {/*<button type="button" className="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">*/}
-                {/*    Launch static backdrop modal*/}
-                {/*</button>*/}
+            <div className="modal fade" id="feedActionVideo" tabIndex="-1" aria-labelledby="feedActionVideoLabel"
+                 aria-hidden="true">
+                <Formik initialValues={currentPost}
+                        onSubmit={(values) => {
+                            values.image = urls[urls.length - 1]
+                            console.log(values,1111)
+                            handleEditPost(values)
+                        }}
+                        enableReinitialize={true}>
+                    <Form id='add-form'>
+                        <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="feedActionPhotoLabel">Edit post photo</h5>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
 
-            </li>
+                                <div className="modal-body">
 
-            <div className="modal fade" id="feedActionPhoto" data-backdrop="static" data-keyboard="false" tabIndex="-1"
-                 aria-labelledby="feedActionPhotoLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="staticBackdropLabel">Modal title</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                                    <div className="d-flex mb-3">
+
+                                        <div className="avatar avatar-xs me-2">
+                                            <img className="avatar-img rounded-circle"
+                                                 src={account.avatar}
+                                                 alt=""/>
+                                        </div>
+
+                                        <Field className="form-control pe-4 fs-3 lh-1 border-0" rows="2" as={'textarea'}
+                                               name={'content'}
+                                               placeholder="Share your thoughts..."></Field>
+                                    </div>
+                                    {(currentPost && currentPost.image != 1) ?
+                                        <div className="image-container2">
+                                            <img src={currentPost.image} style={{width: 200}}/>
+                                            <div className="close-button" data-bs-dismiss="modal"
+                                                 style={{color: '#cc0000'}}
+                                                 onClick={() => {
+                                                     let newPost = {...currentPost};
+                                                     newPost.image = "1"
+                                                     dispatch(handleEditPost(newPost))
+                                                 }}>&times;</div>
+                                        </div> : <></>}
+                                    <div>
+                                        <label className="form-label">Upload attachment</label>
+                                        <div className="dropzone dropzone-default card shadow-none"
+                                             data-dropzone='{"maxFiles":2}'>
+                                            {urls.length === 0 ? <>
+                                                <div className="dz-message"><input type="file" id="myFile"
+                                                                                   name="myFile"
+                                                                                   onChange={handleChange}/>
+                                                    <label htmlFor="myFile" className="file-upload"><i
+                                                        className="bi bi-images display-3"></i>
+                                                        <p>Drag here or click to upload photo.</p></label>
+
+                                                </div>
+                                            </> : <>
+                                                <div className="dz-message"><input type="file" id="myFile"
+                                                                                   name="myFile"
+                                                                                   onChange={handleChange}/>
+                                                    <label htmlFor="myFile"><img src={urls[urls.length - 1]} alt=""
+                                                                                 style={{
+                                                                                     width: '300px', height: '300px'
+                                                                                 }}/></label>
+                                                </div>
+                                            </>}
+                                        </div>
+                                    </div>
+                                    <Field as={"select"} name="status"
+                                           className="form-select js-choice choice-select-text-none mt-3"
+                                           data-position="top" data-search-enabled="false">
+                                        <option value="Public">Public</option>
+                                        <option value="Friends">Friends</option>
+                                        <option value="Onlyme">Only me</option>
+                                    </Field>
+
+                                </div>
+
+                                <div className="modal-footer ">
+
+                                    <button type="button" className="btn btn-danger-soft me-2"
+                                            data-bs-dismiss="modal">Cancel
+                                    </button>
+                                    <button className="btn btn-success-soft" data-bs-dismiss="modal"
+                                            type={'submit'}>Edit
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div className="modal-body">
-                            ...
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Understood</button>
-                        </div>
-                    </div>
-                </div>
+                    </Form>
+                </Formik>
             </div>
         </>
 
