@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+
+import {findByContent} from "../services/PostService";
 import {getNotifications} from "../services/NotificationService";
 
 
@@ -8,11 +10,9 @@ const Header = () => {
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
-
     const account = useSelector(state => {
         return state.account.currentAccount
     })
-
     const notifications =useSelector(state => {
         return  state.notifications.notifications
     })
@@ -22,6 +22,7 @@ const Header = () => {
         dispatch(getNotifications(account.idAccount))
     },[])
 
+
     return (
         <>
             <header className="navbar-light fixed-top header-static bg-mode">
@@ -29,8 +30,8 @@ const Header = () => {
                 <nav className="navbar navbar-expand-lg">
                     <div className="container">
                         <Link className="navbar-brand" to="/home">
-                            <img className="light-mode-item navbar-brand-item" src="assets/images/logo.svg" alt="logo"/>
-                            <img className="dark-mode-item navbar-brand-item" src="assets/images/logo.svg" alt="logo"/>
+                            <img className="light-mode-item navbar-brand-item" src="/logo3.png" alt="logo"/>
+                            <img className="dark-mode-item navbar-brand-item" src="/logo3.png" alt="logo"/>
                         </Link>
                         <button className="navbar-toggler ms-auto icon-md btn btn-light p-0" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -42,12 +43,15 @@ const Header = () => {
                                 <div className="nav-item w-100">
                                     <form className="rounded position-relative">
                                         <input className="form-control ps-5 bg-light" type="search"
-                                               placeholder="Search..." aria-label="Search"/>
+                                               placeholder="Search..." aria-label="Search" onChange={(e)=>{
+                                            dispatch(findByContent(e.target.value))
+                                        }}/>
                                         <button
                                             className="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y"
                                             type="submit"><i className="bi bi-search fs-5"> </i></button>
                                     </form>
                                 </div>
+
                             </div>
                             <ul className="navbar-nav navbar-nav-scroll ms-auto">
                                 <li className="nav-item dropdown">
@@ -254,9 +258,8 @@ const Header = () => {
                                                 <p className="small m-0">Web Developer</p>
                                             </div>
                                         </div>
-                                        <Link className="dropdown-item btn btn-primary-soft btn-sm my-2 text-center"
-                                              to={`/home/myTimeline`}>View
-                                            profile</Link>
+                                        <Link className="dropdown-item btn btn-primary-soft btn-sm my-2 text-center "
+                                              to={`/home/myTimeline`}>View profile</Link>
                                     </li>
                                     <li><a className="dropdown-item" href="settings.html"><i
                                         className="bi bi-gear fa-fw me-2"></i>Settings & Privacy</a></li>

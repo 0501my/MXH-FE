@@ -9,7 +9,7 @@ const DeletePost = (props) => {
     const dispatch = useDispatch();
     const handleDelete = async () => {
         dispatch(deletePost(props.id))
-        navigate("/home")
+        navigate("")
     }
     return (
         <>
