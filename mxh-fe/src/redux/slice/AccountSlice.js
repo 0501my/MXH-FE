@@ -12,7 +12,6 @@ import {
 
 const initialState = {
     account: [],
-    accountShow: localStorage.getItem('accountShow'),
     checkUser: null,
     otherAccount: {},
     currentAccount: JSON.parse(localStorage.getItem('account')),
@@ -37,11 +36,8 @@ const accountSlice = createSlice({
             if (state.account !== 'User is not exit' && state.account !== 'Password is wrong') {
                 localStorage.setItem("isAccount", payload.data.idAccount)
                 localStorage.setItem("access_token", payload.data.token)
-                localStorage.setItem("status", payload.data)
                 localStorage.setItem("nameAccount", payload.data.username)
                 localStorage.setItem("avatar", payload.data.avatar)
-                state.accountShow = false
-                localStorage.setItem('AccountShow', state.accountShow)
             }
 
         });
