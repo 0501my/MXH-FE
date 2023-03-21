@@ -215,6 +215,10 @@ const Header = () => {
                                                                     {it.status === "Friend Request" &&
                                                                         <p className="small mb-2">{it.name} sent a friend request</p>
                                                                     }
+                                                                    {it.status === "Friend Confirm" &&
+                                                                        <p className="small mb-2">{it.name} became friends</p>
+                                                                    }
+
                                                                 </div>
                                                             </div>
                                                         </div>
