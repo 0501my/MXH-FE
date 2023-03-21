@@ -14,3 +14,25 @@ export const deleteComment = createAsyncThunk(
         return id;
     }
 )
+export const addComment = createAsyncThunk(
+    'comments/addComment',
+    async (data) => {
+        const response = await axios.post('http://localhost:4000/comments', data);
+        return response.data[0];
+    }
+)
+export const findByIdComment = createAsyncThunk(
+    'comments/findByIdComment',
+    async (data) => {
+        const res = await axios.get(`http://localhost:4000/comments/findById/${data}`);
+        return res.data
+    }
+)
+export const editComment = createAsyncThunk(
+    'comments/editComment',
+    async (data) => {
+        const response = await axios.put(`http://localhost:4000/comments/${data.idComment}`, data);
+        console.log(response.data)
+        return response.data[0];
+    }
+)

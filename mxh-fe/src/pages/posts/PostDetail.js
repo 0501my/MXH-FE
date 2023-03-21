@@ -1,24 +1,54 @@
-import React, {useEffect} from 'react';
-import {useParams} from "react-router-dom";
-import {findByIdPost} from "../../services/PostService";
+import React, {useEffect, useState} from 'react';
+import {useNavigate, useParams} from "react-router-dom";
+import { findByIdPost} from "../../services/PostService";
 import {useDispatch, useSelector} from "react-redux";
 import EditPost from "./EditPost";
 import Header from "../../component/Header";
 import DeletePost from "./DeletePost";
-import {findByIdPostComment} from "../../services/CommentService";
+import {addComment, editComment, findByIdComment, findByIdPostComment} from "../../services/CommentService";
 import DeleteComment from "../comments/DeleteComment";
+import {Field, Form, Formik} from "formik";
 
 const PostDetail = () => {
     let {idPost} = useParams();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const currentPost = useSelector(state => {
         return state.currentPost.currentPost
     })
+    const account = useSelector(state => {
+        return state.account.currentAccount
+    })
     const comments = useSelector(state => {
-        console.log(state.comments.comments,222)
         return state.comments.comments
     })
-    console.log(currentPost)
+    const handleAddComment = (values) => {
+        let data = {...values, post: currentPost.idPost}
+        dispatch(addComment(data)).then(() => {
+            navigate('')
+        })
+    }
+    const currentComment = useSelector(state => {
+        return state.currentComment.currentComment
+    })
+    console.log(currentComment)
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            // Xử lý submit form ở đây
+        }
+    }
+    const findByC =async (values) => {
+        await dispatch(findByIdComment(values))
+    }
+    const handleEditComment = async (values) => {
+        let data = {...values}
+        await dispatch(editComment(data)).then(() => {
+            console.log(data,33)
+            navigate(`/${idPost}`)
+        })
+    }
+
+    const [urls, setUrls] = useState([]);
     useEffect(() => {
         dispatch(findByIdPost(idPost))
     }, [])
@@ -60,10 +90,10 @@ const PostDetail = () => {
                                                 <ul className="dropdown-menu dropdown-menu-end"
                                                     aria-labelledby="cardFeedAction">
                                                     <li className="nav-item">
-                                                        <a className="nav-link bg-light py-1 px-4 mb-0" href="#!"
+                                                        <a className="nav-link bg-light py-1 px-4 mb-0"
                                                            data-bs-toggle="modal"
                                                            data-bs-target="#feedActionVideo"> <i
-                                                            className="bi bi-pencil-fill"></i> Edit </a>
+                                                            className="bi bi-pencil-fill" ></i> Edit </a>
                                                     </li>
                                                     <li>
                                                         <DeletePost id={idPost}/>
@@ -87,7 +117,30 @@ const PostDetail = () => {
                                         <a className="nav-link" href="#!"> <i
                                             className="bi bi-chat-fill pe-1"></i>(12)</a>
                                     </li>
+
                                 </ul>
+
+                                    <div className="d-flex mb-3">
+                                        <div className="avatar avatar-xs me-2">
+                                            <a href="#!"> <img className="avatar-img rounded-circle"
+                                                              src={account.avatar} alt=""/> </a>
+                                        </div>
+                                        <Formik initialValues={{content : ""}}
+                                                onSubmit={(values)=>{
+                                                    values.account = account.idAccount
+                                                    handleAddComment(values)
+                                                    document.getElementById('add-form1').reset();
+                                                    setUrls([])
+
+                                                }
+                                                }>
+                                        <Form className="w-100" id='add-form1'>
+                                        <Field data-autoresize className="form-control pe-4 bg-light" rows="1" type={'text'} name={'content'}
+                                                  placeholder="Add a comment..." onKeyDown={handleKeyDown}  ></Field>
+                                        </Form>
+                                        </Formik>
+                                        </div>
+
                                     { comments !== undefined && comments.map((it, index) => (
                                         <>
                                             <ul className="comment-wrap list-unstyled">
@@ -106,49 +159,86 @@ const PostDetail = () => {
                                                                 </div>
                                                                 <p className="small mb-0">{it.content}  </p>
                                                             </div>
-                                                            <ul className="nav nav-divider py-2 small">
-                                                                <li className="nav-item">
-                                                                    <a className="nav-link" > {it.time}<div className="dropdown">
-                                                                        <a href="#"
-                                                                           className="bi bi-gear fs-6"
-                                                                           id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        </a>
-                                                                        <ul className="dropdown-menu dropdown-menu-end"
-                                                                            aria-labelledby="cardFeedAction">
-                                                                            <li className="nav-item">
-                                                                                <a className="nav-link bg-light py-1 px-2 mb-0" href=""
-                                                                                   data-bs-toggle="modal"
-                                                                                   data-bs-target="#feedActionVideo"> <i
-                                                                                    className="bi bi-pencil-fill"></i> Edit </a>
-                                                                            </li>
-                                                                            <li>
-                                                                                <DeleteComment id={it.idComment}/>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
+                                                            <a className="nav-link" > {it.time}</a>
+                                                        </div><ul className="nav nav-divider py-2 small">
+                                                        <li className="nav-item">
 
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+                                                                <div className="dropdown">
+                                                                <a href="#"
+                                                                   className="text-secondary btn btn-secondary-soft-hover py-1 px-2"
+                                                                   id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    <i className="bi bi-three-dots"></i>
+                                                                </a>
+                                                                <ul className="dropdown-menu dropdown-menu-end"
+                                                                    aria-labelledby="cardFeedAction">
+                                                                   <li className="nav-item">
+                                                                           <a onClick={()=>{
+                                                                               findByC(it.idComment)
+                                                                           }}
+                                                                            className="nav-link bg-light py-1 px-2 mb-0"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#modalCreateEvents" ><i
+
+                                                                           className="bi bi-calendar2-event-fill text-danger pe-2">
+                                                                               </i>Edit
+                                                                       </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <DeleteComment id={it.idComment}/>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+
+                                                        </li>
+                                                    </ul>
                                                     </div>
                                                 </li>
                                             </ul>
                                         </>
-
                                     ))}
-
                                     <ul className="nav nav-stack flex-wrap small mb-3">
                                     </ul>
-
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="modal fade" id="modalCreateEvents" tabIndex="-1" aria-labelledby="modalLabelCreateAlbum"
+                     aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="modalLabelCreateAlbum">Edit Comment</h5>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <Formik initialValues={currentComment}
+                                    onSubmit={(values)=>{
+                                        handleEditComment(values).then()
+                                    }}
+                                    enableReinitialize={true}>
+                            <div className="modal-body">
+                                <Form className="row g-4">
+                                    <div className="col-12">
+                                        <label className="form-label">Content</label>
+                                        <Field type="text" className="form-control" name={'content'}/>
+                                    </div>
+                                    <div className="modal-footer">
+                                    <button type="button" className="btn btn-danger-soft me-2" data-bs-dismiss="modal"> Cancel
+                                    </button>
+                                    <button type="submit" className="btn btn-success-soft" data-bs-dismiss="modal">Edit</button>
+                                </div>
+                                </Form>
+                            </div>
+                            </Formik>
+
                         </div>
                     </div>
                 </div>
 
 
             </main>
+
         </>
 
     )

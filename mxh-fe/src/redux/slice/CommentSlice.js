@@ -1,8 +1,16 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {deleteComment, findByIdPostComment} from "../../services/CommentService";
-import {deletePost} from "../../services/PostService";
+import {
+    addComment,
+    deleteComment,
+    editComment,
+    findByIdComment,
+    findByIdPostComment
+} from "../../services/CommentService";
+import {editPost} from "../../services/PostService";
+
 const initialState = {
-    comments: []
+    comments: [],
+    currentComment: []
 }
 const commentSlice = createSlice({
         name: 'comments',
@@ -12,6 +20,9 @@ const commentSlice = createSlice({
             builder.addCase(findByIdPostComment.fulfilled, (state, action) => {
                 state.comments = action.payload;
             });
+            builder.addCase(addComment.fulfilled, (state, action) => {
+                state.comments.unshift(action.payload)
+            });
             builder.addCase(deleteComment.fulfilled, (state, action) => {
                 state.comments.map((it, id) => {
                     if (it.idComment === action.payload) {
@@ -19,6 +30,17 @@ const commentSlice = createSlice({
                     }
                 })
             });
+            builder.addCase(findByIdComment.fulfilled, (state, action) => {
+                state.currentComment = action.payload;
+            });
+            builder.addCase(editComment.fulfilled, (state, action) => {
+                state.comments.map((it, id) => {
+                    if (it.idComment === action.payload.idComment) {
+                        state.comments[id] = action.payload
+                    }
+                })
+            })
+
         }
 
     }
