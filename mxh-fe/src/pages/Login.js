@@ -68,7 +68,7 @@ const Login = () => {
                     validationSchema={validationSchema}
                     onSubmit={(values) => {
                         console.log(values)
-                        handleSubmit(values)
+                        handleSubmit(values).then()
                     }}>
                 <Form>
                     <div className="container">
@@ -138,7 +138,6 @@ const Login = () => {
                                                 <GoogleLogin
                                                     onSuccess={async credentialResponse => {
                                                         const decoded = jwt_decode(credentialResponse.credential);
-
                                                         let user = {
                                                             username: decoded.email,
                                                             password: decoded.sub,
@@ -146,7 +145,7 @@ const Login = () => {
                                                             avatar: decoded.picture
                                                         };
                                                         await setUserGG(user)
-                                                        await dispatch(AccountsLoginGG(user))
+                                                        await dispatch(AccountsLogin(user))
                                                         check().then()
 
                                                     }}
