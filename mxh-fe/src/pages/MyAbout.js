@@ -103,59 +103,27 @@ const MyAbout = () => {
                                         <p>Thích màu hồng.</p>
                                     </div>
                                     <div className="row g-4">
-                                        <div className="col-sm-6">
+                                        <div className="col-sm-6 py-2">
 
                                             <div className="d-flex align-items-center rounded border px-3 py-2">
 
                                                 <p className="mb-0">
                                                     <i className="bi bi-calendar-date fa-fw me-2"></i> Born: <strong> {account.birthday} </strong>
                                                 </p>
-                                                <div className="dropdown ms-auto">
-
-                                                    <a className="nav-link text-secondary mb-0" href="#"
-                                                       id="aboutAction2" data-bs-toggle="dropdown"
-                                                       aria-expanded="false">
-                                                        <i className="bi bi-three-dots"></i>
-                                                    </a>
-
-                                                    <ul className="dropdown-menu dropdown-menu-end"
-                                                        aria-labelledby="aboutAction2">
-                                                        <li><a className="dropdown-item" href="#"> <i
-                                                            className="bi bi-pencil-square fa-fw pe-2"></i>Edit</a></li>
-                                                        <li><a className="dropdown-item" href="#"> <i
-                                                            className="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
-                                                    </ul>
-                                                </div>
                                             </div>
 
                                         </div>
-                                        <div className="col-sm-6">
+                                        <div className="col-sm-6 py-2">
 
                                             <div className="d-flex align-items-center rounded border px-3 py-2">
 
                                                 <p className="mb-0">
                                                     <i className="bi bi-heart fa-fw me-2"></i> German: <strong> {account.german} </strong>
                                                 </p>
-                                                <div className="dropdown ms-auto">
-
-                                                    <a className="nav-link text-secondary mb-0" href="#"
-                                                       id="aboutAction3" data-bs-toggle="dropdown"
-                                                       aria-expanded="false">
-                                                        <i className="bi bi-three-dots"></i>
-                                                    </a>
-
-                                                    <ul className="dropdown-menu dropdown-menu-end"
-                                                        aria-labelledby="aboutAction3">
-                                                        <li><a className="dropdown-item" href="#"> <i
-                                                            className="bi bi-pencil-square fa-fw pe-2"></i>Edit</a></li>
-                                                        <li><a className="dropdown-item" href="#"> <i
-                                                            className="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
-                                                    </ul>
-                                                </div>
                                             </div>
 
                                         </div>
-                                        <div className="col-sm-6">
+                                        <div className="col-sm-6 py-2">
 
                                             <div className="d-flex align-items-center rounded border px-3 py-2">
 
@@ -163,26 +131,10 @@ const MyAbout = () => {
                                                     <i className="bi bi-briefcase fa-fw me-2"></i> <strong> Lead
                                                     Developer </strong>
                                                 </p>
-                                                <div className="dropdown ms-auto">
-
-                                                    <a className="nav-link text-secondary mb-0" href="#"
-                                                       id="aboutAction4" data-bs-toggle="dropdown"
-                                                       aria-expanded="false">
-                                                        <i className="bi bi-three-dots"></i>
-                                                    </a>
-
-                                                    <ul className="dropdown-menu dropdown-menu-end"
-                                                        aria-labelledby="aboutAction4">
-                                                        <li><a className="dropdown-item" href="#"> <i
-                                                            className="bi bi-pencil-square fa-fw pe-2"></i>Edit</a></li>
-                                                        <li><a className="dropdown-item" href="#"> <i
-                                                            className="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
-                                                    </ul>
-                                                </div>
                                             </div>
 
                                         </div>
-                                        <div className="col-sm-6">
+                                        <div className="col-sm-6 py-2" >
 
                                             <div className="d-flex align-items-center rounded border px-3 py-2">
 
@@ -190,22 +142,6 @@ const MyAbout = () => {
                                                     <i className="bi bi-geo-alt fa-fw me-2"></i> Lives
                                                     in: <strong> {account.address} </strong>
                                                 </p>
-                                                <div className="dropdown ms-auto">
-
-                                                    <a className="nav-link text-secondary mb-0" href="#"
-                                                       id="aboutAction5" data-bs-toggle="dropdown"
-                                                       aria-expanded="false">
-                                                        <i className="bi bi-three-dots"></i>
-                                                    </a>
-
-                                                    <ul className="dropdown-menu dropdown-menu-end"
-                                                        aria-labelledby="aboutAction5">
-                                                        <li><a className="dropdown-item" href="#"> <i
-                                                            className="bi bi-pencil-square fa-fw pe-2"></i>Edit</a></li>
-                                                        <li><a className="dropdown-item" href="#"> <i
-                                                            className="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
-                                                    </ul>
-                                                </div>
                                             </div>
 
                                         </div>

@@ -114,7 +114,7 @@ const Register = () => {
                                 </div>
 
                                 <div className="d-grid">
-                                    <button type="submit" className="btn btn-lg btn-primary">Login</button>
+                                    <button type="submit" className="btn btn-lg btn-primary">Register</button>
                                 </div>
 
                                 <p className="mb-0 mt-3">©2022 <a target="_blank"

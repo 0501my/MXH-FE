@@ -26,14 +26,16 @@ const PostDetail = () => {
     const handleAddComment = (values) => {
         let data = {...values, post: currentPost.idPost}
         dispatch(addComment(data)).then(() => {
-            navigate('')
+            dispatch(findByIdComment(data)).then(()=>{
+                navigate('')
+            })
         })
     }
 
     const currentComment = useSelector(state => {
         return state.currentComment.currentComment
     })
-    console.log(currentComment)
+    console.log(currentComment,2)
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             // Xử lý submit form ở đây
@@ -46,14 +48,12 @@ const PostDetail = () => {
     const handleEditComment = async (values) => {
         let data = {...values}
         await dispatch(editComment(data)).then(() => {
-            console.log(data, 33)
             navigate('')
         })
     }
     const validationSchema = Yup.object().shape({
         content: Yup.string()
-            .required("Vui lòng nhập comment")
-
+            .required("Please enter comments")
     });
 
     const [urls, setUrls] = useState([]);
@@ -84,8 +84,21 @@ const PostDetail = () => {
                                                 <div className="nav nav-divider">
                                                     <h6 className="nav-item card-title mb-0"><a
                                                         href="#!">{currentPost.account.name} </a></h6>
-                                                    <span className="nav-item small"> 2hr</span>
+                                                    <span className="nav-item small"> {currentPost.time}</span>
                                                 </div>
+                                                {currentPost.status === "Public"&&
+                                                <div className="nav nav-divider">
+                                                    <span className="nav-item small"> <i className="bi bi-globe"></i></span>
+                                                </div>}
+                                                {currentPost.status === "Friends"&&
+                                                    <div className="nav nav-divider">
+                                                        <span className="nav-item small"> <i
+                                                            className="bi bi-people"></i></span>
+                                                    </div>}
+                                                {currentPost.status === "Onlyme" &&
+                                                    <div className="nav nav-divider">
+                                                        <span className="nav-item small"> <i className="bi bi-lock"></i></span>
+                                                    </div>}
                                             </div>
                                         </div>
                                         {currentPost.account.idAccount == localStorage.getItem("isAccount") ? <>
@@ -111,9 +124,9 @@ const PostDetail = () => {
                                             </div>
                                         </> : <> </>}
                                     </div>
-                                    <h1 className="h4">{currentPost.content}</h1>
+                                    <p>{currentPost.content}</p>
                                     <div>
-                                        <img className="card-img rounded" src={currentPost.image}
+                                        <img className="card-img rounded"  src={currentPost.image}
                                              alt=""/>
                                     </div>
                                     <ul className="nav nav-stack flex-wrap small mb-3">
@@ -121,10 +134,10 @@ const PostDetail = () => {
                                             <a className="nav-link" href="#!"> <i
                                                 className="bi bi-hand-thumbs-up-fill pe-1"></i>(56)</a>
                                         </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link" href="#!"> <i
-                                                className="bi bi-chat-fill pe-1"></i>(12)</a>
-                                        </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link" href="#!"> <i
+                                                    className="bi bi-chat-fill pe-1"></i>{comments.length} Comment</a>
+                                            </li>
 
                                     </ul>
 
@@ -174,7 +187,7 @@ const PostDetail = () => {
                                                         </div>
                                                         <ul className="nav nav-divider py-2 small">
                                                             <li className="nav-item">
-
+                                                                {it.account.idAccount == localStorage.getItem("isAccount") ? <>
                                                                 <div className="dropdown">
                                                                     <a href="#"
                                                                        className="text-secondary btn btn-secondary-soft-hover py-1 px-2"
@@ -200,7 +213,7 @@ const PostDetail = () => {
                                                                         </li>
                                                                     </ul>
                                                                 </div>
-
+                                                                </> : <> </>}
                                                             </li>
                                                         </ul>
                                                     </div>

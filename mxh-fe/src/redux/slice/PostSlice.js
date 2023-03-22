@@ -28,7 +28,8 @@ const postSlice = createSlice({
             });
 
             builder.addCase(addPosts.fulfilled, (state, action) => {
-                state.posts.unshift(action.payload)
+                console.log(action)
+                state.posts = action.payload
             });
             builder.addCase(editPost.fulfilled, (state, action) => {
                 state.posts.map((it, id) => {

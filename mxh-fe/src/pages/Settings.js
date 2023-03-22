@@ -134,7 +134,7 @@ const Settings = () => {
                                                         </div>
                                                         <div className="col-lg-6">
                                                             <label className="form-label">Birthday </label>
-                                                            <Field type="text" className="form-control flatpickr" name="birthday"/>
+                                                            <Field type="date" className="form-control flatpickr" name="birthday"/>
                                                         </div>
 
                                                         <div className="col-12 text-end">
