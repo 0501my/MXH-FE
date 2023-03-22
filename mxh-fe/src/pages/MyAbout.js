@@ -67,8 +67,8 @@ const MyAbout = () => {
                                                 </button>
                                                 <ul className="dropdown-menu dropdown-menu-end"
                                                     aria-labelledby="profileAction2">
-                                                    <li><Link className="dropdown-item" to={`/settings`}> <i
-                                                        className="bi bi-lock fa-fw pe-2"></i>Change profile</Link></li>
+                                                    <li><Link className="dropdown-item" to={`/home/settings`}> <i
+                                                        className="bi bi-lock fa-fw pe-2"></i>Setting Account</Link></li>
                                                 </ul>
                                             </div>
                                         </div>
