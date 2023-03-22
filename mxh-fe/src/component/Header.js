@@ -200,9 +200,8 @@ const Header = () => {
                                     <div className="card">
                                         <div className="card-header d-flex justify-content-between align-items-center">
                                             <h6 className="m-0">Notifications <span
-                                                className="badge bg-danger bg-opacity-10 text-danger ms-2">4 new</span>
+                                                className="badge bg-danger bg-opacity-10 text-danger ms-2"></span>
                                             </h6>
-                                            <a className="small" href="#">Clear all</a>
                                         </div>
                                         <div className="card-body p-0">
                                             <ul className="list-group list-group-flush list-unstyled p-2">
@@ -275,11 +274,11 @@ const Header = () => {
                                         </a>
                                     </li>
                                     <li className="dropdown-divider"></li>
-                                    <li><a className="dropdown-item bg-danger-soft-hover" onClick={() => {
+                                    <li><a className="dropdown-item bg-danger-soft-hover" style={{cursor: "pointer"}} onClick={() => {
                                         localStorage.clear();
                                         navigate('/')
                                     }}><i
-                                        className="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
+                                        className="bi bi-power fa-fw me-2" ></i>Sign Out</a></li>
                                     <li>
                                         <hr className="dropdown-divider"/>
                                     </li>
