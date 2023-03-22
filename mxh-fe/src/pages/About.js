@@ -8,7 +8,6 @@ import {addFriend, checkFriend, confirmFriend, deleteFriend, getFriends} from ".
 const About = () => {
 
     const {idAccount} = useParams();
-
     const account = useSelector(state => {
         return state.account.currentAccount
     })

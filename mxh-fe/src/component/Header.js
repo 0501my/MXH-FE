@@ -30,8 +30,8 @@ const Header = () => {
                 <nav className="navbar navbar-expand-lg">
                     <div className="container">
                         <Link className="navbar-brand" to="/home">
-                            <img className="light-mode-item navbar-brand-item" src="/assets/images/logo.svg" alt="logo"/>
-                            <img className="dark-mode-item navbar-brand-item" src="/assets/images/logo.svg" alt="logo"/>
+                            <img className="light-mode-item navbar-brand-item" src="/logo3.png" alt="logo"/>
+                            <img className="dark-mode-item navbar-brand-item" src="/logo3.png" alt="logo"/>
                         </Link>
                         <button className="navbar-toggler ms-auto icon-md btn btn-light p-0" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -254,9 +254,8 @@ const Header = () => {
                                                 <p className="small m-0">Web Developer</p>
                                             </div>
                                         </div>
-                                        <Link className="dropdown-item btn btn-primary-soft btn-sm my-2 text-center"
-                                              to={`/home/myTimeline`}>View
-                                            profile</Link>
+                                        <Link className="dropdown-item btn btn-primary-soft btn-sm my-2 text-center "
+                                              to={`/home/myTimeline`}>View profile</Link>
                                     </li>
                                     <li><a className="dropdown-item" href="settings.html"><i
                                         className="bi bi-gear fa-fw me-2"></i>Settings & Privacy</a></li>
