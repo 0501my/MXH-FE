@@ -19,6 +19,7 @@ const ShowHome = () => {
     const currentPost = useSelector(state => {
         return state.currentPost.currentPost
     })
+    console.log(currentPost)
 
     useEffect(() => {
         handleUpload()

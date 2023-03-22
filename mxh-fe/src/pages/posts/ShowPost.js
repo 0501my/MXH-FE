@@ -7,13 +7,11 @@ import EditPost from "./EditPost";
 
 const ShowPost = () => {
     const posts = useSelector(state => {
-        console.log(state.posts.posts,4)
         return state.posts.posts
     });
     const currentPost = useSelector(state => {
         return state.currentPost.currentPost
     })
-    console.log(currentPost)
     const account = useSelector(state => {
         return state.account.currentAccount
     })
@@ -81,10 +79,10 @@ const ShowPost = () => {
                                 className="bi bi-hand-thumbs-up-fill pe-1"></i>Liked </a>
                         </li>
                         <li className="nav-item">
-                            <Link to={`/${it.idPost}`}><a className="nav-link" href="#!"> <i className="bi bi-chat-fill pe-1"></i>{it.comment.length} Comments</a></Link>
+                            <Link to={`/${it.idPost}`}><a className="nav-link" href="#!"> <i className="bi bi-chat-fill pe-1"></i>{it.comment !=undefined && it.comment.length} Comments</a></Link>
                         </li>
                     </ul>
-                        {it.comment.slice(-2).reverse().map(itc =>(
+                        {it.comment !=undefined && it.comment.slice(-2).reverse().map(itc =>(
                             <>
                                 <ul className="comment-wrap list-unstyled">
                                     <li className="comment-item">
@@ -111,18 +109,18 @@ const ShowPost = () => {
                         ))}
 
                 </div>
-                <div className="card-footer border-0 pt-0">
-                    <a href="#!" role="button"
-                       className="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center"
-                       data-bs-toggle="button" aria-pressed="true">
-                        <div className="spinner-dots me-2">
-                            <span className="spinner-dot"></span>
-                            <span className="spinner-dot"></span>
-                            <span className="spinner-dot"></span>
-                        </div>
-                        Load more comments
-                    </a>
-                </div>
+                {/*<div className="card-footer border-0 pt-0">*/}
+                {/*    <a href="#!" role="button"*/}
+                {/*       className="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center"*/}
+                {/*       data-bs-toggle="button" aria-pressed="true">*/}
+                {/*        <div className="spinner-dots me-2">*/}
+                {/*            <span className="spinner-dot"></span>*/}
+                {/*            <span className="spinner-dot"></span>*/}
+                {/*            <span className="spinner-dot"></span>*/}
+                {/*        </div>*/}
+                {/*        Load more comments*/}
+                {/*    </a>*/}
+                {/*</div>*/}
             </div>
         </>))}
     </>)

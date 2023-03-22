@@ -53,8 +53,7 @@ const PostDetail = () => {
     }
     const validationSchema = Yup.object().shape({
         content: Yup.string()
-            .required("Vui lòng nhập comment")
-
+            .required("Please enter comments")
     });
 
     const [urls, setUrls] = useState([]);
