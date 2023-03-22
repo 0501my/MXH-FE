@@ -115,8 +115,6 @@ const MyTimeLine = () => {
                             {posts !== undefined && posts.map(it=>(
                                 <div className="card">
 
-
-                                                <li><Link className="dropdown-item" to={"/home/settings"}> <i className="bi bi-lock fa-fw pe-2"></i>Change Profile</Link></li>
                                     <div className="card-header border-0 pb-0">
                                         <div className="d-flex align-items-center justify-content-between">
                                             <div className="d-flex align-items-center">
@@ -187,6 +185,8 @@ const MyTimeLine = () => {
                                         </ul>
 
                                     </div>
+
+
 
                                 </div>
                             ))}
