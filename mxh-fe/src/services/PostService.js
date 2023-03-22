@@ -28,7 +28,8 @@ export const addPosts = createAsyncThunk(
     'posts/addPosts',
     async (data) => {
         const response = await axios.post('http://localhost:4000/posts', data);
-        return response.data[0];
+        console.log(response.data)
+        return response.data;
     }
 )
 export const findByIdPost = createAsyncThunk(
