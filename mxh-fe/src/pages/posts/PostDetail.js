@@ -26,14 +26,16 @@ const PostDetail = () => {
     const handleAddComment = (values) => {
         let data = {...values, post: currentPost.idPost}
         dispatch(addComment(data)).then(() => {
-            navigate('')
+            dispatch(findByIdComment(data)).then(()=>{
+                navigate('')
+            })
         })
     }
 
     const currentComment = useSelector(state => {
         return state.currentComment.currentComment
     })
-    console.log(currentComment)
+    console.log(currentComment,2)
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             // Xử lý submit form ở đây
@@ -46,7 +48,6 @@ const PostDetail = () => {
     const handleEditComment = async (values) => {
         let data = {...values}
         await dispatch(editComment(data)).then(() => {
-            console.log(data, 33)
             navigate('')
         })
     }
@@ -121,10 +122,10 @@ const PostDetail = () => {
                                             <a className="nav-link" href="#!"> <i
                                                 className="bi bi-hand-thumbs-up-fill pe-1"></i>(56)</a>
                                         </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link" href="#!"> <i
-                                                className="bi bi-chat-fill pe-1"></i>(12)</a>
-                                        </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link" href="#!"> <i
+                                                    className="bi bi-chat-fill pe-1"></i>{comments.length} Comment</a>
+                                            </li>
 
                                     </ul>
 
@@ -174,7 +175,7 @@ const PostDetail = () => {
                                                         </div>
                                                         <ul className="nav nav-divider py-2 small">
                                                             <li className="nav-item">
-
+                                                                {it.account.idAccount == localStorage.getItem("isAccount") ? <>
                                                                 <div className="dropdown">
                                                                     <a href="#"
                                                                        className="text-secondary btn btn-secondary-soft-hover py-1 px-2"
@@ -200,7 +201,7 @@ const PostDetail = () => {
                                                                         </li>
                                                                     </ul>
                                                                 </div>
-
+                                                                </> : <> </>}
                                                             </li>
                                                         </ul>
                                                     </div>

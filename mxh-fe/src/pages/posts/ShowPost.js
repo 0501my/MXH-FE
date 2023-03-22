@@ -7,9 +7,9 @@ import EditPost from "./EditPost";
 
 const ShowPost = () => {
     const posts = useSelector(state => {
+        console.log(state.posts.posts,4)
         return state.posts.posts
     });
-    console.log(posts)
     const currentPost = useSelector(state => {
         return state.currentPost.currentPost
     })
@@ -77,44 +77,50 @@ const ShowPost = () => {
                     <ul className="nav nav-stack py-3 small">
                         <li className="nav-item">
                             <a className="nav-link active" href="#!"> <i
-                                className="bi bi-hand-thumbs-up-fill pe-1"></i>Liked (56)</a>
+                                className="bi bi-hand-thumbs-up-fill pe-1"></i>Liked </a>
                         </li>
                         <li className="nav-item">
-                            <Link to={`/${it.idPost}`}><a className="nav-link" href="#!"> <i className="bi bi-chat-fill pe-1"></i>Comments</a></Link>
+                            <Link to={`/${it.idPost}`}><a className="nav-link" href="#!"> <i className="bi bi-chat-fill pe-1"></i>{it.comment.length} Comments</a></Link>
                         </li>
                     </ul>
-                    <div className="d-flex mb-3">
-                        <div className="avatar avatar-xs me-2">
-                            <a href="#!"> <img className="avatar-img rounded-circle"
-                                               src="assets/images/avatar/12.jpg" alt=""/> </a>
-                        </div>
-                        <form className="w-100">
-                                        <textarea data-autoresize className="form-control pe-4 bg-light" rows="1"
-                                                  placeholder="Add a comment..."></textarea>
-                        </form>
-                    </div>
-                    <ul className="comment-wrap list-unstyled">
-                        <li className="comment-item">
-                            <div className="d-flex position-relative">
-                                <div className="avatar avatar-xs">
-                                    <a href="#!"><img className="avatar-img rounded-circle"
-                                                      src="assets/images/avatar/05.jpg" alt=""/></a>
-                                </div>
-                                <div className="ms-2">
-                                    <div className="bg-light rounded-start-top-0 p-3 rounded">
-                                        <div className="d-flex justify-content-between">
-                                            <h6 className="mb-1"><a href="#!"> Frances Guerrero </a></h6>
-                                            <small className="ms-2">5hr</small>
+                        {it.comment.slice(-2).reverse().map(itc =>(
+                            <>
+                                <ul className="comment-wrap list-unstyled">
+                                    <li className="comment-item">
+                                        <div className="d-flex position-relative">
+                                            <div className="avatar avatar-xs">
+                                                <a href="#!"><img className="avatar-img rounded-circle"
+                                                                  src={itc.account.avatar} alt=""/></a>
+                                            </div>
+                                            <div className="ms-2">
+                                                <div className="bg-light rounded-start-top-0 p-3 rounded">
+                                                    <div className="d-flex justify-content-between">
+                                                        <h6 className="mb-1"><a href="#!"> {itc.account.name} </a></h6>
+
+                                                    </div>
+                                                    <p className="small mb-0">{itc.content}</p>
+                                                </div>
+                                              <small className="ms-2">{itc.time}</small>
+                                            </div>
                                         </div>
-                                        <p className="small mb-0">Removed demands expense account in outward
-                                            tedious do. Particular way thoroughly unaffected projection.</p>
-                                    </div>
-                                    <ul className="nav nav-divider py-2 small">
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                                    </li>
+                                </ul>
+                            </>
+
+                        ))}
+
+                </div>
+                <div className="card-footer border-0 pt-0">
+                    <a href="#!" role="button"
+                       className="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center"
+                       data-bs-toggle="button" aria-pressed="true">
+                        <div className="spinner-dots me-2">
+                            <span className="spinner-dot"></span>
+                            <span className="spinner-dot"></span>
+                            <span className="spinner-dot"></span>
+                        </div>
+                        Load more comments
+                    </a>
                 </div>
             </div>
         </>))}
