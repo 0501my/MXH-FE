@@ -84,8 +84,21 @@ const PostDetail = () => {
                                                 <div className="nav nav-divider">
                                                     <h6 className="nav-item card-title mb-0"><a
                                                         href="#!">{currentPost.account.name} </a></h6>
-                                                    <span className="nav-item small"> 2hr</span>
+                                                    <span className="nav-item small"> {currentPost.time}</span>
                                                 </div>
+                                                {currentPost.status === "Public"&&
+                                                <div className="nav nav-divider">
+                                                    <span className="nav-item small"> <i className="bi bi-globe"></i></span>
+                                                </div>}
+                                                {currentPost.status === "Friends"&&
+                                                    <div className="nav nav-divider">
+                                                        <span className="nav-item small"> <i
+                                                            className="bi bi-people"></i></span>
+                                                    </div>}
+                                                {currentPost.status === "Onlyme" &&
+                                                    <div className="nav nav-divider">
+                                                        <span className="nav-item small"> <i className="bi bi-lock"></i></span>
+                                                    </div>}
                                             </div>
                                         </div>
                                         {currentPost.account.idAccount == localStorage.getItem("isAccount") ? <>
@@ -111,9 +124,9 @@ const PostDetail = () => {
                                             </div>
                                         </> : <> </>}
                                     </div>
-                                    <h1 className="h4">{currentPost.content}</h1>
+                                    <p>{currentPost.content}</p>
                                     <div>
-                                        <img className="card-img rounded" src={currentPost.image}
+                                        <img className="card-img rounded"  src={currentPost.image}
                                              alt=""/>
                                     </div>
                                     <ul className="nav nav-stack flex-wrap small mb-3">
