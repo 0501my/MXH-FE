@@ -183,9 +183,9 @@ const Header = () => {
                                 </a>
                             </li>
                             <li className="nav-item ms-2">
-                                <a className="nav-link icon-md btn btn-light p-0" href="settings.html">
+                                <Link className="nav-link icon-md btn btn-light p-0" to={"/home/settings"}>
                                     <i className="bi bi-gear-fill fs-6"> </i>
-                                </a>
+                                </Link>
                             </li>
                             <li className="nav-item dropdown ms-2">
                                 <a className="nav-link icon-md btn btn-light p-0" href="#" id="notifDropdown"
@@ -258,8 +258,8 @@ const Header = () => {
                                               to={`/home/myTimeline`}>View
                                             profile</Link>
                                     </li>
-                                    <li><a className="dropdown-item" href="settings.html"><i
-                                        className="bi bi-gear fa-fw me-2"></i>Settings & Privacy</a></li>
+                                    <li><Link className="dropdown-item" to={"/home/settings"}><i
+                                        className="bi bi-gear fa-fw me-2"></i>Settings & Privacy</Link></li>
                                     <li>
                                         <a className="dropdown-item" href="https://support.webestica.com/"
                                            target="_blank">

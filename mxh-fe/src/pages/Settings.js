@@ -1,33 +1,18 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {AccountsEdit, changePassword, searchOtherAccount} from "../services/AccountService";
-
+import {AccountsEdit, changePassword} from "../services/AccountService";
 import swal from "sweetalert";
-import {useParams} from "react-router-dom";
 import * as Yup from "yup";
 
 
 const Settings = () => {
-    const {idAccount} = useParams()
-    const [editInfo, setEditInfo] = useState(false)
+
     const account = useSelector(state => {
         return state.account.currentAccount
     })
 
-    const otherAccount = useSelector(state => {
-        return state.account.otherAccount
-    })
-
     const dispatch =useDispatch()
-
-    useEffect(() => {
-        dispatch(searchOtherAccount(idAccount));
-        if(idAccount == account.idAccount){
-            setEditInfo(true)
-        }
-
-    }, [])
 
     const validationSchema = Yup.object().shape({
         newPassword: Yup.string()
@@ -105,13 +90,16 @@ const Settings = () => {
                             <div className="tab-content py-0 mb-0">
                                 <div className="tab-pane show active fade" id="nav-setting-tab-1">
                                     <div className="card mb-4">
-                                        <Formik initialValues={account}
+                                        <Formik initialValues={{
+                                            name:account.name,
+                                            address:account.address,
+                                            german:account.german,
+                                            birthday:account.birthday,
+                                        }}
                                                 onSubmit={ (values)=>{
                                                     values.idAccount = account.idAccount;
                                                     values.avatar = account.avatar;
                                                   dispatch(AccountsEdit(values)).then( ()=>{
-                                                      console.log(values,2)
-                                                      dispatch(searchOtherAccount(idAccount))
                                                         swal(`Update information`,{
                                                             icon:"success"
                                                         })})
@@ -137,6 +125,7 @@ const Settings = () => {
                                                             <Field type="text" className="form-control" name="address"/>
                                                         </div>
                                                         <div className="col-sm-6">
+                                                            <label className="form-label">German</label>
                                                             <Field as={'select'} className="form-control" name={'german'}>
                                                                 <option value={'men'}>Men</option>
                                                                 <option value={'woman'}>Woman</option>
@@ -158,7 +147,11 @@ const Settings = () => {
                                         </Formik>
                                     </div>
                                     <div className="card">
-                                        <Formik initialValues={{}}
+                                        <Formik initialValues={{
+                                            oldPassword:'',
+                                            newPassword:'',
+                                            repeatPassword:'',
+                                        }}
                                         validationSchema={validationSchema}
                                         onSubmit={(values)=>{
                                             values.id = account.idAccount;
@@ -170,14 +163,16 @@ const Settings = () => {
                                                         swal(`Change password success`,{
                                                             icon: "success",
                                                         })
+                                                        document.getElementById('namngo').reset()
                                                     }
                                                 })
                                             }else {
-                                                alert(`Can not change password`)
+                                                alert(`Wrong repeat password`)
                                             }
                                         }}
                                         enableReinitialize={true}>
-                                            <Form>
+
+                                            <Form id='namngo'>
                                             <div className="card-header border-0 pb-0">
                                                 <h5 className="card-title">Change your password</h5>
                                                 <p className="mb-0">See resolved goodness felicity shy civility domestic had
