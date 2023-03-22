@@ -1,19 +1,67 @@
-import React, {useEffect} from 'react';
-import {useParams} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {useNavigate, useParams} from "react-router-dom";
 import {findByIdPost} from "../../services/PostService";
 import {useDispatch, useSelector} from "react-redux";
 import EditPost from "./EditPost";
 import Header from "../../component/Header";
 import DeletePost from "./DeletePost";
+import {addComment, editComment, findByIdComment, findByIdPostComment} from "../../services/CommentService";
+import DeleteComment from "../comments/DeleteComment";
+import {ErrorMessage, Field, Form, Formik} from "formik";
+import * as Yup from "yup";
 
 const PostDetail = () => {
     let {idPost} = useParams();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const currentPost = useSelector(state => {
         return state.currentPost.currentPost
     })
+    const account = useSelector(state => {
+        return state.account.currentAccount
+    })
+    const comments = useSelector(state => {
+        return state.comments.comments
+    })
+    const handleAddComment = (values) => {
+        let data = {...values, post: currentPost.idPost}
+        dispatch(addComment(data)).then(() => {
+            navigate('')
+        })
+    }
+
+    const currentComment = useSelector(state => {
+        return state.currentComment.currentComment
+    })
+    console.log(currentComment)
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            // Xử lý submit form ở đây
+        }
+    }
+    const findByC = async (values) => {
+        await dispatch(findByIdComment(values)).then(() => {
+        });
+    }
+    const handleEditComment = async (values) => {
+        let data = {...values}
+        await dispatch(editComment(data)).then(() => {
+            console.log(data, 33)
+            navigate('')
+        })
+    }
+    const validationSchema = Yup.object().shape({
+        content: Yup.string()
+            .required("Vui lòng nhập comment")
+
+    });
+
+    const [urls, setUrls] = useState([]);
     useEffect(() => {
         dispatch(findByIdPost(idPost))
+    }, [])
+    useEffect(() => {
+        dispatch(findByIdPostComment(idPost))
     }, [])
     return (
         <>
@@ -50,10 +98,10 @@ const PostDetail = () => {
                                                 <ul className="dropdown-menu dropdown-menu-end"
                                                     aria-labelledby="cardFeedAction">
                                                     <li className="nav-item">
-                                                        <a className="nav-link bg-light py-1 px-4 mb-0" href="#!"
+                                                        <a className="nav-link  py-1 px-4 mb-0"
                                                            data-bs-toggle="modal"
                                                            data-bs-target="#feedActionVideo"> <i
-                                                            className="bi bi-pencil-fill"></i> Edit </a>
+                                                            className="bi bi-pencil-fill pe-1"></i> Edit </a>
                                                     </li>
                                                     <li>
                                                         <DeletePost id={idPost}/>
@@ -77,185 +125,137 @@ const PostDetail = () => {
                                             <a className="nav-link" href="#!"> <i
                                                 className="bi bi-chat-fill pe-1"></i>(12)</a>
                                         </li>
-                                        <li className="nav-item dropdown ms-sm-auto">
-                                            <a className="nav-link mb-0" href="#" id="cardShareAction"
-                                               data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i className="bi bi-reply-fill flip-horizontal ps-1"></i>(3)
-                                            </a>
-                                            <ul className="dropdown-menu dropdown-menu-end"
-                                                aria-labelledby="cardShareAction">
-                                                <li><a className="dropdown-item" href="#"> <i
-                                                    className="bi bi-envelope fa-fw pe-2"></i>Send via Direct
-                                                    Message</a></li>
-                                                <li><a className="dropdown-item" href="#"> <i
-                                                    className="bi bi-bookmark-check fa-fw pe-2"></i>Bookmark </a>
-                                                </li>
-                                                <li><a className="dropdown-item" href="#"> <i
-                                                    className="bi bi-link fa-fw pe-2"></i>Copy link to post</a></li>
-                                                <li><a className="dropdown-item" href="#"> <i
-                                                    className="bi bi-share fa-fw pe-2"></i>Share post via …</a></li>
-                                                <li>
-                                                    <hr className="dropdown-divider"/>
-                                                </li>
-                                                <li><a className="dropdown-item" href="#"> <i
-                                                    className="bi bi-pencil-square fa-fw pe-2"></i>Share to News
-                                                    Feed</a></li>
-                                            </ul>
-                                        </li>
+
                                     </ul>
-                                    <ul className="comment-wrap list-unstyled">
-                                        <li className="comment-item">
-                                            <div className="d-flex position-relative">
-                                                <div className="avatar avatar-xs">
-                                                    <a href="#!"><img className="avatar-img rounded-circle"
-                                                                      src="assets/images/avatar/05.jpg" alt=""/></a>
-                                                </div>
-                                                <div className="ms-2">
-                                                    <div className="bg-light rounded-start-top-0 p-3 rounded">
-                                                        <div className="d-flex justify-content-between">
-                                                            <h6 className="mb-1"><a href="#!"> Frances Guerrero </a>
-                                                            </h6>
-                                                            <small className="ms-2">5hr</small>
-                                                        </div>
-                                                        <p className="small mb-0">Removed demands expense account in
-                                                            outward tedious do. Particular way thoroughly unaffected
-                                                            projection.</p>
-                                                    </div>
-                                                    <ul className="nav nav-divider py-2 small">
-                                                        <li className="nav-item">
-                                                            <a className="nav-link" href="#!"> Like (3)</a>
-                                                        </li>
-                                                        <li className="nav-item">
-                                                            <a className="nav-link" href="#!"> Reply</a>
-                                                        </li>
-                                                        <li className="nav-item">
-                                                            <a className="nav-link" href="#!"> View 5 replies</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <ul className="comment-item-nested list-unstyled">
+
+                                    <div className="d-flex mb-3">
+                                        <div className="avatar avatar-xs me-2">
+                                            <a href="#!"> <img className="avatar-img rounded-circle"
+                                                               src={account.avatar} alt=""/> </a>
+                                        </div>
+                                        <Formik initialValues={{content: ""}}
+                                                onSubmit={(values) => {
+                                                    values.account = account.idAccount
+                                                    handleAddComment(values)
+                                                    document.getElementById('add-form1').reset();
+                                                    setUrls([])
+
+                                                }
+                                                } validationSchema={validationSchema}>
+                                            <Form className="w-100" id='add-form1'>
+                                                <Field data-autoresize className="form-control pe-4 bg-light" rows="1"
+                                                       type={'text'} name={'content'}
+                                                       placeholder="Add a comment..." onKeyDown={handleKeyDown}></Field>
+                                                <ErrorMessage name={'content'}/>
+                                            </Form>
+                                        </Formik>
+                                    </div>
+
+                                    {comments !== undefined && comments.map((it, index) => (
+                                        <>
+                                            <ul className="comment-wrap list-unstyled">
                                                 <li className="comment-item">
-                                                    <div className="d-flex">
+
+                                                    <div className="d-flex position-relative">
                                                         <div className="avatar avatar-xs">
                                                             <a href="#!"><img className="avatar-img rounded-circle"
-                                                                              src="assets/images/avatar/06.jpg"
-                                                                              alt=""/></a>
+                                                                              src={it.account.avatar} alt=""/></a>
                                                         </div>
                                                         <div className="ms-2">
-                                                            <div className="bg-light p-3 rounded">
+                                                            <div className="bg-light rounded-start-top-0 p-3 rounded">
                                                                 <div className="d-flex justify-content-between">
-                                                                    <h6 className="mb-1"><a href="#!"> Lori
-                                                                        Stevens </a></h6>
-                                                                    <small className="ms-2">2hr</small>
+                                                                    <h6 className="mb-1"><a
+                                                                        href="#!"> {it.account.name} </a>
+                                                                    </h6>
                                                                 </div>
-                                                                <p className="small mb-0">See resolved goodness
-                                                                    felicity shy civility domestic had but Drawings
-                                                                    offended yet answered Jennings perceive.</p>
+                                                                <p className="small mb-0">{it.content}  </p>
                                                             </div>
-                                                            <ul className="nav nav-divider py-2 small">
-                                                                <li className="nav-item">
-                                                                    <a className="nav-link" href="#!"> Like (5)</a>
-                                                                </li>
-                                                                <li className="nav-item">
-                                                                    <a className="nav-link" href="#!"> Reply</a>
-                                                                </li>
-                                                            </ul>
+                                                            <a className="nav-link"> {it.time}</a>
                                                         </div>
-                                                    </div>
-                                                </li>
-                                                <li className="comment-item">
-                                                    <div className="d-flex">
-                                                        <div className="avatar avatar-story avatar-xs">
-                                                            <a href="#!"><img className="avatar-img rounded-circle"
-                                                                              src="assets/images/avatar/07.jpg"
-                                                                              alt=""/></a>
-                                                        </div>
-                                                        <div className="ms-2">
-                                                            <div className="bg-light p-3 rounded">
-                                                                <div className="d-flex justify-content-between">
-                                                                    <h6 className="mb-1"><a href="#!"> Billy
-                                                                        Vasquez </a></h6>
-                                                                    <small className="ms-2">15min</small>
+                                                        <ul className="nav nav-divider py-2 small">
+                                                            <li className="nav-item">
+
+                                                                <div className="dropdown">
+                                                                    <a href="#"
+                                                                       className="text-secondary btn btn-secondary-soft-hover py-1 px-2"
+                                                                       id="cardFeedAction" data-bs-toggle="dropdown"
+                                                                       aria-expanded="false">
+                                                                        <i className="bi bi-three-dots"></i>
+                                                                    </a>
+                                                                    <ul className="dropdown-menu dropdown-menu-end"
+                                                                        aria-labelledby="cardFeedAction">
+                                                                        <li className="nav-item">
+                                                                            <a onClick={() => {
+                                                                                findByC(it.idComment)
+                                                                            }}
+                                                                               className="nav-link  py-1 px-4 mb-0"
+                                                                               data-bs-toggle="modal"
+                                                                               data-bs-target="#modalCreateEvents"><i
+                                                                                className="bi bi-pencil-fill text-primary ">
+                                                                            </i> Edit
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <DeleteComment id={it.idComment}/>
+                                                                        </li>
+                                                                    </ul>
                                                                 </div>
-                                                                <p className="small mb-0">Wishing calling is warrant
-                                                                    settled was lucky.</p>
-                                                            </div>
-                                                            <ul className="nav nav-divider py-2 small">
-                                                                <li className="nav-item">
-                                                                    <a className="nav-link" href="#!"> Like</a>
-                                                                </li>
-                                                                <li className="nav-item">
-                                                                    <a className="nav-link" href="#!"> Reply</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+
+                                                            </li>
+                                                        </ul>
                                                     </div>
                                                 </li>
                                             </ul>
-                                            <a href="#!" role="button"
-                                               className="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center mb-3 ms-5"
-                                               data-bs-toggle="button" aria-pressed="true">
-                                                <div className="spinner-dots me-2">
-                                                    <span className="spinner-dot"></span>
-                                                    <span className="spinner-dot"></span>
-                                                    <span className="spinner-dot"></span>
-                                                </div>
-                                                Load more replies
-                                            </a>
-                                        </li>
-                                        <li className="comment-item">
-                                            <div className="d-flex">
-                                                <div className="avatar avatar-xs">
-                                                    <a href="#!"><img className="avatar-img rounded-circle"
-                                                                      src="assets/images/avatar/05.jpg" alt=""/></a>
-                                                </div>
-                                                <div className="ms-2">
-                                                    <div className="bg-light p-3 rounded">
-                                                        <div className="d-flex justify-content-between">
-                                                            <h6 className="mb-1"><a href="#!"> Frances Guerrero </a>
-                                                            </h6>
-                                                            <small className="ms-2">4min</small>
-                                                        </div>
-                                                        <p className="small mb-0">Removed demands expense account in
-                                                            outward tedious do. Particular way thoroughly unaffected
-                                                            projection.</p>
-                                                    </div>
-                                                    <ul className="nav nav-divider pt-2 small">
-                                                        <li className="nav-item">
-                                                            <a className="nav-link" href="#!"> Like (1)</a>
-                                                        </li>
-                                                        <li className="nav-item">
-                                                            <a className="nav-link" href="#!"> Reply</a>
-                                                        </li>
-                                                        <li className="nav-item">
-                                                            <a className="nav-link" href="#!"> View 6 replies</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
+                                        </>
+                                    ))}
+                                    <ul className="nav nav-stack flex-wrap small mb-3">
                                     </ul>
-                                    <div className="card-footer border-0 pb-0">
-                                        <a href="#!" role="button"
-                                           className="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center"
-                                           data-bs-toggle="button" aria-pressed="true">
-                                            <div className="spinner-dots me-2">
-                                                <span className="spinner-dot"></span>
-                                                <span className="spinner-dot"></span>
-                                                <span className="spinner-dot"></span>
-                                            </div>
-                                            Load more comments
-                                        </a>
-                                    </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="modal fade" id="modalCreateEvents" tabIndex="-1" aria-labelledby="modalLabelCreateAlbum"
+                     aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="modalLabelCreateAlbum">Edit Comment</h5>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <Formik initialValues={currentComment}
+                                    onSubmit={(values) => {
+                                        handleEditComment(values).then()
+                                    }}
+                                    enableReinitialize={true}
+                                    validationSchema={validationSchema}>
+                                <div className="modal-body">
+                                    <Form className="row g-4">
+                                        <div className="col-12">
+                                            <label className="form-label">Content</label>
+                                            <Field type="text" className="form-control" name={'content'}/>
+                                            <ErrorMessage name={'content'}/>
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button type="button" className="btn btn-danger-soft me-2"
+                                                    data-bs-dismiss="modal"> Cancel
+                                            </button>
+                                            <button type="submit" className="btn btn-success-soft"
+                                                    data-bs-dismiss="modal">Edit
+                                            </button>
+                                        </div>
+                                    </Form>
+                                </div>
+                            </Formik>
+
                         </div>
                     </div>
                 </div>
 
 
             </main>
+
         </>
 
     )
