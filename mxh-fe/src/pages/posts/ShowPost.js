@@ -30,6 +30,7 @@ const ShowPost = () => {
                             <div className="d-flex align-items-center">
                                 <div className="avatar avatar-story me-2">
                                     <img className="avatar-img rounded-circle" src={it.account.avatar}
+
                                          alt=""/>
                                 </div>
                                 <div>
