@@ -9,6 +9,7 @@ import CreatePost from "./posts/CreatePost";
 
 const ShowHome = () => {
     const navigate = useNavigate();
+
     const [images, setImages] = useState([]);
 
     const account = useSelector(state => {
@@ -16,14 +17,15 @@ const ShowHome = () => {
     })
 
     const dispatch = useDispatch();
+
     const currentPost = useSelector(state => {
         return state.currentPost.currentPost
     })
-    console.log(currentPost)
 
     useEffect(() => {
         handleUpload()
     }, [images])
+
     const handleUpload = () => {
         const promises = [];
         if (images.length > 0) {
@@ -50,7 +52,6 @@ const ShowHome = () => {
 
     }
 
-
     const [urls, setUrls] = useState([]);
 
     const [progress, setProgress] = useState(0);
@@ -60,6 +61,7 @@ const ShowHome = () => {
     useEffect(() => {
         dispatch(getPosts())
     }, [])
+
     useEffect((id) => {
         dispatch(findByIdPost(id))
     }, [])

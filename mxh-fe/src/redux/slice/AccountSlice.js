@@ -21,6 +21,7 @@ const accountSlice = createSlice({
         // builder.addCase(AccountsRegister.fulfilled, (state, {payload}) => {
         //     state.account.push(payload.data);
         // });
+
         builder.addCase(findById.fulfilled, (state, action) => {
             state.account = action.payload;
         });

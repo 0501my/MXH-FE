@@ -45,6 +45,9 @@ const TimeLine = () => {
 
     const handleConfirmFriend = async (id)=>{
         dispatch(confirmFriend(id));
+        let values = {idSender:account.idAccount,idReceiver:idAccount,status:"Friend Confirm"};
+        dispatch(addNotification(values));
+
     }
 
     useEffect(() => {

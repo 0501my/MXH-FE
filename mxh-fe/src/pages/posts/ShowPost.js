@@ -6,19 +6,25 @@ import {Link} from "react-router-dom";
 import EditPost from "./EditPost";
 
 const ShowPost = () => {
+
     const posts = useSelector(state => {
         return state.posts.posts
     });
+
     const currentPost = useSelector(state => {
         return state.currentPost.currentPost
     })
+
     const account = useSelector(state => {
         return state.account.currentAccount
     })
+
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(getPosts())
     }, [])
+
     return (
         <>
             {posts !== undefined && posts.map((it, index) => (<>
@@ -28,7 +34,6 @@ const ShowPost = () => {
                             <div className="d-flex align-items-center">
                                 <div className="avatar avatar-story me-2">
                                     <img className="avatar-img rounded-circle" src={it.account.avatar}
-
                                          alt=""/>
                                 </div>
                                 <div>
