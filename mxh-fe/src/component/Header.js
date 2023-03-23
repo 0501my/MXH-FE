@@ -191,7 +191,7 @@ const Header = () => {
                                 <a className="nav-link icon-md btn btn-light p-0" href="#" id="notifDropdown"
                                    role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                    data-bs-auto-close="outside">
-                                    <span className="badge-notif animation-blink"></span>
+                                    <span className="total-count">{notifications.length}</span>
                                     <i className="bi bi-bell-fill fs-6"> </i>
                                 </a>
                                 <div
