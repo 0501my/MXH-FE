@@ -10,6 +10,7 @@ import MyAbout from "./pages/MyAbout";
 import MyTimeLine from "./pages/MyTimeLine";
 import PostDetail from "./pages/posts/PostDetail";
 import Settings from "./pages/Settings";
+import Message from "./pages/Message";
 
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
       <Route path="/" element={<Login/>}/>
         <Route path="/registers" element={<Register/>}/>
         <Route path="/:idPost" element={<PostDetail/>}/>
-
+        <Route path="/messages" element={<Message/>}/>
         <Route path="/home" element={<Home/>}>
             <Route path={""} element={<ShowHome/>}/>
             <Route path={"myAbout"} element={<MyAbout/>}/>
@@ -27,6 +28,7 @@ function App() {
             <Route path={"timeLine/:idAccount"} element={<TimeLine/>}/>
             <Route path={"settings"} element={<Settings/>}/>
         </Route>
+
     </Routes>
   )
 
