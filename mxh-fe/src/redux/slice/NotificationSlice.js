@@ -1,9 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getNotifications} from "../../services/NotificationService";
+import {checkNotification, editNotification, getNotifications} from "../../services/NotificationService";
 
 
 const initialState = {
-    notifications: []
+    notifications: [],
+    check :''
 }
 const notificationSlice = createSlice({
         name: 'notifications',
@@ -13,6 +14,15 @@ const notificationSlice = createSlice({
             builder.addCase(getNotifications.fulfilled, (state, action) => {
                 state.notifications = action.payload
             });
+
+            builder.addCase(checkNotification.fulfilled, (state, action) => {
+                state.check = action.payload
+            });
+
+            builder.addCase(editNotification.fulfilled, (state, action) => {
+                state.check = action.payload;
+            });
+
 
         }
     }
