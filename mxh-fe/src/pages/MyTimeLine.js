@@ -73,7 +73,7 @@ const MyTimeLine = () => {
 
                                                 <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="profileAction2">
 
-                                                    <li><Link className="dropdown-item" to={"/home/settings"}> <i className="bi bi-lock fa-fw pe-2"></i>Change password</Link></li>
+                                                    <li><Link className="dropdown-item" to={"/home/settings"}> <i className="bi bi-lock fa-fw pe-2"></i>Change profile</Link></li>
 
                                                 </ul>
                                             </div>
