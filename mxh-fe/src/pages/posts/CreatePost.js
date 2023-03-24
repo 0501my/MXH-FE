@@ -8,7 +8,6 @@ import {Field, Form, Formik} from "formik";
 
 const CreatePost = (props) => {
     const [images, setImages] = useState([]);
-
     const dispatch = useDispatch();
 
     const handleChange = async (e) => {
@@ -17,7 +16,6 @@ const CreatePost = (props) => {
             newImage["id"] = Math.random();
             setImages((prevState) => [...prevState, newImage]);
         }
-
     };
 
     const account = useSelector(state => {
@@ -57,6 +55,7 @@ const CreatePost = (props) => {
     const [urls, setUrls] = useState([]);
 
     const [progress, setProgress] = useState(0);
+
 
     return (
         <>
