@@ -3,7 +3,7 @@ import React, {useEffect} from "react";
 import {getPosts} from "../../services/PostService";
 import DeletePost from "./DeletePost";
 import {Link} from "react-router-dom";
-import EditPost from "./EditPost";
+
 
 const ShowPost = () => {
 
@@ -71,7 +71,9 @@ const ShowPost = () => {
                                     </a>
                                     <ul className="dropdown-menu dropdown-menu-end"
                                         aria-labelledby="cardFeedAction">
-                                        <EditPost id={it.idPost}></EditPost>
+
+                                        <li><Link to={`/${it.idPost}`} className="dropdown-item" > <i
+                                            className="bi bi-pencil-square fa-fw pe-2"></i>Edit</Link></li>
                                         <li>
                                             <hr className="dropdown-divider"/>
                                         </li>
@@ -83,9 +85,9 @@ const ShowPost = () => {
                         </div>
                     </div>
                     <div className="card-body">
-                        <Link to={`/${it.idPost}`}><p>{it.content}</p></Link>
+                        <p>{it.content}</p>
                         {it.image != 1 ? <>
-                            <Link to={`/${it.idPost}`}> <img src={it.image} style={{width : "550px", height : "500px"}} alt="#"/> </Link>
+                            <Link to={`/${it.idPost}`}> <img src={it.image} style={{width : "550px", height : "350px", borderRadius:10}} alt="#"/> </Link>
                         </> : <></>}
 
                     <ul className="nav nav-stack py-3 small">
