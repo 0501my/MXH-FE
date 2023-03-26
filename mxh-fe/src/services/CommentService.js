@@ -7,6 +7,13 @@ export const findByIdPostComment = createAsyncThunk(
         return res.data
     }
 )
+export const getComment = createAsyncThunk(
+    'comments/getComment',
+    async () =>{
+        const res = await axios.get(`http://localhost:4000/comments`)
+        return res.data
+    }
+)
 export const deleteComment = createAsyncThunk(
     'comments/deleteComments',
     async (id) => {

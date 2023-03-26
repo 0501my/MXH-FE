@@ -11,14 +11,12 @@ import MyTimeLine from "./pages/MyTimeLine";
 import PostDetail from "./pages/posts/PostDetail";
 import Settings from "./pages/Settings";
 
-
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Login/>}/>
         <Route path="/registers" element={<Register/>}/>
         <Route path="/:idPost" element={<PostDetail/>}/>
-
         <Route path="/home" element={<Home/>}>
             <Route path={""} element={<ShowHome/>}/>
             <Route path={"myAbout"} element={<MyAbout/>}/>
@@ -29,7 +27,6 @@ function App() {
         </Route>
     </Routes>
   )
-
 }
 
 export default App;

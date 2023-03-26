@@ -4,6 +4,7 @@ import {getPosts} from "../../services/PostService";
 import DeletePost from "./DeletePost";
 import {Link} from "react-router-dom";
 import EditPost from "./EditPost";
+import ShowComment from "../comments/ShowComment";
 
 const ShowPost = () => {
 
@@ -87,55 +88,66 @@ const ShowPost = () => {
                         {it.image != 1 ? <>
                             <Link to={`/${it.idPost}`}> <img src={it.image} style={{width : "550px", height : "500px"}} alt="#"/> </Link>
                         </> : <></>}
-
-                    <ul className="nav nav-stack py-3 small">
-                        <li className="nav-item">
-                            <a className="nav-link active" href="#!"> <i
-                                className="bi bi-hand-thumbs-up-fill pe-1"></i>Liked </a>
-                        </li>
-                        <li className="nav-item">
-                            <Link to={`/${it.idPost}`}><a className="nav-link" href="#!"> <i className="bi bi-chat-fill pe-1"></i>{it.comment !=undefined && it.comment.length} Comments</a></Link>
-                        </li>
-                    </ul>
-                        {it.comment !=undefined && it.comment.slice(-2).reverse().map(itc =>(
-                            <>
+                        <div className="card-header border-0 pb-0">
+                        <ul className="nav nav-stack py-3 small">
+                            <li className="nav-item col-4 ">
+                                <a className="nav-link active" href="#!"> <i
+                                    className="bi bi-hand-thumbs-up-fill pe-1"></i>Liked </a>
+                            </li>
+                            <li className="nav-item col-6">
+                                <Link to={`/${it.idPost}`}><a className="nav-link" href="#!"><i className="bi bi-chat-fill pe-1"></i>Comments</a></Link>
+                            <div>
                                 <ul className="comment-wrap list-unstyled">
                                     <li className="comment-item">
                                         <div className="d-flex position-relative">
                                             <div className="avatar avatar-xs">
                                                 <a href="#!"><img className="avatar-img rounded-circle"
-                                                                  src={itc.account.avatar} alt=""/></a>
+                                                                  src="" alt=""/></a>
                                             </div>
                                             <div className="ms-2">
                                                 <div className="bg-light rounded-start-top-0 p-3 rounded">
                                                     <div className="d-flex justify-content-between">
-                                                        <h6 className="mb-1"><a href="#!"> {itc.account.name} </a></h6>
+                                                        <h6 className="mb-1"><a href="#!"> Avatar </a></h6>
 
                                                     </div>
-                                                    <p className="small mb-0">{itc.content}</p>
+                                                    <p className="small mb-0">content</p>
                                                 </div>
-                                              <small className="ms-2">{itc.time}</small>
+                                                <small className="ms-2">thoi gian </small>
                                             </div>
                                         </div>
                                     </li>
                                 </ul>
-                            </>
+                            </div>
 
-                        ))}
+                        </li>
+                    </ul>
+                        {/*{it.comment !=undefined && it.comment.slice(-2).reverse().map(itc =>(*/}
+                        {/*    <>*/}
+                        {/*        <ul className="comment-wrap list-unstyled">*/}
+                        {/*            <li className="comment-item">*/}
+                        {/*                <div className="d-flex position-relative">*/}
+                        {/*                    <div className="avatar avatar-xs">*/}
+                        {/*                        <a href="#!"><img className="avatar-img rounded-circle"*/}
+                        {/*                                          src={itc.account.avatar} alt=""/></a>*/}
+                        {/*                    </div>*/}
+                        {/*                    <div className="ms-2">*/}
+                        {/*                        <div className="bg-light rounded-start-top-0 p-3 rounded">*/}
+                        {/*                            <div className="d-flex justify-content-between">*/}
+                        {/*                                <h6 className="mb-1"><a href="#!"> {itc.account.name} </a></h6>*/}
 
+                        {/*                            </div>*/}
+                        {/*                            <p className="small mb-0">{itc.content}</p>*/}
+                        {/*                        </div>*/}
+                        {/*                      <small className="ms-2">{itc.time}</small>*/}
+                        {/*                    </div>*/}
+                        {/*                </div>*/}
+                        {/*            </li>*/}
+                        {/*        </ul>*/}
+                        {/*    </>*/}
+                        {/*))}*/}
                 </div>
-                {/*<div className="card-footer border-0 pt-0">*/}
-                {/*    <a href="#!" role="button"*/}
-                {/*       className="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center"*/}
-                {/*       data-bs-toggle="button" aria-pressed="true">*/}
-                {/*        <div className="spinner-dots me-2">*/}
-                {/*            <span className="spinner-dot"></span>*/}
-                {/*            <span className="spinner-dot"></span>*/}
-                {/*            <span className="spinner-dot"></span>*/}
-                {/*        </div>*/}
-                {/*        Load more comments*/}
-                {/*    </a>*/}
-                {/*</div>*/}
+
+                    </div>
             </div>
         </>))}
     </>)

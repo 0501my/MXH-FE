@@ -4,7 +4,7 @@ import {
     deleteComment,
     editComment,
     findByIdComment,
-    findByIdPostComment
+    findByIdPostComment, getComment
 } from "../../services/CommentService";
 import {editPost} from "../../services/PostService";
 
@@ -18,6 +18,9 @@ const commentSlice = createSlice({
         reducers: {},
         extraReducers: builder => {
             builder.addCase(findByIdPostComment.fulfilled, (state, action) => {
+                state.comments = action.payload;
+            });
+            builder.addCase(getComment.fulfilled, (state, action) => {
                 state.comments = action.payload;
             });
             builder.addCase(addComment.fulfilled, (state, action) => {

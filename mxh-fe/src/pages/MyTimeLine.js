@@ -33,9 +33,7 @@ const MyTimeLine = () => {
     return (
         <>
 
-            <main>
-
-
+            <main className="MyTimeLineWrapper">
                 <div className="container">
                     <div className="row g-4">
 

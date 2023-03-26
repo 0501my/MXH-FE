@@ -12,7 +12,7 @@ import {
 
 const initialState = {
     posts: [],
-    currentPost: {}
+    currentPost: {account:{}}
 }
 const postSlice = createSlice({
         name: 'posts',
