@@ -6,6 +6,7 @@ import friendReducer from "./slice/FriendSlice";
 import notificationReducer from "./slice/NotificationSlice";
 import commentReducer from "./slice/CommentSlice";
 import currentCommentReducer from "./slice/CommentSlice";
+import likeReducer from "./slice/LikeSlice";
 
 const Store = configureStore({
     reducer: {
@@ -15,7 +16,8 @@ const Store = configureStore({
         friends: friendReducer,
         notifications: notificationReducer,
         comments : commentReducer,
-        currentComment : currentCommentReducer
+        currentComment : currentCommentReducer,
+        likes: likeReducer
     },
 
     middleware: getDefaultMiddleware =>

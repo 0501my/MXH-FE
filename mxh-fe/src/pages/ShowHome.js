@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {editPost, findByIdPost, getPosts, addPosts} from "../services/PostService";
-import {Link, useNavigate} from "react-router-dom";
+import {findByIdPost, getPosts} from "../services/PostService";
+import {Link} from "react-router-dom";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../services/fireBase";
 import ShowPost from "./posts/ShowPost";
 import CreatePost from "./posts/CreatePost";
 
 const ShowHome = () => {
-    const navigate = useNavigate();
 
     const [images, setImages] = useState([]);
 
@@ -17,10 +16,6 @@ const ShowHome = () => {
     })
 
     const dispatch = useDispatch();
-
-    const currentPost = useSelector(state => {
-        return state.currentPost.currentPost
-    })
 
     useEffect(() => {
         handleUpload()
@@ -56,10 +51,9 @@ const ShowHome = () => {
 
     const [progress, setProgress] = useState(0);
 
-    const [check, setCheck] = useState(false)
 
     useEffect(() => {
-        dispatch(getPosts())
+        dispatch(getPosts(account.idAccount))
     }, [])
 
     useEffect((id) => {

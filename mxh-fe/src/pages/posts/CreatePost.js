@@ -9,20 +9,23 @@ import {Field, Form, Formik} from "formik";
 const CreatePost = (props) => {
     const [images, setImages] = useState([]);
     const dispatch = useDispatch();
+
     const handleChange = async (e) => {
         for (let i = 0; i < e.target.files.length; i++) {
             const newImage = e.target.files[i];
             newImage["id"] = Math.random();
             setImages((prevState) => [...prevState, newImage]);
         }
-
     };
+
     const account = useSelector(state => {
         return state.account.currentAccount
     })
+
     useEffect(() => {
         handleUpload()
     }, [images])
+
     const handleUpload = () => {
         const promises = [];
         if (images.length > 0) {
@@ -49,10 +52,10 @@ const CreatePost = (props) => {
 
     }
 
-
     const [urls, setUrls] = useState([]);
 
     const [progress, setProgress] = useState(0);
+
 
     return (
         <>
@@ -169,7 +172,6 @@ const CreatePost = (props) => {
                             values.account = account.idAccount;
                             values.image = 1
                             dispatch(addPosts(values))
-                            console.log(values,2)
                             document.getElementById('add-form1').reset();
                             setUrls([])
                         }}>
