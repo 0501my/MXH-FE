@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {editPost, findByIdPost, getPosts, addPosts} from "../services/PostService";
-import {Link, useNavigate} from "react-router-dom";
+import {findByIdPost, getPosts} from "../services/PostService";
+import {Link} from "react-router-dom";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../services/fireBase";
 import ShowPost from "./posts/ShowPost";
@@ -50,9 +50,8 @@ const ShowHome = () => {
     const [urls, setUrls] = useState([]);
 
     const [progress, setProgress] = useState(0);
-
     useEffect(() => {
-        dispatch(getPosts())
+        dispatch(getPosts(account.idAccount))
     }, [])
 
     useEffect((id) => {

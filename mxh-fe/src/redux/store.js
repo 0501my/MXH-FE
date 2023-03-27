@@ -7,6 +7,8 @@ import notificationReducer from "./slice/NotificationSlice";
 import commentReducer from "./slice/CommentSlice";
 import currentCommentReducer from "./slice/CommentSlice";
 import messageReducer from "./slice/MessageSlice";
+import likeReducer from "./slice/LikeSlice";
+
 
 const Store = configureStore({
     reducer: {
@@ -17,7 +19,8 @@ const Store = configureStore({
         notifications: notificationReducer,
         comments : commentReducer,
         currentComment : currentCommentReducer,
-        message : messageReducer
+        message : messageReducer,
+        likes: likeReducer
     },
 
     middleware: getDefaultMiddleware =>

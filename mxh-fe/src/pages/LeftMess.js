@@ -29,7 +29,7 @@ const LeftMess = () => {
                 <div className="card card-body border-end-0 border-bottom-0 rounded-bottom-0">
                     <div className=" d-flex justify-content-between align-items-center">
                         <h1 className="h5 mb-0">Active chats <span
-                            className="badge bg-success bg-opacity-10 text-success">6</span></h1>
+                            className="badge bg-success bg-opacity-10 text-success"></span></h1>
                         <div className="dropend position-relative">
                             <div className="nav">
                                 <a className="icon-md rounded-circle btn btn-sm btn-primary-soft nav-link toast-btn"
