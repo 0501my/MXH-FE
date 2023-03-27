@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import {findByIdPost} from "../../services/PostService";
+import {findByIdPost, likePost, unlikePost} from "../../services/PostService";
 import {useDispatch, useSelector} from "react-redux";
 import EditPost from "./EditPost";
 import Header from "../../component/Header";
@@ -9,6 +9,7 @@ import {addComment, editComment, findByIdComment, findByIdPostComment} from "../
 import DeleteComment from "../comments/DeleteComment";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
+import {like, unLike} from "../../services/LikeService";
 
 const PostDetail = () => {
     let {idPost} = useParams();
@@ -35,7 +36,6 @@ const PostDetail = () => {
     const currentComment = useSelector(state => {
         return state.currentComment.currentComment
     })
-
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
@@ -131,11 +131,29 @@ const PostDetail = () => {
                                         <img className="card-img rounded" src={currentPost.image}
                                              alt=""/>
                                     </div>
+
                                     <ul className="nav nav-stack flex-wrap small mb-3">
-                                        <li className="nav-item">
-                                            <a className="nav-link" href="#!"> <i
-                                                className="bi bi-hand-thumbs-up-fill pe-1"></i>(56)</a>
-                                        </li>
+                                        {currentPost.isLike == 2 ?
+                                            <li className="nav-item">
+                                                <a as={'button'} className="nav-link active"> <i
+                                                    className="bi bi-hand-thumbs-up-fill pe-1" onClick={() => {
+                                                    dispatch(unLike({post: currentPost.idPost, account: account.idAccount}))
+                                                        .then(() => {
+                                                                dispatch(unlikePost(currentPost))
+                                                            }
+                                                        )
+                                                }}></i> {currentPost.like.length}</a>
+                                            </li> :
+                                            <li className="nav-item">
+                                                <a as={'button'} className="nav-link"> <i
+                                                    className="bi bi-hand-thumbs-up-fill pe-1" onClick={() => {
+                                                    dispatch(like({post: currentPost.idPost, account: account.idAccount}))
+                                                        .then(() => {
+                                                            dispatch(likePost(currentPost))
+                                                        })
+                                                }}></i> {currentPost.like.length}</a>
+                                            </li>
+                                        }
                                         <li className="nav-item">
                                             <a className="nav-link" href="#!"> <i
                                                 className="bi bi-chat-fill pe-1"></i>{comments.length} Comment</a>
