@@ -9,8 +9,10 @@ import DeletePost from "./posts/DeletePost";
 const MyTimeLine = () => {
 
     const posts = useSelector(state => {
+        console.log(state,233)
         return state.posts.posts
     });
+
 
     const account = useSelector(state => {
         return state.account.currentAccount
@@ -148,9 +150,6 @@ const MyTimeLine = () => {
 
                                         </div>
                                     </div>
-
-
-
                                     <div className="card-body">
                                         <p>{it.content}</p>
 
@@ -158,23 +157,35 @@ const MyTimeLine = () => {
 
                                         <ul className="nav nav-stack py-3 small">
                                             <li className="nav-item">
-                                                <a className="nav-link active" href="#!"> <i className="bi bi-hand-thumbs-up-fill pe-1"></i>Liked (56)</a>
+                                                <a className="nav-link active" > <i className="bi bi-hand-thumbs-up-fill pe-1"></i>Liked </a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link" href="#!"> <i className="bi bi-chat-fill pe-1"></i>Comments (12)</a>
+                                                <Link to={`/${it.idPost}`}><a className="nav-link"> <i className="bi bi-chat-fill pe-1"></i> {it.comment !== undefined && it.comment.length} Comments </a></Link>
                                             </li>
                                         </ul>
 
-                                        <div className="d-flex mb-3">
+                                        {/*{it.comment != undefined && it.comment.slice(-2).reverse().map(itc => <>*/}
+                                        {/*    <ul className="comment-wrap list-unstyled">*/}
+                                        {/*        <li className="comment-item">*/}
+                                        {/*            <div className="d-flex position-relative">*/}
+                                        {/*                <div className="avatar avatar-xs">*/}
+                                        {/*                    <a href="#!"><img className="avatar-img rounded-circle"*/}
+                                        {/*                                      src={itc.account.avatar} alt=""/></a>*/}
+                                        {/*                </div>*/}
+                                        {/*                <div className="ms-2">*/}
+                                        {/*                    <div className="bg-light rounded-start-top-0 p-3 rounded">*/}
+                                        {/*                        <div className="d-flex justify-content-between">*/}
+                                        {/*                            <h6 className="mb-1"><a href="#!"> {itc.account.name} </a></h6>*/}
 
-                                            <div className="avatar avatar-xs me-2">
-                                                <a href="#!"> <img className="avatar-img rounded-circle" src={account.avatar} alt=""/> </a>
-                                            </div>
-
-                                            <form className="position-relative w-100">
-                                                <textarea className="form-control pe-4 bg-light" rows="1" placeholder="Add a comment..."></textarea>
-                                            </form>
-                                        </div>
+                                        {/*                        </div>*/}
+                                        {/*                        <p className="small mb-0">{itc.content}</p>*/}
+                                        {/*                    </div>*/}
+                                        {/*                    <small className="ms-2">{itc.time}</small>*/}
+                                        {/*                </div>*/}
+                                        {/*            </div>*/}
+                                        {/*        </li>*/}
+                                        {/*    </ul>*/}
+                                        {/*</>)}*/}
 
                                         <ul className="comment-wrap list-unstyled">
 
