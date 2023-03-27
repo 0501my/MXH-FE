@@ -5,6 +5,21 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+.total-count {
+  position: absolute;
+  top: -7px;
+  right: -8px;
+  background: rgba(255, 0, 0, 0.51);
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  text-align: center;
+  color: #fff;
+  border-radius: 100%;
+  font-size: 11px;
+}
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -15918,8 +15933,8 @@ a.badge:hover {
 }
 
 .avatar-lg {
-  height: 4rem;
-  width: 4rem;
+  height: 6rem;
+  width: 6rem;
 }
 
 .avatar-xl {
@@ -16850,3 +16865,4 @@ html[data-theme=dark] .light-mode-item {
 }
 /*User CSS*/
 /*# sourceMappingURL=style.css.map */
+

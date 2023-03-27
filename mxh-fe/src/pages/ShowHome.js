@@ -50,8 +50,6 @@ const ShowHome = () => {
     const [urls, setUrls] = useState([]);
 
     const [progress, setProgress] = useState(0);
-
-
     useEffect(() => {
         dispatch(getPosts(account.idAccount))
     }, [])

@@ -6,7 +6,6 @@ import {Link} from "react-router-dom";
 import EditPost from "./EditPost";
 import ShowComment from "../comments/ShowComment";
 import {like, unLike} from "../../services/LikeService";
-
 const ShowPost = () => {
 
     const posts = useSelector(state => {
@@ -61,33 +60,33 @@ const ShowPost = () => {
                                             </div>}
                                     </div>
                                 </div>
-                                {it.account.idAccount == localStorage.getItem('isAccount') ? <>
-                                    <div className="dropdown">
-                                        <a
-                                            className="text-secondary btn btn-secondary-soft-hover py-1 px-2"
-                                            id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i className="bi bi-three-dots"></i>
-                                        </a>
-                                        <ul className="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="cardFeedAction">
-                                            <EditPost id={it.idPost}></EditPost>
-                                            <li>
-                                                <hr className="dropdown-divider"/>
-                                            </li>
-                                            <DeletePost id={it.idPost}></DeletePost>
-                                        </ul>
+                            {it.account.idAccount == localStorage.getItem('isAccount') ? <>
+                                <div className="dropdown">
+                                    <a
+                                        className="text-secondary btn btn-secondary-soft-hover py-1 px-2"
+                                        id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i className="bi bi-three-dots"></i>
+                                    </a>
+                                    <ul className="dropdown-menu dropdown-menu-end"
+                                        aria-labelledby="cardFeedAction">
 
-                                    </div>
-                                </> : <></>}
-                            </div>
-                        </div>
-                        <div className="card-body">
-                            <Link to={`/${it.idPost}`}><p>{it.content}</p></Link>
-                            {it.image != 1 ? <>
-                                <Link to={`/${it.idPost}`}> <img src={it.image}
-                                                                 style={{width: "550px", height: "500px"}}
-                                                                 alt="#"/> </Link>
+                                        <li><Link to={`/${it.idPost}`} className="dropdown-item" > <i
+                                            className="bi bi-pencil-square fa-fw pe-2"></i>Edit</Link></li>
+                                        <li>
+                                            <hr className="dropdown-divider"/>
+                                        </li>
+                                        <DeletePost id={it.idPost}></DeletePost>
+                                    </ul>
+
+                                </div>
                             </> : <></>}
+                        </div>
+                    </div>
+                    <div className="card-body">
+                        <p>{it.content}</p>
+                        {it.image != 1 ? <>
+                            <Link to={`/${it.idPost}`}> <img src={it.image} style={{width : "550px", height : "500px", borderRadius:10}} alt="#"/> </Link>
+                        </> : <></>}
 
                             <ul className="nav nav-stack py-3 small">
                                 {it.isLike == 2 ?
@@ -99,7 +98,7 @@ const ShowPost = () => {
                                                     dispatch(unlikePost(it))
                                                     }
                                                 )
-                                        }}></i></a>
+                                        }}></i> {it.like.length}</a>
                                     </li> :
                                     <li className="nav-item">
                                         <a as={'button'} className="nav-link"> <i
@@ -108,7 +107,7 @@ const ShowPost = () => {
                                                 .then(() => {
                                                     dispatch(likePost(it))
                                                 })
-                                        }}></i></a>
+                                        }}></i> {it.like.length}</a>
                                     </li>
                                 }
 
