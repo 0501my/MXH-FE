@@ -97,23 +97,6 @@ const MyTimeLine = () => {
                                     </ul>
                                 </div>
                             </div>
-
-
-
-                            <div className="card card-body">
-                                <div className="d-flex mb-3">
-
-                                    <div className="avatar avatar-xs me-2">
-                                        <Link to={""}> <img className="avatar-img rounded-circle" src={account.avatar} alt=""/> </Link>
-                                    </div>
-
-                                    <form className="w-100">
-                                        <input className="form-control pe-4 border-0" placeholder="Share your thoughts..." data-bs-toggle="modal" data-bs-target="#modalCreateFeed"/>
-                                    </form>
-                                </div>
-
-
-                            </div>
                             {posts !== undefined && posts.map(it=>(
                                 <div className="card">
 
@@ -162,10 +145,10 @@ const MyTimeLine = () => {
 
                                         <ul className="nav nav-stack py-3 small">
                                             <li className="nav-item">
-                                                <a className="nav-link active" href="#!"> <i className="bi bi-hand-thumbs-up-fill pe-1"></i>Liked (56)</a>
+                                                <a className="nav-link active" href="#!"> <i className="bi bi-hand-thumbs-up-fill pe-1"></i>Liked ({it.like !== undefined && it.like.length})</a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link" href="#!"> <i className="bi bi-chat-fill pe-1"></i>Comments (12)</a>
+                                                <a className="nav-link" href="#!"> <i className="bi bi-chat-fill pe-1"></i>Comments ({it.comment !== undefined && it.comment.length})</a>
                                             </li>
                                         </ul>
 

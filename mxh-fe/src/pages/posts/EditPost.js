@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {addPosts, editPost, findByIdPost} from "../../services/PostService";
+import {editPost, findByIdPost} from "../../services/PostService";
 import {useDispatch, useSelector} from "react-redux";
 import {Field, Form, Formik} from "formik";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../../services/fireBase";
 
@@ -11,6 +11,7 @@ const EditPost = (props) => {
     const navigate = useNavigate();
     const handleEditPost = (values) => {
         let data = {...values}
+        console.log(data)
         dispatch(editPost(data)).then(() => {
             navigate('/home')
         })
@@ -18,6 +19,7 @@ const EditPost = (props) => {
     const [images, setImages] = useState([]);
     const [progress, setProgress] = useState(0);
     const [urls, setUrls] = useState([]);
+    console.log(urls)
     const account = useSelector(state => {
         return state.account.currentAccount
     })
@@ -67,8 +69,12 @@ const EditPost = (props) => {
     return (<>
             <div className="modal fade" id="feedActionVideo" tabIndex="-1" aria-labelledby="feedActionVideoLabel"
                  aria-hidden="true">
-                <Formik initialValues={currentPost}
+                <Formik initialValues={{
+                    content:currentPost.content
+                }}
                         onSubmit={(values) => {
+                            values.idPost = currentPost.idPost
+                            values.account = currentPost.account.idAccount
                             values.image = urls[urls.length - 1]
                             handleEditPost(values)
                         }}

@@ -19,7 +19,6 @@ const PostDetail = () => {
         return state.currentPost.currentPost
     })
 
-    console.log(currentPost)
     const account = useSelector(state => {
         return state.account.currentAccount
     })
