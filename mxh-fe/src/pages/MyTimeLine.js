@@ -1,15 +1,14 @@
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {deletePost, findByIdAccount} from "../services/PostService";
-import {deleteFriend, getFriends} from "../services/FriendService";
+import {findByIdAccount} from "../services/PostService";
+import {getFriends} from "../services/FriendService";
 import DeletePost from "./posts/DeletePost";
 
 
 const MyTimeLine = () => {
 
     const posts = useSelector(state => {
-        console.log(state, 233)
         return state.posts.posts
     });
 

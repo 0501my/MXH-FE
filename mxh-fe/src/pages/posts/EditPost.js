@@ -19,7 +19,6 @@ const EditPost = (props) => {
     const [images, setImages] = useState([]);
     const [progress, setProgress] = useState(0);
     const [urls, setUrls] = useState([]);
-    console.log(urls)
     const account = useSelector(state => {
         return state.account.currentAccount
     })

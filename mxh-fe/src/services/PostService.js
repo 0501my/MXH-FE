@@ -36,7 +36,6 @@ export const findByIdPost = createAsyncThunk(
     'posts/findByIdPost',
     async (data) => {
         const res = await axios.get(`http://localhost:4000/posts/findById/${data}`);
-        console.log(res.data)
         return res.data
 
     }
@@ -72,6 +71,20 @@ export const unlikePost = createAsyncThunk(
 
 export const likePost = createAsyncThunk(
     'posts/likePost',
+    async (data)=> {
+        return data
+    }
+)
+
+export const unlikePostDetail = createAsyncThunk(
+    'posts/unlikePostDetail',
+    async (data)=> {
+        return data
+    }
+)
+
+export const likePostDetail = createAsyncThunk(
+    'posts/likePostDetail',
     async (data)=> {
         return data
     }

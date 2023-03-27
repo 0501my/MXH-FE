@@ -1,6 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import {findByIdPost, likePost, unlikePost} from "../../services/PostService";
+import {
+    findByIdPost,
+    getPosts,
+    likePostDetail,
+    unlikePostDetail
+} from "../../services/PostService";
 import {useDispatch, useSelector} from "react-redux";
 import EditPost from "./EditPost";
 import Header from "../../component/Header";
@@ -60,8 +65,10 @@ const PostDetail = () => {
 
     const [urls, setUrls] = useState([]);
     useEffect(() => {
-        console.log(idPost,1)
-        dispatch(findByIdPost(idPost))
+        dispatch(getPosts(account.idAccount)).then(()=>{
+            dispatch(findByIdPost(idPost))
+        })
+
         dispatch(findByIdPostComment(idPost))
     }, [])
     return (
@@ -139,7 +146,7 @@ const PostDetail = () => {
                                                     className="bi bi-hand-thumbs-up-fill pe-1" onClick={() => {
                                                     dispatch(unLike({post: currentPost.idPost, account: account.idAccount}))
                                                         .then(() => {
-                                                                dispatch(unlikePost(currentPost))
+                                                                dispatch(unlikePostDetail(currentPost))
                                                             }
                                                         )
                                                 }}></i> {currentPost.like !== undefined && currentPost.like.length}</a>
@@ -149,7 +156,7 @@ const PostDetail = () => {
                                                     className="bi bi-hand-thumbs-up-fill pe-1" onClick={() => {
                                                     dispatch(like({post: currentPost.idPost, account: account.idAccount}))
                                                         .then(() => {
-                                                            dispatch(likePost(currentPost))
+                                                            dispatch(likePostDetail(currentPost))
                                                         })
                                                 }}></i> {currentPost.like !== undefined && currentPost.like.length}</a>
                                             </li>
