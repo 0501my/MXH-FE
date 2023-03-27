@@ -55,7 +55,6 @@ export const findByIdAccount = createAsyncThunk(
         return res.data
     }
 )
-
 export const findByContent = createAsyncThunk(
     'posts/findByContent',
     async (data)=>{
