@@ -120,17 +120,17 @@ const ShowPost = () => {
                                         <div className="d-flex position-relative">
                                             <div className="avatar avatar-xs">
                                                 <a href="#!"><img className="avatar-img rounded-circle"
-                                                                  src={itc.account.avatar} alt=""/></a>
+                                                                  src={itc.account !== undefined && itc.account.avatar} alt=""/></a>
                                             </div>
                                             <div className="ms-2">
                                                 <div className="bg-light rounded-start-top-0 p-3 rounded">
                                                     <div className="d-flex justify-content-between">
-                                                        <h6 className="mb-1"><a href="#!"> {itc.account.name} </a></h6>
+                                                        <h6 className="mb-1"><a href="#!"> {itc.account !== undefined && itc.account.name} </a></h6>
 
                                                     </div>
-                                                    <p className="small mb-0">{itc.content}</p>
+                                                    <p className="small mb-0">{itc.account !== undefined && itc.content}</p>
                                                 </div>
-                                                <small className="ms-2">{itc.time}</small>
+                                                <small className="ms-2">{itc.account !== undefined && itc.time}</small>
                                             </div>
                                         </div>
                                     </li>
