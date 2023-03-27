@@ -98,7 +98,7 @@ const ShowPost = () => {
                                                     dispatch(unlikePost(it))
                                                     }
                                                 )
-                                        }}></i> {it.like.length}</a>
+                                        }}></i> {it.like !== undefined && it.like.length}</a>
                                     </li> :
                                     <li className="nav-item">
                                         <a as={'button'} className="nav-link"> <i
@@ -107,7 +107,7 @@ const ShowPost = () => {
                                                 .then(() => {
                                                     dispatch(likePost(it))
                                                 })
-                                        }}></i> {it.like.length}</a>
+                                        }}></i> {it.like !== undefined && it.like.length}</a>
                                     </li>
                                 }
 

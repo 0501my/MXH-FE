@@ -60,11 +60,11 @@ const postSlice = createSlice({
             state.posts.map((it, id) => {
                 if (it.idPost === action.payload.idPost) {
                     state.posts[id].isLike = 1;
-                    state.posts[id].like.splice(1,1)
+                    state.posts[id].like.splice(0,1)
                 }
             });
             state.currentPost.isLike = 1;
-            state.currentPost.like.splice(1,1);
+            state.currentPost.like.splice(0,1);
         });
         builder.addCase(likePost.fulfilled, (state, action) => {
             state.posts.map((it, id) => {
