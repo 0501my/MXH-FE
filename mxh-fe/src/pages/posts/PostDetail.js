@@ -19,7 +19,7 @@ const PostDetail = () => {
         return state.currentPost.currentPost
     })
 
-    console.log(currentPost)
+    console.log(currentPost,22)
     const account = useSelector(state => {
         return state.account.currentAccount
     })
@@ -61,7 +61,6 @@ const PostDetail = () => {
 
     const [urls, setUrls] = useState([]);
     useEffect(() => {
-        console.log(idPost,1)
         dispatch(findByIdPost(idPost))
         dispatch(findByIdPostComment(idPost))
     }, [])

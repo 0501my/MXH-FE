@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import EditPost from "./EditPost";
 import ShowComment from "../comments/ShowComment";
 import {like, unLike} from "../../services/LikeService";
+import DisplayTime from "../Time";
 const ShowPost = () => {
 
     const posts = useSelector(state => {
@@ -43,7 +44,7 @@ const ShowPost = () => {
                                                     <Link to={`/Home/myTimeLine`}> {it.account.name} </Link>
                                                 }
                                             </h6>
-                                            <span className="nav-item small"> {it.time}</span>
+                                            <span className="nav-item small"> <DisplayTime time={it.time} /></span>
                                         </div>
                                         {it.status === "Public" &&
                                             <div className="nav nav-divider">

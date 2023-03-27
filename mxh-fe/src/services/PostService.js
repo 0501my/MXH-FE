@@ -5,6 +5,7 @@ import data from "bootstrap/js/src/dom/data";
 export const editPost = createAsyncThunk(
     'posts/editPost',
     async (data) => {
+        console.log(typeof data)
         const response = await axios.put(`http://localhost:4000/posts/${data.idPost}`, data);
         return response.data[0];
     }
