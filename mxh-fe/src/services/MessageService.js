@@ -16,6 +16,7 @@ export const sendMessage = createAsyncThunk(
         return response.data;
     }
 )
+
 export const getListMessage = createAsyncThunk(
     'message/getListMessages',
     async (data) => {
