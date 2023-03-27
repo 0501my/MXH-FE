@@ -12,7 +12,6 @@ import PostDetail from "./pages/posts/PostDetail";
 import Settings from "./pages/Settings";
 import Message from "./pages/Message";
 
-
 function App() {
   return (
     <Routes>
@@ -31,7 +30,6 @@ function App() {
 
     </Routes>
   )
-
 }
 
 export default App;

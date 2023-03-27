@@ -15,6 +15,7 @@ import {
 
 const initialState = {
     posts: [], currentPost: {account: {}}
+
 }
 const postSlice = createSlice({
     name: 'posts', initialState, reducers: {}, extraReducers: builder => {

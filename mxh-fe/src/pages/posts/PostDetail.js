@@ -60,9 +60,8 @@ const PostDetail = () => {
 
     const [urls, setUrls] = useState([]);
     useEffect(() => {
+        console.log(idPost,1)
         dispatch(findByIdPost(idPost))
-    }, [])
-    useEffect(() => {
         dispatch(findByIdPostComment(idPost))
     }, [])
     return (

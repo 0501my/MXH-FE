@@ -3,6 +3,8 @@ import React, {useEffect, useState} from "react";
 import {getPosts, likePost, unlikePost} from "../../services/PostService";
 import DeletePost from "./DeletePost";
 import {Link} from "react-router-dom";
+import EditPost from "./EditPost";
+import ShowComment from "../comments/ShowComment";
 import {like, unLike} from "../../services/LikeService";
 const ShowPost = () => {
 
