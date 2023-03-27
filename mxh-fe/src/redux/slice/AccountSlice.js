@@ -13,7 +13,7 @@ import {
 const initialState = {
     account: [],
     checkUser: null,
-    otherAccount: {},
+    otherAccount: {account : {}},
     currentAccount: JSON.parse(localStorage.getItem('account')),
 }
 const accountSlice = createSlice({

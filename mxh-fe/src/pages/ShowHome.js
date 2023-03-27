@@ -8,7 +8,6 @@ import ShowPost from "./posts/ShowPost";
 import CreatePost from "./posts/CreatePost";
 
 const ShowHome = () => {
-    const navigate = useNavigate();
 
     const [images, setImages] = useState([]);
 
@@ -17,10 +16,6 @@ const ShowHome = () => {
     })
 
     const dispatch = useDispatch();
-
-    const currentPost = useSelector(state => {
-        return state.currentPost.currentPost
-    })
 
     useEffect(() => {
         handleUpload()
@@ -55,8 +50,6 @@ const ShowHome = () => {
     const [urls, setUrls] = useState([]);
 
     const [progress, setProgress] = useState(0);
-
-    const [check, setCheck] = useState(false)
 
     useEffect(() => {
         dispatch(getPosts())

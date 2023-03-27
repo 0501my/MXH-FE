@@ -169,7 +169,6 @@ const CreatePost = (props) => {
                             values.account = account.idAccount;
                             values.image = 1
                             dispatch(addPosts(values))
-                            console.log(values,2)
                             document.getElementById('add-form1').reset();
                             setUrls([])
                         }}>
@@ -196,7 +195,6 @@ const CreatePost = (props) => {
                         values.account = account.idAccount;
                         values.image = urls[urls.length - 1]
                         dispatch(addPosts(values))
-                        console.log(values,2)
                         document.getElementById('add-form').reset();
                         setUrls([])
                     }}>

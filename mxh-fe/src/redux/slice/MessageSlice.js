@@ -1,10 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getMessage, sendMessage} from "../../services/MessageService";
+import {getListMessage, getMessage, sendMessage} from "../../services/MessageService";
 
 
 const initialState = {
     messages: [],
-    message:{otherAccount:{}}
+    message:{otherAccount:{}},
+    list : []
 }
 const messageSlice = createSlice({
         name: 'messages',
@@ -17,6 +18,9 @@ const messageSlice = createSlice({
             });
             builder.addCase(sendMessage.fulfilled, (state, action) => {
                 state.message = action.payload
+            });
+            builder.addCase(getListMessage.fulfilled, (state, action) => {
+                state.list = action.payload
             });
         }
     }

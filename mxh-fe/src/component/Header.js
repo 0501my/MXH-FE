@@ -16,7 +16,9 @@ const Header = () => {
     const notifications =useSelector(state => {
         return  state.notifications.notifications
     })
-
+    const otherAccount = useSelector(state => {
+        return state.account.otherAccount
+    })
 
     useEffect(()=>{
         dispatch(getNotifications(account.idAccount))
@@ -56,7 +58,7 @@ const Header = () => {
                         </div>
                         <ul className="nav flex-nowrap align-items-center ms-sm-3 list-unstyled">
                             <li className="nav-item ms-2">
-                                <Link to={"/messages"} className="nav-link icon-md btn btn-light p-0">
+                                <Link to={`/messages?senderId=${account.idAccount}&receiverId=${otherAccount.idAccount}`} className="nav-link icon-md btn btn-light p-0">
                                     <i className="bi bi-chat-left-text-fill fs-6"> </i>
                                 </Link>
                             </li>

@@ -119,7 +119,7 @@ const TimeLine = () => {
                                         <li className="nav-item"><Link className="nav-link active" to={""}> Posts </Link></li>
                                         <li className="nav-item"><Link className="nav-link" to={`/home/about/${idAccount}`}> About </Link>
                                         </li>
-                                        <li className="nav-item"><Link className="nav-link active" to={`/messages?senderId=${account.idAccount}&receiverId=${otherAccount.idAccount}`}> Message </Link></li>
+                                        <li className="nav-item"><Link className="nav-link" to={`/messages?senderId=${account.idAccount}&receiverId=${otherAccount.idAccount}`}> Message </Link></li>
                                     </ul>
                                 </div>
                             </div>

@@ -1,28 +1,79 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Header from "../component/Header";
 import {useDispatch, useSelector} from "react-redux";
-import {getMessage, sendMessage} from "../services/MessageService";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {Field, Form, Formik} from "formik";
-import {addPosts} from "../services/PostService";
+import {getListMessage, getMessage} from "../services/MessageService";
+import {Link, useLocation, useParams} from "react-router-dom";
+import {findById, searchOtherAccount} from "../services/AccountService";
+import * as socketIOClient from "socket.io-client";
+import LeftMess from "./LeftMess";
 
+const host = "http://localhost:4000";
 const Message = () => {
-    const navigate = useNavigate()
+
     const dispatch = useDispatch();
+    const [messages, setMessage] = useState('');
+    const [id, setId] = useState();
+    const socketRef = useRef();
     const account = useSelector(state => {
         return state.account.currentAccount
     })
-    let existURL = useLocation().search
+
     const otherAccount = useSelector(state => {
-        return state.account.otherAccount
+        return state.account.account
     })
-    const message = useSelector(state => {
+    let message = useSelector(state => {
         return state.message.messages
     })
+    // console.log(message,1)
+    let existURL = useLocation().search
+    const [mess, setMess] = useState()
+    const handleChange = (e) => {
+        setMessage(e.target.value)
+    }
+    const onEnterPress = (e) => {
+        if (e.keyCode == 13 && e.shiftKey == false) {
+            sendMessage().then()
+        }
+    }
+    // cho tin nhắn xuống cuối cùng
+    const scrollBottom = () => {
+        window.scrollTo({left: 0, top: document.body.scrollHeight, behavior: "smooth"});
+    }
+    const sendMessage = async () => {
+        if (messages !== null) {
+            const msg = {
+                content: messages,
+                id: id,
+                idReceiver: otherAccount.idAccount
+            }
+            await socketRef.current.emit('sendDataClient', msg)
+            await setMessage('')
+            scrollBottom()
+        }
+    }
+    console.log(mess,2)
 
     useEffect(() => {
+        setMess(message)
+        socketRef.current = socketIOClient.connect(host)
+        setId(account.idAccount)
+        socketRef.current.on('sendDataServer', dataGot => {
+            setMess(dataGot.content)
+            scrollBottom()
+        }) // mỗi khi có tin nhắn thì mess sẽ được render thêm
+        return () => {
+            socketRef.current.disconnect();
+        };
+    }, [message]);
+    let last2 = existURL.slice(-2);
+    console.log(last2)
+    useEffect(() => {
         dispatch(getMessage(existURL))
-    }, [])
+        dispatch(searchOtherAccount(otherAccount.idAccount))
+        dispatch(getListMessage(account.idAccount))
+        dispatch(findById(last2))
+    }, [existURL])
+
     return (
         <>
             <Header/>
@@ -30,8 +81,8 @@ const Message = () => {
                 <div className="container">
 
                     <div className="row gx-0">
-                        <div className="col-lg-4 col-xxl-2"></div>
-                        <div className="col-lg-4 col-xxl-8">
+                        <LeftMess/>
+                        <div className="col-lg-8 col-xxl-9">
                             <div className="card card-chat rounded-start-lg-0 border-start-lg-0">
                                 <div className="card-body h-100" style={{overflow: "auto"}}>
                                     <div className="tab-content py-0 mb-0 h-100" id="chatTabsContent">
@@ -88,7 +139,7 @@ const Message = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            {message !== undefined && message.map(item => (
+                                            {mess !== undefined && mess.map(item => (
                                                 <>
                                                     {item.senderIdAccount !== account.idAccount ? <>
                                                         <div>
@@ -120,7 +171,7 @@ const Message = () => {
                                                             <div className="w-100">
                                                                 <div className="d-flex flex-column align-items-end">
                                                                     <div
-                                                                        className="bg-primary text-white p-2 px-3 rounded-2">{item.content}
+                                                                        className="bg-primary text-white p-2 px-3 rounded-2 mt-4">{item.content}
                                                                     </div>
                                                                     <div
                                                                         className="text-center small my-2">{item.time}</div>
@@ -137,37 +188,24 @@ const Message = () => {
 
                                     </div>
                                 </div>
-                                <Formik initialValues={{
-                                    content: "",
-                                    sender: account.idAccount,
-                                    receiver: otherAccount.idAccount
-                                }}
-                                        onSubmit={(values) => {
-                                            console.log(values)
-                                            dispatch(sendMessage(values))
-                                            navigate(`/messages${existURL}`)
-                                            dispatch(getMessage(existURL))
-                                            document.getElementById('add-form1').reset();
-
-                                        }}>
-                                    <Form id='add-form1'>
-                                        <div className="card-footer">
-                                            <div className="d-sm-flex align-items-end">
-                                                <Field className="form-control mb-sm-0 mb-3" data-autoresize
-                                                       placeholder="Type a message" rows="1" type={'text'}
-                                                       as={"textarea"}
-                                                       name={'content'}></Field>
-                                                <button className="btn btn-sm btn-primary ms-2" type={"submit"}><i
-                                                    className="fa-solid fa-paper-plane fs-6"></i></button>
-                                            </div>
+                                <div id='add-form1'>
+                                    <div className="card-footer">
+                                        <div className="d-sm-flex align-items-end">
+                                                <textarea className="form-control mb-sm-0 mb-3" data-autoresize
+                                                          placeholder="Type a message" rows="1" value={messages}
+                                                          onChange={handleChange} onKeyDown={onEnterPress}
+                                                          name={'content'}></textarea>
+                                            <button className="btn btn-sm btn-primary ms-2" type={"submit"}
+                                                    onClick={sendMessage}><i
+                                                className="fa-solid fa-paper-plane fs-6"></i></button>
                                         </div>
-                                    </Form>
+                                    </div>
+                                </div>
 
-                                </Formik>
 
                             </div>
                         </div>
-                        <div className="col-lg-4 col-xxl-2"></div>
+
                     </div>
 
                 </div>

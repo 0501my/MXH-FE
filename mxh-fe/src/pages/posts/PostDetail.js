@@ -35,7 +35,6 @@ const PostDetail = () => {
     const currentComment = useSelector(state => {
         return state.currentComment.currentComment
     })
-    console.log(currentComment, 2)
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             // Xử lý submit form ở đây
