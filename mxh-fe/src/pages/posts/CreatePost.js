@@ -243,7 +243,7 @@ const CreatePost = (props) => {
                                             <div className="dz-message"><input type="file" id="myFile" name="myFile"
                                                                                onChange={handleChange}/>
                                                 <label htmlFor="myFile"><img src={urls[urls.length - 1]} alt="" style={{
-                                                    width: '300px', height: '300px'
+                                                    width: '500px', height: '300px'
                                                 }}/>
                                                 </label>
                                             </div>

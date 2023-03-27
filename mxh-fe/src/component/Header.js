@@ -1,14 +1,13 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
 import {findByContent} from "../services/PostService";
-import {getNotifications} from "../services/NotificationService";
+import {checkNotification, editNotification, getNotifications} from "../services/NotificationService";
 
 
 const Header = () => {
     const navigate = useNavigate();
-
     const dispatch = useDispatch();
     const account = useSelector(state => {
         return state.account.currentAccount
@@ -16,14 +15,18 @@ const Header = () => {
     const notifications =useSelector(state => {
         return  state.notifications.notifications
     })
+
     const otherAccount = useSelector(state => {
         return state.account.otherAccount
+    })
+    const check = useSelector(state => {
+        return state.notifications.check
     })
 
     useEffect(()=>{
         dispatch(getNotifications(account.idAccount))
+        dispatch(checkNotification(account.idAccount))
     },[])
-
 
     return (
         <>
@@ -67,13 +70,20 @@ const Header = () => {
                                     <i className="bi bi-gear-fill fs-6"> </i>
                                 </Link>
                             </li>
-                            <li className="nav-item dropdown ms-2">
+                            <li className="nav-item dropdown ms-2" >
                                 <a className="nav-link icon-md btn btn-light p-0" href="#" id="notifDropdown"
                                    role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                    data-bs-auto-close="outside">
-                                    <span className="badge-notif animation-blink"></span>
-                                    <i className="bi bi-bell-fill fs-6"> </i>
+                                    {
+                                        check > 0 ?
+                                            <span className="total-count" >{check}</span>
+                                    : null
+                                            }
+                                        <i className="bi bi-bell-fill fs-6" onClick={()=>{
+                                            dispatch(editNotification(account.idAccount))
+                                        }}> </i>
                                 </a>
+
                                 <div
                                     className="dropdown-menu dropdown-animation dropdown-menu-end dropdown-menu-size-md p-0 shadow-lg border-0"
                                     aria-labelledby="notifDropdown">
@@ -83,33 +93,36 @@ const Header = () => {
                                                 className="badge bg-danger bg-opacity-10 text-danger ms-2"></span>
                                             </h6>
                                         </div>
-                                        <div className="card-body p-0">
-                                            <ul className="list-group list-group-flush list-unstyled p-2">
-                                                {notifications !== undefined && notifications.map(it=>(
-                                                    <li>
-                                                        <div
-                                                            className="list-group-item list-group-item-action rounded badge-unread d-flex border-0 mb-1 p-3 position-relative">
-                                                            <div className="avatar text-center d-none d-sm-inline-block">
-                                                                <Link to={`/home/timeLine/${it.idAccount}`}><img className="avatar-img rounded-circle"
-                                                                           src={it.avatar} alt=""/></Link>
-                                                            </div>
-                                                            <div className="ms-sm-3 d-flex">
-                                                                <div>
-                                                                    {it.status === "Friend Request" &&
-                                                                        <p className="small mb-2">{it.name} sent a friend request</p>
-                                                                    }
-                                                                    {it.status === "Friend Confirm" &&
-                                                                        <p className="small mb-2">{it.name} became friends</p>
-                                                                    }
+                                        <div style={{ overflow: "auto", height: "300px" }}>
+                                            <div className="card-body p-0">
+                                                <ul className="list-group list-group-flush list-unstyled p-2">
+                                                    {
+                                                        notifications !== undefined && notifications.map(it=>(
+                                                    <Link to={`/home/timeLine/${it.idAccount}`} >
+                                                        <li >
+                                                            <div
+                                                                className="list-group-item list-group-item-action rounded badge-unread d-flex border-0 mb-1 p-3 position-relative">
+                                                                <div className="avatar text-center d-none d-sm-inline-block">
+                                                                    <img className="avatar-img rounded-circle"
+                                                                               src={it.avatar} alt=""/>
+                                                                </div>
+                                                                <div className="ms-sm-3 d-flex">
+                                                                    <div>
+                                                                        {it.status === "Friend Request" &&
+                                                                            <p className="small mb-2">{it.name} sent a friend request</p>
+                                                                        }
+                                                                        {it.status === "Friend Confirm" &&
+                                                                            <p className="small mb-2">{it.name} became friends</p>
+                                                                        }
 
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </li>
-                                                ))}
-
-
-                                            </ul>
+                                                        </li>
+                                                    </Link>
+                                                    ))}
+                                                </ul>
+                                            </div>
                                         </div>
                                         <div className="card-footer text-center">
                                             <a href="#" className="btn btn-sm btn-primary-soft">See all incoming
@@ -117,6 +130,7 @@ const Header = () => {
                                         </div>
                                     </div>
                                 </div>
+
                             </li>
                             <li className="nav-item ms-2 dropdown">
                                 <a className="nav-link btn icon-md p-0" href="#" id="profileDropdown" role="button"
