@@ -12,6 +12,7 @@ const Register = () => {
     const initialValuesAdd = {
         username: "", password: "", passwordAgain: "",
     };
+
     const validationSchema = Yup.object().shape({
         username: Yup.string().required("Please enter username.")
             .matches(/^[a-zA-Z0-9]/), password: Yup.string()
