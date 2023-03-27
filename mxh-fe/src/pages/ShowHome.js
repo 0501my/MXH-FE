@@ -54,9 +54,6 @@ const ShowHome = () => {
         dispatch(getPosts(account.idAccount))
     }, [])
 
-    useEffect((id) => {
-        dispatch(findByIdPost(id))
-    }, [])
 
     return (<>
 

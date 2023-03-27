@@ -18,6 +18,8 @@ const PostDetail = () => {
     const currentPost = useSelector(state => {
         return state.currentPost.currentPost
     })
+
+    console.log(currentPost)
     const account = useSelector(state => {
         return state.account.currentAccount
     })
@@ -142,7 +144,7 @@ const PostDetail = () => {
                                                                 dispatch(unlikePost(currentPost))
                                                             }
                                                         )
-                                                }}></i> {currentPost.like.length}</a>
+                                                }}></i> {currentPost.like !== undefined && currentPost.like.length}</a>
                                             </li> :
                                             <li className="nav-item">
                                                 <a as={'button'} className="nav-link"> <i
@@ -151,7 +153,7 @@ const PostDetail = () => {
                                                         .then(() => {
                                                             dispatch(likePost(currentPost))
                                                         })
-                                                }}></i> {currentPost.like.length}</a>
+                                                }}></i> {currentPost.like !== undefined && currentPost.like.length}</a>
                                             </li>
                                         }
                                         <li className="nav-item">

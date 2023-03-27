@@ -3,7 +3,6 @@ import React, {useEffect, useState} from "react";
 import {getPosts, likePost, unlikePost} from "../../services/PostService";
 import DeletePost from "./DeletePost";
 import {Link} from "react-router-dom";
-import EditPost from "./EditPost";
 import {like, unLike} from "../../services/LikeService";
 const ShowPost = () => {
 
@@ -97,7 +96,7 @@ const ShowPost = () => {
                                                     dispatch(unlikePost(it))
                                                     }
                                                 )
-                                        }}></i> {it.like.length}</a>
+                                        }}></i> {it.like !== undefined && it.like.length}</a>
                                     </li> :
                                     <li className="nav-item">
                                         <a as={'button'} className="nav-link"> <i
@@ -106,7 +105,7 @@ const ShowPost = () => {
                                                 .then(() => {
                                                     dispatch(likePost(it))
                                                 })
-                                        }}></i> {it.like.length}</a>
+                                        }}></i> {it.like !== undefined && it.like.length}</a>
                                     </li>
                                 }
 
