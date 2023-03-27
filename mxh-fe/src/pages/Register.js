@@ -55,7 +55,7 @@ const Register = () => {
 
                             <div className="card card-body text-center p-4 p-sm-5">
 
-                                <h1 className="mb-2">Sign in</h1>
+                                <h1 className="mb-2">Sign up</h1>
                                 <p>
                                 <span className="d-block">Already have an account? <Link
                                     to="/">Sign in here</Link></span>
