@@ -8,8 +8,8 @@ import {
     findByIdPost,
     getPosts,
     getStatus,
-    likePost,
-    unlikePost
+    likePost, likePostDeTail,
+    unlikePost, unlikePostDetail
 } from "../../services/PostService";
 
 
@@ -63,8 +63,6 @@ const postSlice = createSlice({
                     state.posts[id].like.splice(0,1)
                 }
             });
-            state.currentPost.isLike = 1;
-            state.currentPost.like.splice(0,1);
         });
         builder.addCase(likePost.fulfilled, (state, action) => {
             state.posts.map((it, id) => {
@@ -73,6 +71,12 @@ const postSlice = createSlice({
                     state.posts[id].like.push(2);
                 }
             })
+        });
+        builder.addCase(unlikePostDetail.fulfilled, (state, action) => {
+            state.currentPost.isLike = 1;
+            state.currentPost.like.splice(0,1);
+        });
+        builder.addCase(likePostDeTail.fulfilled, (state, action) => {
             state.currentPost.isLike = 2;
             state.currentPost.like.push(2);
         });

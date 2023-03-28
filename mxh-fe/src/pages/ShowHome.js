@@ -14,6 +14,9 @@ const ShowHome = () => {
     const account = useSelector(state => {
         return state.account.currentAccount
     })
+    const otherAccount = useSelector(state => {
+        return state.account.otherAccount
+    })
 
     const dispatch = useDispatch();
 
@@ -57,7 +60,7 @@ const ShowHome = () => {
 
     return (<>
 
-            <main>
+            <main >
                 <div className="container">
                     <div className="row g-4">
                         <div className="col-lg-3">
@@ -74,73 +77,47 @@ const ShowHome = () => {
                                         <button type="button" className="btn-close text-reset ms-auto"
                                                 data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                     </div>
+
                                     <div className="offcanvas-body d-block px-2 px-lg-0">
                                         <div className="card overflow-hidden">
                                             <div className="card-body pt-0 mt-5">
                                                 <div className="text-center">
                                                     <div className="avatar avatar-lg mt-n5 mb-3">
-                                                        <a href="#!"><img
+                                                        <a><img
                                                             className="avatar-img rounded border border-white border-3"
                                                             src={account.avatar} alt=""/></a>
                                                     </div>
                                                     <h5 className="mb-0"><Link
-                                                        to={`/Home/PersonalPage/MyTimeLine/${account.idAccount}`}>{account.name}</Link>
+                                                        to={`/home/myTimeline`}>{account.name}</Link>
                                                     </h5>
-                                                    <small>Web Developer at Webestica</small>
-                                                    <p className="mt-3">I'd love to change the world, but they won’t
-                                                        give me
-                                                        the source code.</p>
-                                                    <div className="hstack gap-2 gap-xl-3 justify-content-center">
-                                                        <div>
-                                                            <h6 className="mb-0">256</h6>
-                                                            <small>Post</small>
-                                                        </div>
-                                                        <div className="vr"></div>
-                                                        <div>
-                                                            <h6 className="mb-0">2.5K</h6>
-                                                            <small>Followers</small>
-                                                        </div>
-                                                        <div className="vr"></div>
-                                                        <div>
-                                                            <h6 className="mb-0">365</h6>
-                                                            <small>Following</small>
-                                                        </div>
-                                                    </div>
+                                                    <small>Nhà phát triển web tại CodeGym</small>
+                                                    <p className="mt-3">Tôi muốn thay đổi thế giới, nhưng họ không cho tôi mã nguồn..</p>
+
                                                 </div>
 
                                                 <hr/>
                                                 <ul className="nav nav-link-secondary flex-column fw-bold gap-2">
                                                     <li className="nav-item">
-                                                        <a className="nav-link" href="my-profile.html"> <img
+                                                        <Link className="nav-link" to={"/home"}> <img
                                                             className="me-2 h-20px fa-fw"
                                                             src="assets/images/icon/home-outline-filled.svg"
-                                                            alt=""/><span>Feed </span></a>
+                                                            alt=""/><span>Feed </span></Link>
                                                     </li>
                                                     <li className="nav-item">
-                                                        <a className="nav-link" href="my-profile-connections.html"> <img
+                                                        <Link className="nav-link" to={"/home/myTimeline"}> <img
                                                             className="me-2 h-20px fa-fw"
                                                             src="assets/images/icon/person-outline-filled.svg"
-                                                            alt=""/><span>Connections </span></a>
+                                                            alt=""/><span>Connections </span></Link>
                                                     </li>
                                                     <li className="nav-item">
-                                                        <a className="nav-link" href="events.html"> <img
+                                                        <Link className="nav-link" to={`/messages?senderId=${account.idAccount}&receiverId=${otherAccount.idAccount}`}> <img
                                                             className="me-2 h-20px fa-fw"
-                                                            src="assets/images/icon/calendar-outline-filled.svg"
-                                                            alt=""/><span>Events </span></a>
-                                                    </li>
-                                                    <li className="nav-item">
-                                                        <a className="nav-link" href="notifications.html"> <img
-                                                            className="me-2 h-20px fa-fw"
-                                                            src="assets/images/icon/notification-outlined-filled.svg"
-                                                            alt=""/><span>Notifications </span></a>
+                                                            src="assets/images/icon/chat-alt-outline-filled.svg"
+                                                            alt=""/><span>Message </span></Link>
                                                     </li>
 
                                                 </ul>
 
-                                            </div>
-                                            <div className="card-footer text-center py-2">
-                                                <a className="btn btn-link btn-sm" href="my-profile.html">View
-                                                    Profile </a>
                                             </div>
                                         </div>
                                         <ul className="nav small mt-4 justify-content-center lh-1">
@@ -165,7 +142,7 @@ const ShowHome = () => {
                                                     terms</a>
                                             </li>
                                         </ul>
-                                        <p className="small text-center mt-1">©2022 <a className="text-body"
+                                        <p className="small text-center mt-1">©2023 <a className="text-body"
                                                                                        target="_blank"
                                                                                        href="https://www.webestica.com/"> Webestica </a>
                                         </p>

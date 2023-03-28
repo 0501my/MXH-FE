@@ -76,3 +76,17 @@ export const likePost = createAsyncThunk(
         return data
     }
 )
+
+export const unlikePostDetail = createAsyncThunk(
+    'posts/unlikePostDetail',
+    async (data)=> {
+        return data
+    }
+)
+
+export const likePostDeTail = createAsyncThunk(
+    'posts/likePostDeTail',
+    async (data)=> {
+        return data
+    }
+)
