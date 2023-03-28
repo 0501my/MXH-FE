@@ -18,7 +18,7 @@ const ShowPost = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getPosts(account.idAccount));
+        dispatch(getPosts());
     }, [])
 
     return (

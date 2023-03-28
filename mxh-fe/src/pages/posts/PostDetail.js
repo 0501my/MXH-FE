@@ -65,7 +65,7 @@ const PostDetail = () => {
 
     const [urls, setUrls] = useState([]);
     useEffect(() => {
-        dispatch(getPosts(account.idAccount)).then(()=>{
+        dispatch(getPosts()).then(()=>{
             dispatch(findByIdPost(idPost))
         })
 

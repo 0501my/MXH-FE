@@ -12,7 +12,7 @@ export const editPost = createAsyncThunk(
 export const getPosts = createAsyncThunk(
     'posts/getPosts',
     async (data) => {
-        const response = await axios.get(`http://localhost:4000/posts/getPost/${data}`);
+        const response = await axios.get(`http://localhost:4000/posts`);
         return response.data;
     }
 )
