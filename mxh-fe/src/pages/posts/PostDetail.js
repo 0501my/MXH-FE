@@ -3,7 +3,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {
     findByIdPost,
     getPosts,
-    likePostDeTail,
+    likePostDetail,
     unlikePostDetail
 } from "../../services/PostService";
 import {useDispatch, useSelector} from "react-redux";
@@ -65,7 +65,7 @@ const PostDetail = () => {
 
     const [urls, setUrls] = useState([]);
     useEffect(() => {
-        dispatch(getPosts(account.idAccount)).then(()=>{
+        dispatch(getPosts()).then(()=>{
             dispatch(findByIdPost(idPost))
         })
         dispatch(findByIdPostComment(idPost))
@@ -155,7 +155,7 @@ const PostDetail = () => {
                                                     className="bi bi-hand-thumbs-up-fill pe-1" onClick={() => {
                                                     dispatch(like({post: currentPost.idPost, account: account.idAccount}))
                                                         .then(() => {
-                                                            dispatch(likePostDeTail(currentPost))
+                                                            dispatch(likePostDetail(currentPost))
                                                         })
                                                 }}></i> {currentPost.like !== undefined && currentPost.like.length}</a>
                                             </li>

@@ -1,6 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
-import data from "bootstrap/js/src/dom/data";
 
 export const editPost = createAsyncThunk(
     'posts/editPost',
@@ -12,7 +11,7 @@ export const editPost = createAsyncThunk(
 export const getPosts = createAsyncThunk(
     'posts/getPosts',
     async (data) => {
-        const response = await axios.get(`http://localhost:4000/posts/getPost/${data}`);
+        const response = await axios.get(`http://localhost:4000/posts`);
         return response.data;
     }
 )
@@ -36,7 +35,6 @@ export const findByIdPost = createAsyncThunk(
     'posts/findByIdPost',
     async (data) => {
         const res = await axios.get(`http://localhost:4000/posts/findById/${data}`);
-        console.log(res.data)
         return res.data
 
     }
@@ -83,10 +81,10 @@ export const unlikePostDetail = createAsyncThunk(
         return data
     }
 )
-
-export const likePostDeTail = createAsyncThunk(
-    'posts/likePostDeTail',
+export const likePostDetail = createAsyncThunk(
+    'posts/likePostDetail',
     async (data)=> {
         return data
     }
 )
+

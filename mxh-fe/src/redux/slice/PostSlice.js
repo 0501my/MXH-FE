@@ -8,7 +8,7 @@ import {
     findByIdPost,
     getPosts,
     getStatus,
-    likePost, likePostDeTail,
+    likePost, likePostDetail,
     unlikePost, unlikePostDetail
 } from "../../services/PostService";
 
@@ -76,7 +76,7 @@ const postSlice = createSlice({
             state.currentPost.isLike = 1;
             state.currentPost.like.splice(0,1);
         });
-        builder.addCase(likePostDeTail.fulfilled, (state, action) => {
+        builder.addCase(likePostDetail.fulfilled, (state, action) => {
             state.currentPost.isLike = 2;
             state.currentPost.like.push(2);
         });

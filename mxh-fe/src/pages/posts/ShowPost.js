@@ -1,9 +1,10 @@
 import {useDispatch, useSelector} from "react-redux";
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {getPosts, likePost, unlikePost} from "../../services/PostService";
 import DeletePost from "./DeletePost";
 import {Link} from "react-router-dom";
 import {like, unLike} from "../../services/LikeService";
+
 const ShowPost = () => {
 
     const posts = useSelector(state => {
@@ -17,7 +18,7 @@ const ShowPost = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getPosts(account.idAccount));
+        dispatch(getPosts());
     }, [])
 
     return (
@@ -93,7 +94,7 @@ const ShowPost = () => {
                                             className="bi bi-hand-thumbs-up-fill pe-1" onClick={() => {
                                             dispatch(unLike({post: it.idPost, account: account.idAccount}))
                                                 .then(() => {
-                                                    dispatch(unlikePost(it))
+                                                    dispatch(unlikePost(it));
                                                     }
                                                 )
                                         }}></i> {it.like !== undefined && it.like.length}</a>
@@ -103,7 +104,7 @@ const ShowPost = () => {
                                             className="bi bi-hand-thumbs-up-fill pe-1" onClick={() => {
                                             dispatch(like({post: it.idPost, account: account.idAccount}))
                                                 .then(() => {
-                                                    dispatch(likePost(it))
+                                                    dispatch(likePost(it));
                                                 })
                                         }}></i> {it.like !== undefined && it.like.length}</a>
                                     </li>

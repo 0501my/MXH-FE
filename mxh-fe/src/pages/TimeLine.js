@@ -98,18 +98,24 @@ const TimeLine = () => {
 
                                         <li className="list-inline-item"><i
                                             className="bi bi-geo-alt me-1"></i> {otherAccount.address}</li>
-                                        {friend === "Add Friend" && <span as={"button"} className="badge bg-primary" onClick={()=>{handleAddFriend()}}>Add Friend</span>}
-                                        {friend.status === "Friends" &&
+                                        {otherAccount.idAccount !== account.idAccount &&
                                             <>
-                                                <span as={"button"} className="badge bg-primary">Friends</span>
-                                                <span as={"button"} className="badge bg-primary bg-opacity-10 text-secondary" onClick={()=>{handleDeleteFriend(friend.friend.id)}}> Delete </span>
-                                            </>}
-                                        {friend.status === "Cancel Request" && <span as={"button"} className="badge bg-primary" onClick={()=>{handleDeleteFriend(friend.friend.id)}}>Cancel Request</span>}
-                                        {friend.status === "Confirm" &&
-                                            <>
-                                                <span as={"button"} className="badge bg-primary" onClick={()=>{handleConfirmFriend(friend.friend.id)}}>Confirm</span>
-                                                <span as={"button"} className="badge bg-primary bg-opacity-10 text-secondary" onClick={()=>{handleDeleteFriend(friend.friend.id)}}> Delete </span>
-                                            </>}
+                                                {friend === "Add Friend" && <span as={"button"} className="badge bg-primary" onClick={()=>{handleAddFriend()}}>Add Friend</span>}
+                                                {friend.status === "Friends" &&
+                                                    <>
+                                                        <span as={"button"} className="badge bg-primary">Friends</span>
+                                                        <span as={"button"} className="badge bg-primary bg-opacity-10 text-secondary" onClick={()=>{handleDeleteFriend(friend.friend.id)}}> Delete </span>
+                                                    </>}
+                                                {friend.status === "Cancel Request" && <span as={"button"} className="badge bg-primary" onClick={()=>{handleDeleteFriend(friend.friend.id)}}>Cancel Request</span>}
+                                                {friend.status === "Confirm" &&
+                                                    <>
+                                                        <span as={"button"} className="badge bg-primary" onClick={()=>{handleConfirmFriend(friend.friend.id)}}>Confirm</span>
+                                                        <span as={"button"} className="badge bg-primary bg-opacity-10 text-secondary" onClick={()=>{handleDeleteFriend(friend.friend.id)}}> Delete </span>
+                                                    </>}
+                                            </>
+
+                                        }
+
                                     </ul>
                                 </div>
 
@@ -160,11 +166,13 @@ const TimeLine = () => {
                                         <ul className="nav nav-stack py-3 small">
                                             <li className="nav-item">
                                                 <a className="nav-link active" href="#!"> <i
-                                                    className="bi bi-hand-thumbs-up-fill pe-1"></i>Liked (56)</a>
+                                                    className="bi bi-hand-thumbs-up-fill pe-1"></i>Liked
+                                                    ({it.like !== undefined && it.like.length})</a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link" href="#!"> <i className="bi bi-chat-fill pe-1"></i>Comments
-                                                    (12)</a>
+                                                <a className="nav-link" href="#!"> <i
+                                                    className="bi bi-chat-fill pe-1"></i>Comments
+                                                    ({it.comment !== undefined && it.comment.length})</a>
                                             </li>
                                         </ul>
 
@@ -250,7 +258,13 @@ const TimeLine = () => {
                                                                         alt=""/></a>
                                                                 </div>
                                                                 <h6 className="card-title mb-1 mt-3"><Link
-                                                                    to={`/home/timeLine/${it.idAccount}`}> {it.name}</Link></h6>
+                                                                    to={`/home/timeLine/${it.idAccount}`} onClick={()=>{
+                                                                    dispatch(findByIdAccount(it.idAccount));
+                                                                    dispatch(searchOtherAccount(it.idAccount));
+                                                                    let data = {thisId:account.idAccount,thatId:it.idAccount};
+                                                                    dispatch(checkFriend(data));
+                                                                    dispatch(getFriends(it.idAccount))
+                                                                }}> {it.name}</Link></h6>
                                                             </div>
 
                                                         </div>
